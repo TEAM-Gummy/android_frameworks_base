@@ -300,6 +300,8 @@ interface ITelephony {
      */
     List<CellInfo> getAllCellInfo();
 
+    int getLteOnGsmMode();
+
     /**
      * Sets minimum time in milli-seconds between onCellInfoChanged
      */
