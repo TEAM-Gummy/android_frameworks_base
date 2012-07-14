@@ -90,4 +90,6 @@
     <!-- status message in phone options dialog for when expanded desktop is off -->
     <string name="global_actions_expanded_desktop_mode_off_status">Expanded desktop is OFF</string>
 
+    <!-- stylus gestures support -->
+    <string name="stylus_app_not_installed">%s is not installed</string>
 </resources>
