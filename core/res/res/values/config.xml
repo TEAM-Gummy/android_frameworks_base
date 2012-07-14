@@ -1378,6 +1378,7 @@
     <!-- Disable the home key unlock setting -->
     <bool name="config_disableHomeUnlockSetting">true</bool>
 
+
     <!-- empty string to disable, or like: /sys/kernel/fast_charge/force_fast_charge
          it is disabled by default so devices need to add an overlay to enable-->
     <string name="config_fastChargePath" translatable="false"></string>
@@ -1389,4 +1390,7 @@
     <!-- Configuration to restart radio upon PDP_DEACTIVATE with
          error cause as Regular deactivation(36). -->
     <bool name="config_radio_reset_on_regular_deactivation">true</bool>
+
+    <!-- Boolean to enable Stylus gestures -->
+    <bool name="config_stylusGestures">false</bool>
 </resources>
