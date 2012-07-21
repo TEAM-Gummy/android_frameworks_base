@@ -1752,4 +1752,6 @@
   <!-- Irda Service -->
   <java-symbol type="bool" name="config_enableIrdaManagerService" />
 
+  <!-- Wifi -->
+  <java-symbol type="bool" name="config_wifiApFirmwareReload" />
 </resources>
