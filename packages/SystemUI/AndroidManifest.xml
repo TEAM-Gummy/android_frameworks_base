@@ -137,6 +137,13 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".gummy.GummyReceiver">
+            <intent-filter>
+                <action android:name="com.android.systemui.gummy.LAUNCH_ACTION" />
+            </intent-filter>
+        </receiver>
+
         <!-- started from UsbDeviceSettingsManager -->
         <activity android:name=".usb.UsbConfirmActivity"
             android:exported="true"

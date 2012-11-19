@@ -50,4 +50,13 @@
   <java-symbol type="string" name="toast_rotation_locked" />
   <java-symbol type="bool" name="config_hasRotationLockSwitch" />
 
+  <!-- GummyActions -->
+  <java-symbol type="string" name="action_clockoptions"/>
+  <java-symbol type="string" name="action_voiceassist"/>
+  <java-symbol type="string" name="action_event"/>
+  <java-symbol type="string" name="action_today"/>
+  <java-symbol type="string" name="action_alarm"/>
+  <java-symbol type="string" name="action_null"/>
+  <java-symbol type="string" name="action_app"/>
+
 </resources>
