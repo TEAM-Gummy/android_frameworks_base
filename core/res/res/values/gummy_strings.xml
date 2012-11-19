@@ -53,4 +53,14 @@
     <!-- Long-press back kill application -->
     <string name="app_killed_message">Application killed</string>
 
+    <!-- GummyActions -->
+    <string name="action_assist">Search (Google Now)</string>
+    <string name="action_clockoptions">Clock options</string>
+    <string name="action_voiceassist">Voice search</string>
+    <string name="action_event">Event</string>
+    <string name="action_today">Today</string>
+    <string name="action_alarm">Alarm</string>
+    <string name="action_app">Custom App/Shortcut</string>
+    <string name="action_null">Blank</string>
+
 </resources>
