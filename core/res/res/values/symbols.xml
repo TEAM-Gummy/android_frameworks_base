@@ -1837,7 +1837,6 @@
   <!-- From PinyinIME(!!!) -->
   <java-symbol type="string" name="inputMethod" />
 
-
   <!-- From Chromium-WebView -->
   <java-symbol type="attr" name="actionModeWebSearchDrawable" />
   <java-symbol type="string" name="websearch" />
@@ -1856,5 +1855,8 @@
   <java-symbol type="bool" name="config_forceDisableHardwareKeyboard" />
 
   <java-symbol type="bool" name="config_samsung_stk" />
+
+  <java-symbol type="bool" name="config_smsSamsungCdmaAlternateMessageIDEncoding" />
+
 
 </resources>
