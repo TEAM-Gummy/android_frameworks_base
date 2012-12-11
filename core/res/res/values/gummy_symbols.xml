@@ -59,4 +59,7 @@
   <java-symbol type="string" name="action_null"/>
   <java-symbol type="string" name="action_app"/>
 
+  <!-- Lockscreen -->
+  <java-symbol type="bool" name="config_disableHomeUnlockSetting" />
+
 </resources>
