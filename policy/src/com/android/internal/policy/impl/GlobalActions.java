@@ -82,8 +82,8 @@ import android.os.IBinder;
 import android.os.Messenger;
 import android.os.RemoteException;
 
-import com.android.internal.util.slim.PolicyConstants;
-import com.android.internal.util.slim.PolicyHelper;
+import com.android.internal.util.gummy.PolicyConstants;
+import com.android.internal.util.gummy.PolicyHelper;
 
 /**
  * Helper to show the global actions dialog.  Each item is an {@link Action} that

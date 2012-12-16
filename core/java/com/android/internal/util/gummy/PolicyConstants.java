@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2013 SlimRoms Project
+* Copyright (C) 2013 Gummy
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.slim;
+package com.android.internal.util.gummy;
 
 public class PolicyConstants {
 
