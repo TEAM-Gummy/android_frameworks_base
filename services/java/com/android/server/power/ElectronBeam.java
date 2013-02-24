@@ -91,6 +91,8 @@ final class ElectronBeam {
     private EGLSurface mEglSurface;
     private boolean mSurfaceVisible;
     private float mSurfaceAlpha;
+    private int mElectronBeamMode;
+    private boolean mIsLandscape;
 
     // Texture names.  We only use one texture, which contains the screenshot.
     private final int[] mTexNames = new int[1];
@@ -117,9 +119,9 @@ final class ElectronBeam {
      */
     public static final int MODE_FADE = 2;
 
-
-    public ElectronBeam(DisplayManagerService displayManager) {
+    public ElectronBeam(DisplayManagerService displayManager, int mode) {
         mDisplayManager = displayManager;
+        mElectronBeamMode = mode;
     }
 
     /**
@@ -220,17 +222,28 @@ final class ElectronBeam {
         if (!attachEglContext()) {
             return false;
         }
+
         try {
             // Clear frame to solid black.
             GLES10.glClearColor(0f, 0f, 0f, 1f);
             GLES10.glClear(GLES10.GL_COLOR_BUFFER_BIT);
 
-            // Draw the frame.
-            if (level < HSTRETCH_DURATION) {
-                drawHStretch(1.0f - (level / HSTRETCH_DURATION));
+            if (mElectronBeamMode == 1 || (mElectronBeamMode == 2 && mIsLandscape)) {
+                // Draw the frame vertical.
+                if (level < VSTRETCH_DURATION) {
+                    drawHStretch(1.0f - (level / VSTRETCH_DURATION));
+                } else {
+                    drawVStretch(1.0f - ((level - VSTRETCH_DURATION) / HSTRETCH_DURATION));
+                }
             } else {
-                drawVStretch(1.0f - ((level - HSTRETCH_DURATION) / VSTRETCH_DURATION));
+                // Draw the frame horizontal.
+                if (level < HSTRETCH_DURATION) {
+                    drawHStretch(1.0f - (level / HSTRETCH_DURATION));
+                } else {
+                    drawVStretch(1.0f - ((level - HSTRETCH_DURATION) / VSTRETCH_DURATION));
+                }
             }
+
             if (checkGlErrors("drawFrame")) {
                 return false;
             }
@@ -347,17 +360,31 @@ final class ElectronBeam {
         }
     }
 
-    private static void setVStretchQuad(FloatBuffer vtx, float dw, float dh, float a) {
-        final float w = dw + (dw * a);
-        final float h = dh - (dh * a);
+    private void setVStretchQuad(FloatBuffer vtx, float dw, float dh, float a) {
+        final float w;
+        final float h;
+        if (mElectronBeamMode == 1 || (mElectronBeamMode == 2 && mIsLandscape)) {
+            w = dw - (dw * a);
+            h = dh + (dh * a);
+        } else {
+            w = dw + (dw * a);
+            h = dh - (dh * a);
+        }
         final float x = (dw - w) * 0.5f;
         final float y = (dh - h) * 0.5f;
         setQuad(vtx, x, y, w, h);
     }
 
-    private static void setHStretchQuad(FloatBuffer vtx, float dw, float dh, float a) {
-        final float w = 2 * dw * (1.0f - a);
-        final float h = 1.0f;
+    private void setHStretchQuad(FloatBuffer vtx, float dw, float dh, float a) {
+        final float w;
+        final float h;
+        if (mElectronBeamMode == 1 || (mElectronBeamMode == 2 && mIsLandscape)) {
+            w = 1.0f;
+            h = dw + (dw * a);
+        } else {
+            w = dw + (dw * a);
+            h = 1.0f;
+        }
         final float x = (dw - w) * 0.5f;
         final float y = (dh - h) * 0.5f;
         setQuad(vtx, x, y, w, h);
@@ -684,7 +711,7 @@ final class ElectronBeam {
      * callback can be invoked on any thread, not necessarily the thread that
      * owns the electron beam.
      */
-    private static final class NaturalSurfaceLayout implements DisplayTransactionListener {
+    private final class NaturalSurfaceLayout implements DisplayTransactionListener {
         private final DisplayManagerService mDisplayManager;
         private SurfaceControl mSurfaceControl;
 
@@ -713,18 +740,22 @@ final class ElectronBeam {
                     case Surface.ROTATION_0:
                         mSurfaceControl.setPosition(0, 0);
                         mSurfaceControl.setMatrix(1, 0, 0, 1);
+                        mIsLandscape = false;
                         break;
                     case Surface.ROTATION_90:
                         mSurfaceControl.setPosition(0, displayInfo.logicalHeight);
                         mSurfaceControl.setMatrix(0, -1, 1, 0);
+                        mIsLandscape = false;
                         break;
                     case Surface.ROTATION_180:
                         mSurfaceControl.setPosition(displayInfo.logicalWidth, displayInfo.logicalHeight);
                         mSurfaceControl.setMatrix(-1, 0, 0, -1);
+                        mIsLandscape = false;
                         break;
                     case Surface.ROTATION_270:
                         mSurfaceControl.setPosition(displayInfo.logicalWidth, 0);
                         mSurfaceControl.setMatrix(0, 1, -1, 0);
+                        mIsLandscape = false;
                         break;
                 }
             }
