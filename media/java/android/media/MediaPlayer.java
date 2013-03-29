@@ -1327,7 +1327,6 @@ public class MediaPlayer
      */
     public void release() {
         stayAwake(false);
-        updateSurfaceScreenOn();
         mOnPreparedListener = null;
         mOnBufferingUpdateListener = null;
         mOnCompletionListener = null;
