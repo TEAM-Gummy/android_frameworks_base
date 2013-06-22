@@ -811,6 +811,16 @@ class ServerThread {
                 reportWtf("starting IdleMaintenanceService", e);
             }
 
+            if (context.getResources().getBoolean(
+                    com.android.internal.R.bool.config_enableIrdaManagerService)) {
+                try {
+                    Slog.i(TAG, "IrdaManager Service");
+                    ServiceManager.addService("irda", new IrdaManagerService(context));
+                } catch (Throwable e) {
+                    Slog.e(TAG, "Failure starting Irda Service", e);
+                }
+			}
+			
             try {
                 Slog.i(TAG, "Print Service");
                 printManager = new PrintManagerService(context);
