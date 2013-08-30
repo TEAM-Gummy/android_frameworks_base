@@ -39,7 +39,6 @@ class QuickSettingsContainerView extends FrameLayout {
 
     public QuickSettingsContainerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         updateResources();
     }
 
