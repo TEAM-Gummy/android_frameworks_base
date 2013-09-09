@@ -2737,6 +2737,12 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_COLOR = "status_bar_color";
+
+        /**
+         * Sets lockscreen tint alpha
+         * @hide
+         */
+        public static final String LOCKSCREEN_ALPHA_CONFIG = "lockscreen_alpha_config";
     }
 
     /**
