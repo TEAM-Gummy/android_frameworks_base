@@ -87,19 +87,18 @@ public class DateView extends TextView {
     }
 
     protected void updateClock() {
-        if (mDateFormat == null) {
-            final String dateFormat = getContext().getString(R.string.system_ui_date_pattern);
-            final Locale l = Locale.getDefault();
-            final String fmt = ICU.getBestDateTimePattern(dateFormat, l.toString());
-            mDateFormat = new SimpleDateFormat(fmt, l);
-        }
+        final String weekdayFormat = getContext().getString(R.string.system_ui_weekday_pattern);
+        final String dateFormat = getContext().getString(R.string.system_ui_date_pattern);
+        final Locale l = Locale.getDefault();
+        final Date now = new Date();
+        String weekdayFmt = ICU.getBestDateTimePattern(weekdayFormat, l.toString());
+        String dateFmt = ICU.getBestDateTimePattern(dateFormat, l.toString());
 
-        mCurrentTime.setTime(System.currentTimeMillis());
+        StringBuilder builder = new StringBuilder();
+        builder.append(new SimpleDateFormat(weekdayFmt, l).format(now));
+        builder.append("\n");
+        builder.append(new SimpleDateFormat(dateFmt, l).format(now));
 
-        final String text = mDateFormat.format(mCurrentTime);
-        if (!text.equals(mLastText)) {
-            setText(text);
-            mLastText = text;
-        }
+        setText(builder.toString());
     }
 }
