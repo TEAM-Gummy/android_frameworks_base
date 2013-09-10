@@ -16,6 +16,7 @@
 package com.android.internal.util.gummy;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -27,6 +28,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.nfc.NfcAdapter;
+import android.provider.Settings;
 import android.os.Vibrator;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -88,6 +90,10 @@ public class DeviceUtils {
 
     public static boolean deviceSupportsGps(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS);
+    }
+
+    public static boolean adbEnabled(ContentResolver resolver) {
+            return (Settings.Global.getInt(resolver, Settings.Global.ADB_ENABLED, 0)) == 1;
     }
 
     public static boolean deviceSupportsVibrator(Context ctx) {
