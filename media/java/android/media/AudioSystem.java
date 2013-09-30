@@ -231,6 +231,8 @@ public class AudioSystem
     public static final int DEVICE_OUT_USB_DEVICE = 0x4000;
     public static final int DEVICE_OUT_REMOTE_SUBMIX = 0x8000;
     public static final int DEVICE_OUT_PROXY = 0x40000;
+    public static final int DEVICE_OUT_FM = 0x80000;
+    public static final int DEVICE_OUT_FM_TX = 0x100000;
     public static final int DEVICE_OUT_DEFAULT = DEVICE_BIT_DEFAULT;
 
     public static final int DEVICE_OUT_ALL = (DEVICE_OUT_EARPIECE |
@@ -250,6 +252,8 @@ public class AudioSystem
                                               DEVICE_OUT_USB_DEVICE |
                                               DEVICE_OUT_REMOTE_SUBMIX |
                                               DEVICE_OUT_PROXY |
+                                              DEVICE_OUT_FM |
+                                              DEVICE_OUT_FM_TX |
                                               DEVICE_OUT_DEFAULT);
     public static final int DEVICE_OUT_ALL_A2DP = (DEVICE_OUT_BLUETOOTH_A2DP |
                                                    DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES |
@@ -275,6 +279,8 @@ public class AudioSystem
     public static final int DEVICE_IN_USB_ACCESSORY = DEVICE_BIT_IN | 0x800;
     public static final int DEVICE_IN_USB_DEVICE = DEVICE_BIT_IN | 0x1000;
     public static final int DEVICE_IN_PROXY = DEVICE_BIT_IN | 0x4000;
+    public static final int DEVICE_IN_FM_RX = DEVICE_BIT_IN | 0x8000;
+    public static final int DEVICE_IN_FM_RX_A2DP = DEVICE_BIT_IN | 0x10000;
     public static final int DEVICE_IN_DEFAULT = DEVICE_BIT_IN | DEVICE_BIT_DEFAULT;
 
     public static final int DEVICE_IN_ALL = (DEVICE_IN_COMMUNICATION |
@@ -291,6 +297,8 @@ public class AudioSystem
                                              DEVICE_IN_USB_ACCESSORY |
                                              DEVICE_IN_USB_DEVICE |
                                              DEVICE_IN_PROXY |
+                                             DEVICE_IN_FM_RX |
+                                             DEVICE_IN_FM_RX_A2DP |
                                              DEVICE_IN_DEFAULT);
     public static final int DEVICE_IN_ALL_SCO = DEVICE_IN_BLUETOOTH_SCO_HEADSET;
 
@@ -316,6 +324,8 @@ public class AudioSystem
     public static final String DEVICE_OUT_USB_DEVICE_NAME = "usb_device";
     public static final String DEVICE_OUT_REMOTE_SUBMIX_NAME = "remote_submix";
     public static final String DEVICE_OUT_PROXY_NAME = "proxy";
+    public static final String DEVICE_OUT_FM_NAME = "fm";
+    public static final String DEVICE_OUT_FM_TX_NAME = "fm_tx";
 
     public static String getDeviceName(int device)
     {
@@ -354,6 +364,10 @@ public class AudioSystem
             return DEVICE_OUT_REMOTE_SUBMIX_NAME;
         case DEVICE_OUT_PROXY:
             return DEVICE_OUT_PROXY_NAME;
+        case DEVICE_OUT_FM:
+            return DEVICE_OUT_FM_NAME;
+        case DEVICE_OUT_FM_TX:
+            return DEVICE_OUT_FM_TX_NAME;
         case DEVICE_OUT_DEFAULT:
         default:
             return "";

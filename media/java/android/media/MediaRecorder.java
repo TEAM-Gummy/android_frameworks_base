@@ -204,11 +204,6 @@ public class MediaRecorder
          */
         public static final int REMOTE_SUBMIX = 8;
 
-        /** @hide */
-        public static final int FM_RX = 9;
-
-        /** @hide */
-        public static final int FM_RX_A2DP = 10;
         /**
          * Audio source for preemptible, low-priority software hotword detection
          * It presents the same gain and pre processing tuning as {@link #VOICE_RECOGNITION}.
@@ -221,6 +216,12 @@ public class MediaRecorder
          * @hide
          */
         protected static final int HOTWORD = 1999;
+
+        /** @hide */
+        public static final int FM_RX = 9;
+
+        /** @hide */
+        public static final int FM_RX_A2DP = 10;
     }
 
     /**
@@ -351,7 +352,7 @@ public class MediaRecorder
      * @see android.media.MediaRecorder.AudioSource
      */
     public static final int getAudioSourceMax() {
-        return AudioSource.REMOTE_SUBMIX;
+        return AudioSource.FM_RX_A2DP;
     }
 
     /**
