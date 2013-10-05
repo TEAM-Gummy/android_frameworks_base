@@ -751,11 +751,22 @@ class ServerThread extends Thread {
             } catch (Throwable e) {
                 Slog.e(TAG, "Failure starting AssetRedirectionManager Service", e);
             }
+
             try {
                 Slog.i(TAG, "IdleMaintenanceService");
                 new IdleMaintenanceService(context, battery);
             } catch (Throwable e) {
                 reportWtf("starting IdleMaintenanceService", e);
+            }
+
+            if (context.getResources().getBoolean(
+                    com.android.internal.R.bool.config_enableIrdaManagerService)) {
+                try {
+                    Slog.i(TAG, "IrdaManager Service");
+                    ServiceManager.addService("irda", new IrdaManagerService(context));
+                } catch (Throwable e) {
+                    Slog.e(TAG, "Failure starting Irda Service", e);
+                }
             }
         }
 
