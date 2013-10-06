@@ -168,4 +168,15 @@
 
     <!-- Default for Settings.Secure.USER_SETUP_COMPLETE -->
     <bool name="def_user_setup_complete">false</bool>
+
+    <!-- Default for Settings.System.STATUS_BAR_BATTERY.
+    0. Icon
+    1. Percentage
+    2. Circle
+    3. Circle with Percentage
+    4. None/Hidden -->
+    <integer name="def_battery_style">0</integer>
+
+    <!-- Default setting for the text battery -->
+    <integer name="def_text_battery">0</integer>
 </resources>

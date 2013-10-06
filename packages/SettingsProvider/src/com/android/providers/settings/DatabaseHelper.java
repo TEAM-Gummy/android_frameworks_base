@@ -1982,6 +1982,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             loadIntegerSetting(stmt, Settings.System.POINTER_SPEED,
                     R.integer.def_pointer_speed);
+
+            loadIntegerSetting(stmt, Settings.System.STATUS_BAR_BATTERY,
+                    R.integer.def_battery_style);
+
+            loadIntegerSetting(stmt, Settings.System.BATTERY_TEXT,
+                    R.integer.def_text_battery);
+
         } finally {
             if (stmt != null) stmt.close();
         }
