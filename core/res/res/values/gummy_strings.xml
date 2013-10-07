@@ -50,4 +50,7 @@
         intercept an outgoing SMS.
         Malicious apps may use this to prevent outgoing SMS messages.</string>
 
+    <!-- Long-press back kill application -->
+    <string name="app_killed_message">Application killed</string>
+
 </resources>

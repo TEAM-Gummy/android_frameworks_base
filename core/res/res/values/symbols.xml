@@ -1841,6 +1841,9 @@
   <java-symbol type="attr" name="actionModeWebSearchDrawable" />
   <java-symbol type="string" name="websearch" />
 
+  <!-- Hardware Key ReMapping -->
+  <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
   <!-- Config Power Menu -->
   <java-symbol type="string" name="global_action_screenshot" />
   <java-symbol type="string" name="global_action_reboot" />
@@ -1858,8 +1861,11 @@
 
   <java-symbol type="bool" name="config_smsSamsungCdmaAlternateMessageIDEncoding" />
 
-
   <!-- Irda Service -->
   <java-symbol type="bool" name="config_enableIrdaManagerService" />
+
+  <!-- Kill app back press -->
+  <java-symbol type="string" name="app_killed_message" />
+  <java-symbol type="integer" name="config_backKillTimeout" />
 
 </resources>
