@@ -2577,6 +2577,104 @@ public final class Settings {
         public static final String POWER_MENU_CONFIG = "power_menu_config";
 
         /**
+         * Whether to enable custom rebindings of the actions performed on
+         * certain key press events.
+         * @hide
+         */
+        public static final String HARDWARE_KEY_REBINDING = "hardware_key_rebinding";
+
+         /**
+          * Action to perform when the home key pressed. (Default is 1)
+          * 0 - Nothing
+          * 1 - Home
+          * 2 - Back
+          * 3 - Menu
+          * 4 - App-switch
+          * 5 - Search
+          * 6 - Voice Search
+          * 7 - In-App Search
+          * 8 - Power Off
+          * 0 - Kill App
+          * 10 - Last App
+          * 11- Custom App
+          * 12- Custom App
+          * @hide
+          */
+         public static final String KEY_HOME_ACTION = "key_home_action";
+
+         /**
+          * Action to perform when the home key is long pressed. (Default is 4)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_HOME_LONG_PRESS_ACTION = "key_home_long_press_action";
+
+         /**
+          * Action to perform when the back key is pressed. (Default is 2)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_BACK_ACTION = "key_back_action";
+
+         /**
+          * Action to perform when the back key is long-pressed. (Default is 8)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_BACK_LONG_PRESS_ACTION = "key_back_long_press_action";
+
+         /**
+          * Action to perform when the menu key is pressed. (Default is 3)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_MENU_ACTION = "key_menu_action";
+
+         /**
+          * Action to perform when the menu key is long-pressed.
+          * (Default is 0 on devices with a search key, 5 on devices without)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_MENU_LONG_PRESS_ACTION = "key_menu_long_press_action";
+
+         /**
+          * Action to perform when the assistant (search) key is pressed. (Default is 5)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_ASSIST_ACTION = "key_assist_action";
+
+         /**
+          * Action to perform when the assistant (search) key is long-pressed. (Default is 2)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_ASSIST_LONG_PRESS_ACTION = "key_assist_long_press_action";
+
+         /**
+          * Action to perform when the app switch key is pressed. (Default is 2)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_APP_SWITCH_ACTION = "key_app_switch_action";
+
+         /**
+          * Action to perform when the app switch key is long-pressed. (Default is 0)
+          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+          * @hide
+          */
+         public static final String KEY_APP_SWITCH_LONG_PRESS_ACTION = "key_app_switch_long_press_action";
+
+        /**
+         * Control the display of the action overflow button within app UI.
+         * 0 = use system default
+         * 1 = force on
+         * @hide
+         */
+        public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4474,6 +4572,36 @@ public final class Settings {
                 INCALL_POWER_BUTTON_BEHAVIOR_SCREEN_OFF;
 
         /**
+         * What happens when the user presses the Home button when the
+         * phone is ringing.<br/>
+         * <b>Values:</b><br/>
+         * 1 - Nothing happens. (Default behavior)<br/>
+         * 2 - The Home button answer the current call.<br/>
+         *
+         * @hide
+         */
+        public static final String RING_HOME_BUTTON_BEHAVIOR = "ring_home_button_behavior";
+
+        /**
+         * RING_HOME_BUTTON_BEHAVIOR value for "do nothing".
+         * @hide
+         */
+        public static final int RING_HOME_BUTTON_BEHAVIOR_DO_NOTHING = 0x1;
+
+        /**
+         * RING_HOME_BUTTON_BEHAVIOR value for "answer".
+         * @hide
+         */
+        public static final int RING_HOME_BUTTON_BEHAVIOR_ANSWER = 0x2;
+
+        /**
+         * RING_HOME_BUTTON_BEHAVIOR default value.
+         * @hide
+         */
+        public static final int RING_HOME_BUTTON_BEHAVIOR_DEFAULT =
+                RING_HOME_BUTTON_BEHAVIOR_DO_NOTHING;
+
+        /**
          * The current night mode that has been selected by the user.  Owned
          * and controlled by UiModeManagerService.  Constants are as per
          * UiModeManager.
@@ -4527,6 +4655,12 @@ public final class Settings {
          * @hide
          */
         public static final String SMS_DEFAULT_APPLICATION = "sms_default_application";
+
+        /**
+         * Whether to allow killing of the foreground app by long-pressing the Back button
+         * @hide
+         */
+        public static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
 
         /**
          * Name of a package that the current user has explicitly allowed to see all of that
