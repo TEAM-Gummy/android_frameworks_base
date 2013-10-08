@@ -1877,4 +1877,7 @@
   <java-symbol type="string" name="lockscreen_always_battery" />
   <java-symbol type="string" name="lockscreen_always_low_battery" />
 
+  <!-- Lockscreen -->
+  <java-symbol type="bool" name="config_disableHomeUnlockSetting" />
+
 </resources>

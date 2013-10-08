@@ -1628,6 +1628,11 @@ public class KeyguardHostView extends KeyguardViewBase {
         return !configDisabled || isTestHarness || fileOverride;
     }
 
+    private boolean shouldEnableHomeKey() {
+        final boolean homeOverride = Settings.System.getInt(getContext().getContentResolver(), Settings.System.HOME_UNLOCK_SCREEN, 0) == 1;
+        return homeOverride;
+    }
+
     public void goToUserSwitcher() {
         mAppWidgetContainer.setCurrentPage(getWidgetPosition(R.id.keyguard_multi_user_selector));
     }
@@ -1640,6 +1645,15 @@ public class KeyguardHostView extends KeyguardViewBase {
     public boolean handleMenuKey() {
         // The following enables the MENU key to work for testing automation
         if (shouldEnableMenuKey()) {
+            showNextSecurityScreenOrFinish(false);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean handleHomeKey() {
+        // The following enables the HOME key to work for testing automation
+        if (shouldEnableHomeKey()) {
             showNextSecurityScreenOrFinish(false);
             return true;
         }
