@@ -55,6 +55,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 import static com.android.internal.util.gummy.GummyConstants.*;
+import com.android.internal.util.gummy.TorchConstants;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.R;
 
