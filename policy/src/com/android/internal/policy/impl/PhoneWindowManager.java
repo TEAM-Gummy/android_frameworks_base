@@ -4803,8 +4803,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // enable 180 degree rotation while docked.
                 preferredRotation = mDeskDockEnablesAccelerometer
                         ? sensorRotation : mDeskDockRotation;
-<<<<<<< HEAD
-            } else if (mHdmiPlugged && mDemoHdmiRotationLock) {
+            } else if ((mHdmiPlugged || mWifiDisplayConnected) &&
+                                           mDemoHdmiRotationLock) {
                 // Ignore sensor when plugged into HDMI when demo HDMI rotation lock enabled.
                 // Note that the dock orientation overrides the HDMI orientation.
                 preferredRotation = mDemoHdmiRotation;
@@ -4818,15 +4818,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_LOCKED) {
                 // Application just wants to remain locked in the last rotation.
                 preferredRotation = lastRotation;
-=======
-            } else if ((mHdmiPlugged || mWifiDisplayConnected) &&
-                                                        mHdmiRotationLock) {
-                // Ignore sensor when plugged into HDMI.
-                // or Wifi display is connected
-                // Note that the dock orientation overrides the HDMI/Wifi
-                // orientation.
-                preferredRotation = mHdmiRotation;
->>>>>>> d4e44f4... Squashed commit of audio changes from CodeAurora
             } else if ((mUserRotationMode == WindowManagerPolicy.USER_ROTATION_FREE
                             && (orientation == ActivityInfo.SCREEN_ORIENTATION_USER
                                     || orientation == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
