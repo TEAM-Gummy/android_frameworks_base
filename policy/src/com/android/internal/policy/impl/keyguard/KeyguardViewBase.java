@@ -46,7 +46,7 @@ import android.widget.FrameLayout;
  */
 public abstract class KeyguardViewBase extends FrameLayout {
 
-    private static int BACKGROUND_COLOR = 0;
+    private static int BACKGROUND_COLOR = 112;
     private AudioManager mAudioManager;
     private TelephonyManager mTelephonyManager = null;
     protected KeyguardViewMediator.ViewMediatorCallback mViewMediatorCallback;
@@ -88,7 +88,7 @@ public abstract class KeyguardViewBase extends FrameLayout {
 
     public void resetBackground() {
         BACKGROUND_COLOR = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.LOCKSCREEN_ALPHA_CONFIG, 0);
+                Settings.System.LOCKSCREEN_ALPHA_CONFIG, 112);
         setBackground(mBackgroundDrawable);
     }
 
