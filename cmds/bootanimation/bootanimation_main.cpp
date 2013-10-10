@@ -25,6 +25,7 @@
 #include <utils/Log.h>
 #include <utils/threads.h>
 
+#include <surfaceflinger/ISurfaceComposer.h>
 #include <media/mediaplayer.h>
 
 #if defined(HAVE_PTHREADS)
