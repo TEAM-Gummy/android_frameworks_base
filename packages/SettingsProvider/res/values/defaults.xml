@@ -189,4 +189,7 @@
 
     <!-- Default for Settings.System.LOCKSCREEN_TARGETS. -->
     <string name="def_lockscreen_targets" translatable="false"></string>
+
+    <!-- Default setting for menu overflow button -->
+    <integer name="def_menu_overflow">0</integer>
 </resources>

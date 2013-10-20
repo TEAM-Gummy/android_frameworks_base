@@ -1995,6 +1995,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadStringSetting(stmt, Settings.System.LOCKSCREEN_TARGETS,
                     R.string.def_lockscreen_targets);
 
+            loadStringSetting(stmt, Settings.System.UI_FORCE_OVERFLOW_BUTTON,
+                    R.integer.def_menu_overflow);
+
         } finally {
             if (stmt != null) stmt.close();
         }
