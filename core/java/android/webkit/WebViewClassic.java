@@ -4483,6 +4483,13 @@ public final class WebViewClassic implements WebViewProvider, WebViewProvider.Sc
         return selectText(x, y);
     }
 
+    public void clearSelection() {
+        selectionDone();
+        if (mWebViewCore != null) {
+            mWebViewCore.sendMessage(EventHub.CLEAR_SELECT_TEXT);
+        }
+    }
+
     /**
      * Select the word at the indicated content coordinates.
      */
