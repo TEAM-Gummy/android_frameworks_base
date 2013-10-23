@@ -33,16 +33,9 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.media.RemoteControlClient;
-import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -167,7 +160,6 @@ public class KeyguardHostView extends KeyguardViewBase {
             mCameraDisabled = dpm.getCameraDisabled(null);
         }
 
-        cleanupAppWidgetIds();
         mSafeModeEnabled = LockPatternUtils.isSafeModeEnabled();
 
         // These need to be created with the user context...
@@ -185,6 +177,8 @@ public class KeyguardHostView extends KeyguardViewBase {
 
         mAppWidgetHost = new AppWidgetHost(userContext, APPWIDGET_HOST_ID, mOnClickHandler,
                 Looper.myLooper());
+
+        cleanupAppWidgetIds();
 
         mAppWidgetManager = AppWidgetManager.getInstance(userContext);
 
@@ -226,32 +220,21 @@ public class KeyguardHostView extends KeyguardViewBase {
             mCleanupAppWidgetsOnBootCompleted = true;
             return;
         }
-        // Clean up appWidgetIds that are bound to lockscreen, but not actually used
-        // This is only to clean up after another bug: we used to not call
-        // deleteAppWidgetId when a user manually deleted a widget in keyguard. This code
-        // shouldn't have to run more than once per user. AppWidgetProviders rely on callbacks
-        // that are triggered by deleteAppWidgetId, which is why we're doing this
-        int[] appWidgetIdsInKeyguardSettings = mLockPatternUtils.getAppWidgets();
-        int[] appWidgetIdsBoundToHost = mAppWidgetHost.getAppWidgetIds();
-        int fallbackWidgetId = mLockPatternUtils.getFallbackAppWidgetId();
-        for (int i = 0; i < appWidgetIdsBoundToHost.length; i++) {
-            int appWidgetId = appWidgetIdsBoundToHost[i];
-            if (!contains(appWidgetIdsInKeyguardSettings, appWidgetId)) {
-                if (appWidgetId == fallbackWidgetId) {
-                    if (widgetsDisabledByDpm()) {
-                        // Ignore attempts to delete the fallback widget when widgets
-                        // are disabled
-                        continue;
-                    } else {
-                        // Reset fallback widget id in the event that widgets have been
-                        // enabled, and fallback widget is being deleted
-                        mLockPatternUtils.writeFallbackAppWidgetId(
-                                AppWidgetManager.INVALID_APPWIDGET_ID);
-                    }
+        if (!mSafeModeEnabled && !widgetsDisabledByDpm()) {
+            // Clean up appWidgetIds that are bound to lockscreen, but not actually used
+            // This is only to clean up after another bug: we used to not call
+            // deleteAppWidgetId when a user manually deleted a widget in keyguard. This code
+            // shouldn't have to run more than once per user. AppWidgetProviders rely on callbacks
+            // that are triggered by deleteAppWidgetId, which is why we're doing this
+            int[] appWidgetIdsInKeyguardSettings = mLockPatternUtils.getAppWidgets();
+            int[] appWidgetIdsBoundToHost = mAppWidgetHost.getAppWidgetIds();
+            for (int i = 0; i < appWidgetIdsBoundToHost.length; i++) {
+                int appWidgetId = appWidgetIdsBoundToHost[i];
+                if (!contains(appWidgetIdsInKeyguardSettings, appWidgetId)) {
+                    Log.d(TAG, "Found a appWidgetId that's not being used by keyguard, deleting id "
+                            + appWidgetId);
+                    mAppWidgetHost.deleteAppWidgetId(appWidgetId);
                 }
-                Log.d(TAG, "Found a appWidgetId that's not being used by keyguard, deleting id "
-                        + appWidgetId);
-                mAppWidgetHost.deleteAppWidgetId(appWidgetId);
             }
         }
     }
@@ -383,7 +366,7 @@ public class KeyguardHostView extends KeyguardViewBase {
             mAppWidgetContainer = (KeyguardWidgetPager) findViewById(R.id.app_widget_container);
         }
         mAppWidgetContainer.setVisibility(VISIBLE);
-        removeView(mAppWidgetContainerHidden);
+        mAppWidgetContainerHidden.setVisibility(GONE);
         mAppWidgetContainer.setCallbacks(mWidgetCallbacks);
         mAppWidgetContainer.setDeleteDropTarget(deleteDropTarget);
         mAppWidgetContainer.setMinScale(0.5f);
@@ -407,7 +390,6 @@ public class KeyguardHostView extends KeyguardViewBase {
 
         setBackButtonEnabled(false);
 
-        updateBackground();
         addDefaultWidgets();
 
         addWidgetsFromSettings();
@@ -456,46 +438,6 @@ public class KeyguardHostView extends KeyguardViewBase {
             return true;
         }
     };
-
-    private void updateBackground() {
-        String background = Settings.System.getStringForUser(getContext().getContentResolver(),
-                Settings.System.LOCKSCREEN_BACKGROUND, UserHandle.USER_CURRENT);
-
-        if (background == null) {
-            return;
-        }
-
-        Drawable back = null;
-        int bgAlpha = (int)((1 - (Settings.System.getFloatForUser(getContext().getContentResolver(),
-                Settings.System.LOCKSCREEN_ALPHA, 0.0f, UserHandle.USER_CURRENT))) * 255);
-
-        if (!background.isEmpty()) {
-            try {
-                back = new ColorDrawable(Integer.parseInt(background));
-            } catch(NumberFormatException e) {
-                Log.e(TAG, "Invalid background color " + background);
-            }
-        } else {
-            try {
-                Context settingsContext = getContext().createPackageContext("com.android.settings", 0);
-                String wallpaperFile = settingsContext.getFilesDir() + "/lockwallpaper";
-                Bitmap backgroundBitmap = BitmapFactory.decodeFile(wallpaperFile);
-                back = new BitmapDrawable(getContext().getResources(), backgroundBitmap);
-            } catch (NameNotFoundException e) {
-                // Do nothing here
-            }
-        }
-        if (back != null) {
-            back.setAlpha(bgAlpha);
-            Drawable overlay = new ColorDrawable(BACKGROUND_COLOR);
-            Drawable[] layers = new Drawable[] {
-                back,
-                overlay
-            };
-            LayerDrawable layerDrawable = new LayerDrawable(layers);
-            setBackground(layerDrawable);
-        }
-    }
 
     private int getDisabledFeatures(DevicePolicyManager dpm) {
         int disabledFeatures = DevicePolicyManager.KEYGUARD_DISABLE_FEATURES_NONE;
@@ -1224,10 +1166,6 @@ public class KeyguardHostView extends KeyguardViewBase {
         AppWidgetProviderInfo appWidgetInfo = mAppWidgetManager.getAppWidgetInfo(appId);
         if (appWidgetInfo != null) {
             AppWidgetHostView view = mAppWidgetHost.createView(mContext, appId, appWidgetInfo);
-            Bundle options = new Bundle();
-            options.putInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY,
-                AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD);
-            view.updateAppWidgetOptions(options);
             addWidget(view, pageIndex);
             return true;
         } else {
@@ -1793,17 +1731,10 @@ public class KeyguardHostView extends KeyguardViewBase {
         showNextSecurityScreenOrFinish(false);
     }
 
-    public void showCustomIntent(Intent intent) {
-        startActivity(intent);
-    }
-
     public void showAssistant() {
         final Intent intent = ((SearchManager) mContext.getSystemService(Context.SEARCH_SERVICE))
           .getAssistIntent(mContext, true, UserHandle.USER_CURRENT);
-        startActivity(intent);
-    }
 
-    private void startActivity(Intent intent) {
         if (intent == null) return;
 
         final ActivityOptions opts = ActivityOptions.makeCustomAnimation(mContext,
