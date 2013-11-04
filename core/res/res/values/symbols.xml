@@ -1717,6 +1717,7 @@
   <java-symbol type="drawable" name="ic_volume" />
   <java-symbol type="drawable" name="stat_notify_sim_toolkit" />
   <java-symbol type="bool" name="config_stkNoAlphaUsrCnf" />
+  <java-symbol type="bool" name="config_samsung_stk" />
 
   <!-- From maps library -->
   <java-symbol type="array" name="maps_starting_lat_lng" />
@@ -1746,4 +1747,5 @@
   <java-symbol type="dimen" name="subtitle_shadow_radius" />
   <java-symbol type="dimen" name="subtitle_shadow_offset" />
   <java-symbol type="dimen" name="subtitle_outline_width" />
+
 </resources>
