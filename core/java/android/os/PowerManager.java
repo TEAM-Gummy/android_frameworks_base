@@ -335,21 +335,34 @@ public final class PowerManager {
     }
 
     /**
-     * Returns true if the screen auto-brightness adjustment setting should
-     * be available in the UI.  This setting is experimental and disabled by default.
+     * Gets the minimum screen brightness.
+     * This is the lowest possible screen brightness; the screen will
+     * never become dimmer than that.
      * @hide
      */
-    public static boolean useScreenAutoBrightnessAdjustmentFeature() {
-        return SystemProperties.getBoolean("persist.power.useautobrightadj", false);
+    public int getMinimumAbsoluteScreenBrightness() {
+        int minSetting = getMinimumScreenBrightnessSetting();
+        int dimSetting = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_screenBrightnessDim);
+        return Math.min(minSetting, dimSetting);
     }
 
     /**
-     * Returns true if the twilight service should be used to adjust screen brightness
-     * policy.  This setting is experimental and disabled by default.
+     * Returns true if the screen auto-brightness adjustment setting should
+     * be available in the UI.
+     * @hide
+     */
+    public static boolean useScreenAutoBrightnessAdjustmentFeature() {
+        return true;
+    }
+
+    /**
+     * Returns true if the twilight service should be used to adjust
+     * screen brightness policy.
      * @hide
      */
     public static boolean useTwilightAdjustmentFeature() {
-        return SystemProperties.getBoolean("persist.power.usetwilightadj", false);
+        return true;
     }
 
     /**
