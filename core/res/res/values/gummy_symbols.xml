@@ -25,19 +25,6 @@
   <java-symbol type="bool" name="config_multiColorBatteryLed" />
   <java-symbol type="bool" name="config_intrusiveBatteryLed" />
 
-<<<<<<< HEAD:core/res/res/values/gummy_symbols.xml
-=======
-  <!-- Privacy Guard -->
-  <java-symbol type="string" name="privacy_guard_notification" />
-  <java-symbol type="string" name="privacy_guard_notification_detail" />
-  <java-symbol type="string" name="privacy_guard_custom_notification_detail" />
-  <java-symbol type="drawable" name="stat_notify_privacy_guard" />
-  <java-symbol type="drawable" name="stat_notify_privacy_guard_off" />
-  <java-symbol type="drawable" name="stat_notify_privacy_guard_custom" />
-  <java-symbol type="drawable" name="stat_notify_privacy_guard_plus" />
-  <java-symbol type="drawable" name="stat_notify_privacy_guard_off_plus" />
-  <java-symbol type="drawable" name="stat_notify_privacy_guard_custom_plus" />
-
   <!-- Config Power Menu -->
   <java-symbol type="drawable" name="ic_lock_reboot" />
   <java-symbol type="drawable" name="ic_lock_screenshot" />
@@ -51,5 +38,4 @@
   <java-symbol type="string" name="reboot_progress" />
   <java-symbol type="string" name="reboot_system" />
 
->>>>>>> 8435ec2... Frameworks: Advanced Power Menu:core/res/res/values/slim_symbols.xml
 </resources>
