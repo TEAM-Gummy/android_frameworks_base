@@ -46,9 +46,9 @@ public class SignalClusterView
     NetworkController mNC;
 
     private boolean mWifiVisible = false;
-    private int mWifiStrengthId = 0;
+    private int mWifiStrengthId = 0, mWifiActivityId = 0;
     private boolean mMobileVisible = false;
-    private int mMobileStrengthId = 0, mMobileTypeId = 0;
+    private int mMobileStrengthId = 0, mMobileActivityId = 0, mMobileTypeId = 0;
     private boolean mIsAirplaneMode = false;
     private int mAirplaneIconId = 0;
     private String mWifiDescription, mMobileDescription, mMobileTypeDescription;
@@ -56,7 +56,7 @@ public class SignalClusterView
     private boolean mShowSignalText = false;
 
     ViewGroup mWifiGroup, mMobileGroup;
-    ImageView mWifi, mMobile, mMobileType, mAirplane;
+    ImageView mWifi, mMobile, mWifiActivity, mMobileActivity, mMobileType, mAirplane;
     TextView mMobileText;
     View mSpacer;
 
@@ -87,8 +87,10 @@ public class SignalClusterView
 
         mWifiGroup      = (ViewGroup) findViewById(R.id.wifi_combo);
         mWifi           = (ImageView) findViewById(R.id.wifi_signal);
+        mWifiActivity   = (ImageView) findViewById(R.id.wifi_inout);
         mMobileGroup    = (ViewGroup) findViewById(R.id.mobile_combo);
         mMobile         = (ImageView) findViewById(R.id.mobile_signal);
+        mMobileActivity = (ImageView) findViewById(R.id.mobile_inout);
         mMobileType     = (ImageView) findViewById(R.id.mobile_type);
         mMobileText     = (TextView)  findViewById(R.id.signal_text);
         mSpacer         =             findViewById(R.id.spacer);
@@ -103,8 +105,10 @@ public class SignalClusterView
 
         mWifiGroup      = null;
         mWifi           = null;
+        mWifiActivity   = null;
         mMobileGroup    = null;
         mMobile         = null;
+        mMobileActivity = null;
         mMobileType     = null;
         mMobileText     = null;
         mSpacer         = null;
@@ -114,19 +118,22 @@ public class SignalClusterView
     }
 
     @Override
-    public void setWifiIndicators(boolean visible, int strengthIcon, String contentDescription) {
+    public void setWifiIndicators(boolean visible, int strengthIcon, int activityIcon,
+            String contentDescription) {
         mWifiVisible = visible;
         mWifiStrengthId = strengthIcon;
+        mWifiActivityId = activityIcon;
         mWifiDescription = contentDescription;
 
         apply();
     }
 
     @Override
-    public void setMobileDataIndicators(boolean visible, int strengthIcon,
+    public void setMobileDataIndicators(boolean visible, int strengthIcon, int activityIcon,
             int typeIcon, String contentDescription, String typeContentDescription) {
         mMobileVisible = visible;
         mMobileStrengthId = strengthIcon;
+        mMobileActivityId = activityIcon;
         mMobileTypeId = typeIcon;
         mMobileDescription = contentDescription;
         mMobileTypeDescription = typeContentDescription;
@@ -160,11 +167,16 @@ public class SignalClusterView
         if (mWifi != null) {
             mWifi.setImageDrawable(null);
         }
+        if (mWifiActivity != null) {
+            mWifiActivity.setImageDrawable(null);
+        }
 
         if (mMobile != null) {
             mMobile.setImageDrawable(null);
         }
-
+        if (mMobileActivity != null) {
+            mMobileActivity.setImageDrawable(null);
+        }
         if (mMobileType != null) {
             mMobileType.setImageDrawable(null);
         }
@@ -182,6 +194,7 @@ public class SignalClusterView
 
         if (mWifiVisible) {
             mWifi.setImageResource(mWifiStrengthId);
+            mWifiActivity.setImageResource(mWifiActivityId);
 
             mWifiGroup.setContentDescription(mWifiDescription);
             mWifiGroup.setVisibility(View.VISIBLE);
@@ -190,12 +203,13 @@ public class SignalClusterView
         }
 
         if (DEBUG) Log.d(TAG,
-                String.format("wifi: %s sig=%d",
+                String.format("wifi: %s sig=%d act=%d",
                     (mWifiVisible ? "VISIBLE" : "GONE"),
-                    mWifiStrengthId));
+                    mWifiStrengthId, mWifiActivityId));
 
         if (mMobileVisible && !mIsAirplaneMode) {
             mMobile.setImageResource(mMobileStrengthId);
+            mMobileActivity.setImageResource(mMobileActivityId);
             mMobileType.setImageResource(mMobileTypeId);
 
             mMobileGroup.setContentDescription(mMobileTypeDescription + " " + mMobileDescription);
@@ -226,9 +240,9 @@ public class SignalClusterView
         }
 
         if (DEBUG) Log.d(TAG,
-                String.format("mobile: %s sig=%d typ=%d",
+                String.format("mobile: %s sig=%d act=%d typ=%d",
                     (mMobileVisible ? "VISIBLE" : "GONE"),
-                    mMobileStrengthId, mMobileTypeId));
+                    mMobileStrengthId, mMobileActivityId, mMobileTypeId));
 
         mMobileType.setVisibility(
                 !mWifiVisible ? View.VISIBLE : View.GONE);

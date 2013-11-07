@@ -39,6 +39,12 @@
             android:layout_centerVertical="true"
             android:scaleType="center"
             />
+        <ImageView
+            android:id="@+id/wifi_inout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center|bottom"
+            />
     </FrameLayout>
     <View
         android:layout_height="6dp"
@@ -59,6 +65,12 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:scaleType="center"
+            />
+        <ImageView
+            android:id="@+id/wimax_inout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center|bottom"
             />
     </FrameLayout>
     -->
@@ -86,11 +98,18 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 />
+
             <com.android.systemui.statusbar.policy.SignalText
                 android:id="@+id/signal_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="8dp"
+                android:paddingLeft="8dp"/>
+
+            <ImageView
+                android:id="@+id/mobile_inout"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end|bottom"
                 />
         </FrameLayout>
     </FrameLayout>
