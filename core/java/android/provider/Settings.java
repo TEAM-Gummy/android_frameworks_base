@@ -1187,8 +1187,6 @@ public final class Settings {
             return getUriFor(CONTENT_URI, name);
         }
 
-        }
-
         /**
          * @hide
          * Convenience function for retrieving a single system settings value
