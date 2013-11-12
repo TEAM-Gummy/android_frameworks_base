@@ -385,7 +385,8 @@ public final class Sensor {
 
     /**
      * @return Number of events reserved for this sensor in the batch mode FIFO. This gives a
-     * guarantee on the minimum number of events that can be batched.
+     * guarantee on the minimum number of events that can be batched
+     * @hide
      */
     public int getFifoReservedEventCount() {
         return mFifoReservedEventCount;
@@ -396,6 +397,7 @@ public final class Sensor {
      * it indicates that batch mode is not supported for this sensor. If other applications
      * registered to batched sensors, the actual number of events that can be batched might be
      * smaller because the hardware FiFo will be partially used to batch the other sensors.
+     * @hide
      */
     public int getFifoMaxEventCount() {
         return mFifoMaxEventCount;
