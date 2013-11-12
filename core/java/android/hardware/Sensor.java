@@ -319,8 +319,6 @@ public final class Sensor {
     private float   mResolution;
     private float   mPower;
     private int     mMinDelay;
-    private int     mFifoReservedEventCount;
-    private int     mFifoMaxEventCount;
 
     Sensor() {
     }
@@ -381,26 +379,6 @@ public final class Sensor {
      */
     public int getMinDelay() {
         return mMinDelay;
-    }
-
-    /**
-     * @return Number of events reserved for this sensor in the batch mode FIFO. This gives a
-     * guarantee on the minimum number of events that can be batched
-     * @hide
-     */
-    public int getFifoReservedEventCount() {
-        return mFifoReservedEventCount;
-    }
-
-    /**
-     * @return Maximum number of events of this sensor that could be batched. If this value is zero
-     * it indicates that batch mode is not supported for this sensor. If other applications
-     * registered to batched sensors, the actual number of events that can be batched might be
-     * smaller because the hardware FiFo will be partially used to batch the other sensors.
-     * @hide
-     */
-    public int getFifoMaxEventCount() {
-        return mFifoMaxEventCount;
     }
 
     /** @hide */
