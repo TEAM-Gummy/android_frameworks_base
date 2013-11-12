@@ -220,9 +220,9 @@ static void nativeDestroySensorEventQueue(JNIEnv *env, jclass clazz, jint eventQ
     receiver->decStrong((void*)nativeInitSensorEventQueue);
 }
 
-static jint nativeFlushSensor(JNIEnv *env, jclass clazz, jint eventQ) {
+static jint nativeFlushSensor(JNIEnv *env, jclass clazz, jint eventQ, jint handle) {
     sp<Receiver> receiver(reinterpret_cast<Receiver *>(eventQ));
-    return receiver->getSensorEventQueue()->flush();
+    return receiver->getSensorEventQueue()->flushSensor(handle);
 }
 
 //----------------------------------------------------------------------------
@@ -255,7 +255,7 @@ static JNINativeMethod gBaseEventQueueMethods[] = {
             (void*)nativeDestroySensorEventQueue },
 
     {"nativeFlushSensor",
-            "(I)I",
+            "(II)I",
             (void*)nativeFlushSensor },
 };
 
