@@ -673,7 +673,9 @@ public abstract class SensorManager {
 
     /**
      * Registers a {@link android.hardware.SensorEventListener SensorEventListener} for the given
-     * sensor. Events are delivered in continuous mode as soon as they are available.
+     * sensor. Events are delivered in continuous mode as soon as they are available. To reduce the
+     * battery usage, use {@link #registerListener(SensorEventListener, Sensor, int, int, int,
+     *  FlushCompleteListener)}
      *
      * <p class="note"></p>
      * Note: Don't use this method with a one shot trigger sensor such as
@@ -710,6 +712,7 @@ public abstract class SensorManager {
      * @see #registerListener(SensorEventListener, Sensor, int)
      * @see #unregisterListener(SensorEventListener)
      * @see #unregisterListener(SensorEventListener, Sensor)
+     * @see #registerListener(SensorEventListener, Sensor, int, int, int, FlushCompleteListener)
      *
      * @throws IllegalArgumentException when sensor is null or a trigger sensor
      */
