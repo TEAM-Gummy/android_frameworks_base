@@ -38,9 +38,19 @@
   <java-symbol type="string" name="reboot_progress" />
   <java-symbol type="string" name="reboot_system" />
 
+<<<<<<< HEAD
+  <!-- Kill app back press -->
+  <java-symbol type="string" name="app_killed_message" />
+  <java-symbol type="integer" name="config_backKillTimeout" />
+
+  <!-- Hardware Key ReMapping -->
+  <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
   <!-- HW rotation lock -->
   <java-symbol type="string" name="toast_rotation_unlocked" />
   <java-symbol type="string" name="toast_rotation_locked" />
   <java-symbol type="bool" name="config_hasRotationLockSwitch" />
 
+=======
+>>>>>>> parent of 62c92de... Frameworks: Port hardware key rebinding
 </resources>
