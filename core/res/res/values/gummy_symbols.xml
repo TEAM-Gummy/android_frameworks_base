@@ -130,4 +130,9 @@
   <!-- Description of accessibility unlock target -->
   <java-symbol type="string" name="description_target_unlock" />
 
+  <!-- EdgeGesture service -->
+  <java-symbol type="dimen" name="edge_gesture_trigger_distance" />
+  <java-symbol type="dimen" name="edge_gesture_perpendicular_distance" />
+  <java-symbol type="dimen" name="edge_gesture_trigger_thickness" />
+
 </resources>

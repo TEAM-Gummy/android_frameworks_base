@@ -68,6 +68,7 @@ import com.android.server.media.MediaRouterService;
 import com.android.server.net.NetworkPolicyManagerService;
 import com.android.server.net.NetworkStatsService;
 import com.android.server.os.SchedulingPolicyService;
+import com.android.server.gesture.EdgeGestureService;
 import com.android.server.pm.Installer;
 import com.android.server.pm.PackageManagerService;
 import com.android.server.pm.UserManagerService;
@@ -382,6 +383,7 @@ class ServerThread {
         AssetAtlasService atlas = null;
         PrintManagerService printManager = null;
         MediaRouterService mediaRouter = null;
+        EdgeGestureService edgeGestureService = null;
 
         // Bring up services needed for UI.
         if (factoryTest != SystemServer.FACTORY_TEST_LOW_LEVEL) {
@@ -896,6 +898,14 @@ class ServerThread {
                     reportWtf("starting MediaRouterService", e);
                 }
             }
+
+            try {
+                Slog.i(TAG, "EdgeGesture service");
+                edgeGestureService = new EdgeGestureService(context, inputManager);
+                ServiceManager.addService("edgegestureservice", edgeGestureService);
+            } catch (Throwable e) {
+                Slog.e(TAG, "Failure starting EdgeGesture service", e);
+            }
         }
 
         // Before things start rolling, be sure we have decided whether
@@ -989,6 +999,14 @@ class ServerThread {
         filter.addCategory(Intent.CATEGORY_THEME_PACKAGE_INSTALLED_STATE_CHANGE);
         filter.addDataScheme("package");
         context.registerReceiver(new AppsLaunchFailureReceiver(), filter);
+
+        if (edgeGestureService != null) {
+            try {
+                edgeGestureService.systemReady();
+            } catch (Throwable e) {
+                reportWtf("making EdgeGesture service ready", e);
+            }
+        }
 
         // These are needed to propagate to the runnable below.
         final Context contextF = context;
