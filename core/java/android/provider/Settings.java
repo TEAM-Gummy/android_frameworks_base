@@ -2832,39 +2832,6 @@ public final class Settings {
         public static final String SYSTEM_POWER_CRT_MODE = "system_power_crt_mode";
 
         /**
-          * Volume keys control cursor in text fields (default is 0)
-          * 0 - Disabled
-          * 1 - Volume up/down moves cursor left/right
-          * 2 - Volume up/down moves cursor right/left
-          * @hide
-          */
-         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
-
-        /**
-         * Override and forcefully disable the fullscreen keyboard
-         * @hide
-         */
-        public static final String DISABLE_FULLSCREEN_KEYBOARD = "disable_fullscreen_keyboard";
-
-        /**
-         * Whether to show the IME switcher in the status bar
-         * @hide
-         */
-        public static final String STATUS_BAR_IME_SWITCHER = "status_bar_ime_switcher";
-
-        /**
-         * Automatic keyboard rotation timeout.  0 to disable completely.
-         * @hide
-         */
-        public static final String KEYBOARD_ROTATION_TIMEOUT = "keyboard_rotation_timeout";
-
-        /**
-         * Forces formal text input.  1 to replace emoticon key with enter key.
-         * @hide
-         */
-        public static final String FORMAL_TEXT_INPUT = "formal_text_input";
-
-        /**
          * Display style of the status bar battery information
          * default: 0
          * @hide
@@ -2940,6 +2907,8 @@ public final class Settings {
         public static final String POWER_UI_LOW_BATTERY_WARNING_POLICY = "power_ui_low_battery_warning_policy";
 
         /**
+=======
+>>>>>>> parent of 1bb150f... fb: add back all keyboard IME features back (1/2)
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
