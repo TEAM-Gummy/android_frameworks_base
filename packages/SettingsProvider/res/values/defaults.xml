@@ -177,4 +177,18 @@
          0 means no timeout; battery sounds will always play
          >0 is milliseconds of screen-off time after which battery sounds will not play -->
     <integer name="def_low_battery_sound_timeout">0</integer>
+
+    <!-- Default for Settings.System.STATUS_BAR_BATTERY.
+    0. Icon
+    1. Percentage
+    2. Icon with Percentage
+    3. Circle
+    4. Circle with Percentage 
+    5. Dotted Circle
+    6. Dotted Circle with Percentage -->
+    <integer name="def_battery_style">0</integer>
+
+    <!-- Default setting for menu overflow button -->
+    <integer name="def_menu_overflow">1</integer>
+
 </resources>
