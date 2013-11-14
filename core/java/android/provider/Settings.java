@@ -2907,8 +2907,6 @@ public final class Settings {
         public static final String POWER_UI_LOW_BATTERY_WARNING_POLICY = "power_ui_low_battery_warning_policy";
 
         /**
-=======
->>>>>>> parent of 1bb150f... fb: add back all keyboard IME features back (1/2)
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
