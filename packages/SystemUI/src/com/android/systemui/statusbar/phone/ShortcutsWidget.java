@@ -21,7 +21,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.provider.Settings;
 import android.net.Uri;
@@ -78,7 +77,6 @@ public class ShortcutsWidget extends LinearLayout {
 
     private ArrayList<ButtonConfig> mButtonsConfig;
 
-    private ShortcutsSettingsObserver mObserver = null;
     private View.OnClickListener mExternalClickListener;
     private View.OnLongClickListener mExternalLongClickListener;
 
@@ -105,23 +103,8 @@ public class ShortcutsWidget extends LinearLayout {
 
     }
 
-    private class ShortcutsSettingsObserver extends ContentObserver {
-        public ShortcutsSettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        public void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-
-        }
-
-        public void unobserve() {
-            mContext.getContentResolver().unregisterContentObserver(this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-        }
+    public boolean hasAppBinded() {
+        return mActive;
     }
 
     private void modifyShortcutLayout() {
@@ -159,10 +142,6 @@ public class ShortcutsWidget extends LinearLayout {
 
     public void setupShortcuts() {
         destroyShortcuts();
-
-        mObserver = new ShortcutsSettingsObserver(mHandler);
-        mObserver.observe();
-
         recreateShortcutLayout();
     }
 
@@ -170,10 +149,6 @@ public class ShortcutsWidget extends LinearLayout {
         try {
             removeAllViews();
         } catch (Exception e) {
-        }
-
-        if (mObserver != null) {
-            mObserver.unobserve();
         }
     }
 
