@@ -431,7 +431,7 @@ public class AudioService extends IAudioService.Stub {
     final int mFixedVolumeDevices = AudioSystem.DEVICE_OUT_AUX_DIGITAL |
             AudioSystem.DEVICE_OUT_DGTL_DOCK_HEADSET |
             AudioSystem.DEVICE_OUT_ANLG_DOCK_HEADSET |
-            AudioSystem.DEVICE_OUT_ALL_USB;
+            AudioSystem.DEVICE_OUT_ALL_USB |
             AudioSystem.DEVICE_OUT_PROXY; // use fixed volume on proxy device(WiFi display)
 
     // TODO merge orientation and rotation
