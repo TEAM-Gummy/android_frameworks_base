@@ -125,4 +125,9 @@
   <!-- Wi-Fi AP Notification -->
   <java-symbol type="string" name="notify_turn_tethering_off_title" />
 
+  <!-- Description of accessibility direction for targets -->
+  <java-symbol type="string" name="accessibility_target_direction" />
+  <!-- Description of accessibility unlock target -->
+  <java-symbol type="string" name="description_target_unlock" />
+
 </resources>
