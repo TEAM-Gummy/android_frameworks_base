@@ -21,9 +21,9 @@ import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
@@ -64,8 +64,7 @@ public final class RotationPolicy {
      * settings.
      */
     public static boolean isRotationLockToggleSupported(Context context) {
-        return isRotationSupported(context)
-                && context.getResources().getConfiguration().smallestScreenWidthDp >= 600;
+        return context.getResources().getConfiguration().smallestScreenWidthDp >= 600;
     }
 
     /**

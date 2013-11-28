@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.STATUS_BAR_SERVICE" />
     <uses-permission android:name="android.permission.STATUS_BAR" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.REMOTE_AUDIO_PLAYBACK" />
 
     <uses-permission android:name="android.permission.MANAGE_USERS" />
@@ -65,14 +66,23 @@
     <uses-permission android:name="android.permission.READ_DREAM_STATE" />
     <uses-permission android:name="android.permission.WRITE_DREAM_STATE" />
 
-    <!-- Alarm clocks -->
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
-
     <!-- Keyguard -->
     <uses-permission android:name="android.permission.CONTROL_KEYGUARD" />
 
     <!-- Kill app permission -->
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
+
+    <!-- Secure Screenshot -->
+    <protected-broadcast android:name="android.permission.SCREENSHOT" />
+    <protected-broadcast android:name="android.intent.action.SCREENSHOT" />
+
+    <!-- Quick Settings --> 
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+
+    <permission android:name="android.permission.SCREENSHOT"
+                android:protectionLevel="signatureOrSystem"
+                android:description="@string/permdesc_screenshot"
+                android:label="@string/permlab_screenshot" />
 
     <application
         android:persistent="true"
@@ -92,11 +102,14 @@
             android:exported="true"
             />
 
-        <!-- started from PhoneWindowManager
-             TODO: Should have an android:permission attribute -->
         <service android:name=".screenshot.TakeScreenshotService"
             android:process=":screenshot"
-            android:exported="false" />
+            android:permission="android.permission.SCREENSHOT"
+            android:exported="false">
+            <intent-filter>
+               <android name="android.intent.action.SCREENSHOT"/>
+            </intent-filter>
+        </service>
 
         <service android:name=".LoadAverageService"
                 android:exported="true" />

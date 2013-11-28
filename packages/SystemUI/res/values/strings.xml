@@ -20,6 +20,11 @@
     <!-- Name of the status bar as seen in the applications info settings page. [CHAR LIMIT=12] -->
     <string name="app_label">System UI</string>
 
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_screenshot">Capture screenshot</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_screenshot">Allows the app to cature a screenshot. This is protected by SystemUI.</string>
+
     <!-- The text for the button in the notification window-shade that clears
          all of the currently visible notifications. [CHAR LIMIT=10]-->
     <string name="status_bar_clear_all_button">Clear</string>
@@ -447,67 +452,7 @@
     <!-- Textual description of Ethernet connections -->
     <string name="ethernet_label">Ethernet</string>
 
-    <!-- QuickSettings: Airplane mode [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_airplane_mode_label">Airplane mode</string>
-    <!-- QuickSettings: Battery Charging [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_battery_charging_label">Charging, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
-    <!-- QuickSettings: Battery Charged [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_battery_charged_label">Charged</string>
-    <!-- QuickSettings: Bluetooth [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_bluetooth_label">Bluetooth</string>
-    <!-- QuickSettings: Bluetooth (Multiple) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_bluetooth_multiple_devices_label">Bluetooth (<xliff:g id="number">%d</xliff:g> Devices)</string>
-    <!-- QuickSettings: Bluetooth (Off) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_bluetooth_off_label">Bluetooth Off</string>
-    <!-- QuickSettings: Brightness [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_brightness_label">Brightness</string>
-    <!-- QuickSettings: Rotation Unlocked [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_rotation_unlocked_label">Auto Rotate</string>
-    <!-- QuickSettings: Rotation Locked [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_rotation_locked_label">Rotation Locked</string>
-    <!-- QuickSettings: IME [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_ime_label">Input Method</string>
-    <!-- QuickSettings: Location [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_label">Location</string>
-    <!-- QuickSettings: Location (Off) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_off_label">Location Off</string>
-    <!-- QuickSettings: Media device [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_media_device_label">Media device</string>
-    <!-- QuickSettings: RSSI [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_rssi_label">RSSI</string>
-    <!-- QuickSettings: RSSI (No network) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_rssi_emergency_only">Emergency Calls Only</string>
-    <!-- QuickSettings: Settings [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_settings_label">Settings</string>
-    <!-- QuickSettings: Time [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_time_label">Time</string>
-    <!-- QuickSettings: User [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_user_label">Me</string>
-    <!-- QuickSettings: Wifi [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_wifi_label">Wi-Fi</string>
-    <!-- QuickSettings: Wifi (Not connected) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_wifi_not_connected">Not Connected</string>
-    <!-- QuickSettings: Wifi (No network) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_wifi_no_network">No Network</string>
-    <!-- QuickSettings: Wifi (Off) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_wifi_off_label">Wi-Fi Off</string>
-    <!-- QuickSettings: Wifi display [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_wifi_display_label">Wi-Fi Display</string>
-    <!-- QuickSettings: Wifi display [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_wifi_display_no_connection_label">Wireless Display</string>
-    <!-- QuickSettings: Brightness dialog title [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_brightness_dialog_title">Brightness</string>
-    <!-- QuickSettings: Brightness dialog auto brightness button [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_brightness_dialog_auto_brightness_label">AUTO</string>
-
-
     <!-- Glyph to be overlaid atop the battery when the level is extremely low. Do not translate. -->
     <string name="battery_meter_very_low_overlay_symbol">!</string>
-
-    <!-- Shows up when there is a user SSL CA Cert installed on the
-         device.  Indicates to the user that SSL traffic can be intercepted.
-         If the text fits on one line (~14 chars), it should start with a
-         linebreak to position it correctly.  [CHAR LIMIT=45] -->
-    <string name="ssl_ca_cert_warning">Network may\nbe monitored</string>
 
 </resources>

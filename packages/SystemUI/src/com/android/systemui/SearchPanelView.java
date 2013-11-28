@@ -392,6 +392,12 @@ public class SearchPanelView extends FrameLayout implements
         setDrawables();
     }
 
+    public int screenLayout() {
+        final int screenSize = Resources.getSystem().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK;
+        return screenSize;
+    }
+
     private boolean isScreenPortrait() {
         return mResources.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }

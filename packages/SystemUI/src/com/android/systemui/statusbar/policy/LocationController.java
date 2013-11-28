@@ -59,6 +59,15 @@ public class LocationController extends BroadcastReceiver {
     private ArrayList<LocationSettingsChangeCallback> mSettingsChangeCallbacks =
             new ArrayList<LocationSettingsChangeCallback>();
 
+    private ArrayList<LocationGpsStateChangeCallback> mChangeCallbacks =
+            new ArrayList<LocationGpsStateChangeCallback>();
+
+    private ContentObserver mGpsSettingObserver;
+
+    public interface LocationGpsStateChangeCallback {
+        public void onLocationGpsStateChanged(boolean inUse, boolean hasFix, String description);
+    }
+
     /**
      * A callback for change in location settings (the user has enabled/disabled location).
      */
@@ -70,6 +79,10 @@ public class LocationController extends BroadcastReceiver {
          *                        is enabled in settings.
          */
         public void onLocationSettingsChanged(boolean locationEnabled);
+    }
+
+    public void addStateChangedCallback(LocationGpsStateChangeCallback cb) {
+        mChangeCallbacks.add(cb);
     }
 
     public LocationController(Context context) {
@@ -90,15 +103,26 @@ public class LocationController extends BroadcastReceiver {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
-                if (LocationManager.MODE_CHANGED_ACTION.equals(action)) {
-                    locationSettingsChanged();
-                }
+                locationSettingsChanged();
             }
         }, UserHandle.ALL, intentFilter, null, new Handler());
 
         // Examine the current location state and initialize the status view.
         updateActiveLocationRequests();
         refreshViews();
+
+        mGpsSettingObserver = new ContentObserver(new Handler()) {
+            @Override
+            public void onChange(boolean selfChange) {
+                boolean visible = Settings.Secure.isLocationProviderEnabled(
+                        mContext.getContentResolver(), LocationManager.GPS_PROVIDER);
+                for (LocationGpsStateChangeCallback cb : mChangeCallbacks) {
+                    cb.onLocationGpsStateChanged(visible, false, null);
+                }
+            }
+        };
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.Secure.LOCATION_PROVIDERS_ALLOWED), false, mGpsSettingObserver);
     }
 
     /**
@@ -121,9 +145,6 @@ public class LocationController extends BroadcastReceiver {
      */
     public boolean setLocationEnabled(boolean enabled) {
         int currentUserId = ActivityManager.getCurrentUser();
-        if (isUserLocationRestricted(currentUserId)) {
-            return false;
-        }
         final ContentResolver cr = mContext.getContentResolver();
         // When enabling location, a user consent dialog will pop up, and the
         // setting won't be fully enabled until the user accepts the agreement.
@@ -145,16 +166,6 @@ public class LocationController extends BroadcastReceiver {
         int mode = Settings.Secure.getIntForUser(resolver, Settings.Secure.LOCATION_MODE,
                 Settings.Secure.LOCATION_MODE_OFF, ActivityManager.getCurrentUser());
         return mode != Settings.Secure.LOCATION_MODE_OFF;
-    }
-
-    /**
-     * Returns true if the current user is restricted from using location.
-     */
-    private boolean isUserLocationRestricted(int userId) {
-        final UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-        return um.hasUserRestriction(
-                UserManager.DISALLOW_SHARE_LOCATION,
-                new UserHandle(userId));
     }
 
     /**

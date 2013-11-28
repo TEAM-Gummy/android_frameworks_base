@@ -347,18 +347,7 @@ public class UserManager {
      * @param restrictionKey the string key representing the restriction
      */
     public boolean hasUserRestriction(String restrictionKey) {
-        return hasUserRestriction(restrictionKey, Process.myUserHandle());
-    }
-
-    /**
-     * @hide
-     * Returns whether the given user has been disallowed from performing certain actions
-     * or setting certain settings.
-     * @param restrictionKey the string key representing the restriction
-     * @param userHandle the UserHandle of the user for whom to retrieve the restrictions.
-     */
-    public boolean hasUserRestriction(String restrictionKey, UserHandle userHandle) {
-        return getUserRestrictions(userHandle).getBoolean(restrictionKey, false);
+        return getUserRestrictions().getBoolean(restrictionKey, false);
     }
 
     /**

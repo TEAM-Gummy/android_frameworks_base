@@ -29,16 +29,10 @@ import android.view.accessibility.AccessibilityEvent;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.GestureRecorder;
-import com.android.systemui.statusbar.policy.BatteryController;
-import com.android.systemui.statusbar.policy.BluetoothController;
-import com.android.systemui.statusbar.policy.LocationController;
-import com.android.systemui.statusbar.policy.NetworkController;
-import com.android.systemui.statusbar.policy.RotationLockController;
 
 public class SettingsPanelView extends PanelView {
     public static final boolean DEBUG_GESTURES = true;
 
-    private QuickSettings mQS;
     private QuickSettingsContainerView mQSContainer;
 
     Drawable mHandleBar;
@@ -61,38 +55,7 @@ public class SettingsPanelView extends PanelView {
         mHandleView = findViewById(R.id.handle);
     }
 
-    public void setQuickSettings(QuickSettings qs) {
-        mQS = qs;
-    }
-
-    @Override
-    public void setBar(PanelBar panelBar) {
-        super.setBar(panelBar);
-
-        if (mQS != null) {
-            mQS.setBar(panelBar);
-        }
-    }
-
-    public void setImeWindowStatus(boolean visible) {
-        if (mQS != null) {
-            mQS.setImeWindowStatus(visible);
-        }
-    }
-
-    public void setup(NetworkController networkController, BluetoothController bluetoothController,
-            BatteryController batteryController, LocationController locationController,
-            RotationLockController rotationLockController) {
-        if (mQS != null) {
-            mQS.setup(networkController, bluetoothController, batteryController,
-                    locationController, rotationLockController);
-        }
-    }
-
     void updateResources() {
-        if (mQS != null) {
-            mQS.updateResources();
-        }
         if (mQSContainer != null) {
             mQSContainer.updateResources();
         }
@@ -108,12 +71,6 @@ public class SettingsPanelView extends PanelView {
                 "settings,v=" + vel);
         }
         super.fling(vel, always);
-    }
-
-    public void setService(PhoneStatusBar phoneStatusBar) {
-        if (mQS != null) {
-            mQS.setService(phoneStatusBar);
-        }
     }
 
     @Override

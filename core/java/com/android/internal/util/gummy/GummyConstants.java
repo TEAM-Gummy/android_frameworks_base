@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 AOKP by Mike Wilson - Zaphod-Beeblebrox && Steve Spear - Stevespear426
+ * Copyright (C) 2013 Gummy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.android.internal.util.gummy;
 
-import com.android.internal.R;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -25,9 +24,30 @@ import android.text.TextUtils;
 
 public class GummyConstants {
 
+    public static final String ASSIST_ICON_METADATA_NAME = "com.android.systemui.action_assist_icon";
+
+    /* Adding Actions here will automatically add them to NavBar actions in Gummy Settings.
+     * **app** must remain the last action.  Add other actions before that final action.
+     */
     public static enum GummyConstant {
+        ACTION_HOME          { @Override public String value() { return "**home**";}},
+        ACTION_BACK          { @Override public String value() { return "**back**";}},
+        ACTION_MENU          { @Override public String value() { return "**menu**";}},
+        ACTION_SEARCH        { @Override public String value() { return "**search**";}},
+        ACTION_RECENTS       { @Override public String value() { return "**recents**";}},
+        ACTION_ASSIST        { @Override public String value() { return "**assist**";}},
+        ACTION_POWER         { @Override public String value() { return "**power**";}},
+        ACTION_NOTIFICATIONS { @Override public String value() { return "**notifications**";}},
         ACTION_CLOCKOPTIONS  { @Override public String value() { return "**clockoptions**";}},
         ACTION_VOICEASSIST   { @Override public String value() { return "**voiceassist**";}},
+        ACTION_LAST_APP      { @Override public String value() { return "**lastapp**";}},
+        ACTION_RECENTS_GB    { @Override public String value() { return "**recentsgb**";}},
+        ACTION_TORCH         { @Override public String value() { return "**torch**";}},
+        ACTION_IME           { @Override public String value() { return "**ime**";}},
+        ACTION_KILL          { @Override public String value() { return "**kill**";}},
+        ACTION_SILENT        { @Override public String value() { return "**ring_silent**";}},
+        ACTION_VIB           { @Override public String value() { return "**ring_vib**";}},
+        ACTION_SILENT_VIB    { @Override public String value() { return "**ring_vib_silent**";}},
         ACTION_EVENT         { @Override public String value() { return "**event**";}},
         ACTION_TODAY         { @Override public String value() { return "**today**";}},
         ACTION_ALARM         { @Override public String value() { return "**alarm**";}},
@@ -62,6 +82,32 @@ public class GummyConstants {
         return values;
     }
 
+    public static Drawable getSystemUIDrawable(Context mContext, String DrawableID) {
+        Resources res = mContext.getResources();
+        PackageManager pm = mContext.getPackageManager();
+        int resId = 0;
+        Drawable d = res.getDrawable(com.android.internal.R.drawable.ic_action_empty);
+        if (pm != null) {
+            Resources mSystemUiResources = null;
+            try {
+                mSystemUiResources = pm.getResourcesForApplication("com.android.systemui");
+            } catch (Exception e) {
+            }
+
+            if (mSystemUiResources != null && DrawableID != null) {
+                resId = mSystemUiResources.getIdentifier(DrawableID, null, null);
+            }
+            if (resId > 0) {
+                try {
+                    d = mSystemUiResources.getDrawable(resId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return d;
+    }
+
     public static String getProperName(Context context, String actionstring) {
         // Will return a string for the associated action, but will need the caller's context to get resources.
         Resources res = context.getResources();
@@ -71,11 +117,62 @@ public class GummyConstants {
         }
         GummyConstant action = fromString(actionstring);
         switch (action) {
+            case ACTION_HOME :
+                value = res.getString(com.android.internal.R.string.action_home);
+                break;
+            case ACTION_BACK:
+                value = res.getString(com.android.internal.R.string.action_back);
+                break;
+            case ACTION_RECENTS:
+                value = res.getString(com.android.internal.R.string.action_recents);
+                break;
+            case ACTION_RECENTS_GB:
+                value = res.getString(com.android.internal.R.string.action_recents_gb);
+                break;
+            case ACTION_SEARCH:
+                value = res.getString(com.android.internal.R.string.action_search);
+                break;
+            /*case ACTION_SCREENSHOT:
+                value = res.getString(com.android.internal.R.string.action_screenshot);
+                break;*/
+            case ACTION_MENU:
+                value = res.getString(com.android.internal.R.string.action_menu);
+                break;
+            case ACTION_IME:
+                value = res.getString(com.android.internal.R.string.action_ime);
+                break;
+            case ACTION_KILL:
+                value = res.getString(com.android.internal.R.string.action_kill);
+                break;
+            case ACTION_LAST_APP:
+                value = res.getString(com.android.internal.R.string.action_lastapp);
+                break;
+            case ACTION_POWER:
+                value = res.getString(com.android.internal.R.string.action_power);
+                break;
+            case ACTION_NOTIFICATIONS:
+                value = res.getString(com.android.internal.R.string.action_notifications);
+                break;
+            case ACTION_ASSIST:
+                value = res.getString(com.android.internal.R.string.action_assist);
+                break;
             case ACTION_CLOCKOPTIONS:
                 value = res.getString(com.android.internal.R.string.action_clockoptions);
                 break;
             case ACTION_VOICEASSIST:
                 value = res.getString(com.android.internal.R.string.action_voiceassist);
+                break;
+            case ACTION_TORCH:
+                value = res.getString(com.android.internal.R.string.action_torch);
+                break;
+            case ACTION_SILENT:
+                value = res.getString(com.android.internal.R.string.action_silent);
+                break;
+            case ACTION_VIB:
+                value = res.getString(com.android.internal.R.string.action_vib);
+                break;
+            case ACTION_SILENT_VIB:
+                value = res.getString(com.android.internal.R.string.action_silent_vib);
                 break;
             case ACTION_EVENT:
                 value = res.getString(com.android.internal.R.string.action_event);
@@ -92,6 +189,88 @@ public class GummyConstants {
             case ACTION_NULL:
             default:
                 value = res.getString(com.android.internal.R.string.action_null);
+                break;
+
+        }
+        return value;
+    }
+    public static Drawable getActionIcon(Context context,String actionstring) {
+        // Will return a Drawable for the associated action, but will need the caller's context to get resources.
+        Resources res = context.getResources();
+        Drawable value = null;
+        GummyConstant action = fromString(actionstring);
+        switch (action) {
+            case ACTION_HOME :
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_home");
+                break;
+            case ACTION_BACK:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_back");
+                break;
+            case ACTION_RECENTS:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_recent");
+                break;
+            case ACTION_RECENTS_GB:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_recent_gb");
+                break;
+            case ACTION_SEARCH:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_search");
+                break;
+            /*case ACTION_SCREENSHOT:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_screenshot");
+                break;*/
+            case ACTION_MENU:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_menu_big");
+                break;
+            case ACTION_IME:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_ime_switcher");
+                break;
+            case ACTION_KILL:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_killtask");
+                break;
+            case ACTION_LAST_APP:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_lastapp");
+                break;
+            case ACTION_POWER:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_power");
+                break;
+            case ACTION_NOTIFICATIONS:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_notifications");
+                break;
+            case ACTION_ASSIST:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_assist");
+                break;
+            case ACTION_CLOCKOPTIONS:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_clockoptions");
+                break;
+            case ACTION_VOICEASSIST:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_voiceassist");
+                break;
+            case ACTION_TORCH:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_torch");
+                break;
+            case ACTION_SILENT:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_silent");
+                break;
+            case ACTION_VIB:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_vib");
+                break;
+            case ACTION_SILENT_VIB:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_silent_vib");
+                break;
+            case ACTION_EVENT:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_event");
+                break;
+            case ACTION_TODAY:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_today");
+                break;
+            case ACTION_ALARM:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_alarm");
+                break;
+            case ACTION_APP: // APP doesn't really have an icon - it should look up
+                        //the package icon - we'll return the 'null' on just in case
+            case ACTION_NULL:
+            default:
+                value = getSystemUIDrawable(context, "com.android.systemui:drawable/ic_sysbar_null");
                 break;
 
         }
