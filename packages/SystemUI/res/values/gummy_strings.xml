@@ -25,4 +25,126 @@
     <!-- Kill app toast -->
     <string name="app_killed_message">App Killed</string>
 
+    <!-- QuickSettings: Airplane mode [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_airplane_mode_label">Airplane mode</string>
+    <!-- QuickSettings: Battery Charging [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_battery_charging_label">Charging, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
+    <!-- QuickSettings: Battery Charged [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_battery_charged_label">Charged</string>
+    <!-- QuickSettings: Bluetooth [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_bluetooth_label">Bluetooth</string>
+    <!-- QuickSettings: Bluetooth (Multiple) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_bluetooth_multiple_devices_label">Bluetooth (<xliff:g id="number">%d</xliff:g> Devices)</string>
+    <!-- QuickSettings: Bluetooth (Off) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_bluetooth_off_label">Bluetooth Off</string>
+    <!-- QuickSettings: Brightness [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_brightness_label">Brightness</string>
+    <!-- QuickSettings: Rotation Unlocked [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_rotation_unlocked_label">Auto Rotate</string>
+    <!-- QuickSettings: Rotation Locked [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_rotation_locked_label">Rotation Locked</string>
+    <!-- QuickSettings: IME [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_ime_label">Input Method</string>
+    <!-- QuickSettings: Location [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_location_label">Location in use</string>
+    <!-- QuickSettings: Media device [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_media_device_label">Media device</string>
+    <!-- QuickSettings: RSSI [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_rssi_label">RSSI</string>
+    <!-- QuickSettings: RSSI (No network) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_rssi_emergency_only">Emergency Calls Only</string>
+    <!-- QuickSettings: Settings [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_settings_label">Settings</string>
+    <!-- QuickSettings: Time [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_time_label">Time</string>
+    <!-- QuickSettings: User [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_user_label">Me</string>
+    <!-- QuickSettings: Wifi [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_wifi_label">Wi-Fi</string>
+    <!-- QuickSettings: Wifi (Not connected) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_wifi_not_connected">Not Connected</string>
+    <!-- QuickSettings: Wifi (No network) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_wifi_no_network">No Network</string>
+    <!-- QuickSettings: Wifi (Off) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_wifi_off_label">Wi-Fi Off</string>
+    <!-- QuickSettings: Wifi display [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_wifi_display_label">Wi-Fi Display</string>
+    <!-- QuickSettings: Wifi display [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_wifi_display_no_connection_label">Wireless Display</string>
+    <!-- QuickSettings: Brightness dialog title [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_brightness_dialog_title">Brightness</string>
+    <!-- QuickSettings: Brightness dialog auto brightness button [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_brightness_dialog_auto_brightness_label">AUTO</string>
+
+    <!--  Target/Action Strings -->
+    <string name="shortcut_label">Gummy Actions</string>
+    <string name="action_home">Home</string>
+    <string name="action_back">Back</string>
+    <string name="action_recents">Recents</string>
+    <string name="action_screenshot">Screenshot</string>
+    <string name="action_menu">Menu</string>
+    <string name="action_ime">Open IME Switcher</string>
+    <string name="action_kill">Kill task</string>
+    <string name="action_power">Power</string>
+    <string name="action_search">Search</string>
+    <string name="action_notifications">Notifications</string>
+    <string name="action_lastapp">Last App</string>
+    <string name="action_none">Empty</string>
+    <string name="quick_settings_navbar_hide_on_label">NavBar Hide On</string>
+    <string name="quick_settings_navbar_hide_off_label">NavBAr Hide Off</string>
+
+    <string name="widgets">Widgets</string>
+    <string name="toggle_navbar">NavBar - Toggle</string>
+    <string name="toggle_statusbar">StatusBar - Toggle</string>
+    <string name="toggle_widgets">Widgets - Toggle</string>
+    <string name="toggle_ring_vib">Ring/Vib - Toggle</string>
+    <string name="toggle_ring_silent">Ring/Silent - Togle</string>
+    <string name="toggle_ring_vib_silent">Ring/Vib/Silent - Toggle</string>
+    <string name="recents_kill_all_button_text">Kill all</string>
+    <string name="screenshot_toast">Screenshot in %1$d seconds</string>
+
+    <!--  Quick Settings -->
+    <string name="quick_settings_vibrate_on_label">Vibrate On</string>
+    <string name="quick_settings_vibrate_off_label">Vibrate Off</string>
+    <string name="quick_settings_silent_on_label">Silent On</string>
+    <string name="quick_settings_silent_off_label">Silent Off</string>
+    <string name="quick_settings_fcharge_on_label">F-Charge On</string>
+    <string name="quick_settings_fcharge_off_label">F-Charge Off</string>
+    <string name="quick_settings_torch_on_label">Torch On</string>
+    <string name="quick_settings_torch_off_label">Torch Off</string>
+    <string name="quick_settings_nfc_on_label">NFC On</string>
+    <string name="quick_settings_nfc_off_label">NFC Off</string>
+    <string name="quick_settings_wifi_tether_on_label">Wifi Tether On</string>
+    <string name="quick_settings_wifi_tether_off_label">Wifi Tether Off</string>
+    <string name="quick_settings_bt_tether_on_label">BT Tether On</string>
+    <string name="quick_settings_bt_tether_off_label">BT Tether Off</string>
+    <string name="quick_settings_usb_tether_on_label">USB Tether On</string>
+    <string name="quick_settings_usb_tether_off_label">USB Tether Off</string>
+    <string name="quick_settings_sync_on_label">Sync On</string>
+    <string name="quick_settings_sync_off_label">Sync Off</string>
+    <string name="quick_settings_twog_on_label">2g On</string>
+    <string name="quick_settings_twog_off_label">2g Off</string>
+    <string name="quick_settings_lte_on_label">LTE On</string>
+    <string name="quick_settings_lte_off_label">LTE Off</string>
+    <string name="quick_settings_gps_on_label">GPS On</string>
+    <string name="quick_settings_gps_off_label">GPS Off</string>
+    <string name="quick_settings_data_on_label">Data On</string>
+    <string name="quick_settings_data_off_label">Data Off</string>
+    <string name="quick_settings_quiet_hours_on_label">QuietHours On</string>
+    <string name="quick_settings_quiet_hours_off_label">QuietHours Off</string>
+    <string name="quick_settings_sound_on">Sound on</string>
+    <string name="quick_settings_statusbar_on_label">StatusBar On</string>
+    <string name="quick_settings_statusbar_off_label">StatusBar Off</string>
+    <string name="quick_settings_screenshot">Screenshot</string>
+    <string name="quick_settings_recording">Recording...</string>
+    <string name="quick_settings_recordingcap">Recording Captured</string>
+    <string name="quick_settings_playing">Playing...</string>
+    <string name="quick_settings_quickrecord">Quick Record</string>
+    <string name="quick_settings_nofile">Long Press To Record</string>
+    <string name="quick_settings_sleep">Sleep</string>
+    <string name="quick_settings_stayawake_on">Stay Awake On</string>
+    <string name="quick_settings_stayawake_off">Stay Awake Off</string>
+    <string name="quick_settings_adb_on"><xliff:g id="ip" example="192.168.1.5">%s</xliff:g></string>
+    <string name="quick_settings_adb_off">Wireless ADB Off</string>
+
 </resources>
