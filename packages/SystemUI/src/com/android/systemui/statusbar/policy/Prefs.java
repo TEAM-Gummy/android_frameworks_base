@@ -22,11 +22,21 @@ import android.content.SharedPreferences;
 public class Prefs {
     private static final String SHARED_PREFS_NAME = "status_bar";
 
+    public static final String LAST_FCHARGE_STATE = "last_fcharge_state";
+
     public static SharedPreferences read(Context context) {
         return context.getSharedPreferences(Prefs.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     public static SharedPreferences.Editor edit(Context context) {
         return context.getSharedPreferences(Prefs.SHARED_PREFS_NAME, Context.MODE_PRIVATE).edit();
+    }
+
+    public static void setLastFastChargeState(Context context, boolean enabled) {
+        edit(context).putBoolean(LAST_FCHARGE_STATE, enabled).commit();
+    }
+
+    public static boolean getLastFastChargeState(Context context) {
+        return read(context).getBoolean(LAST_FCHARGE_STATE, false);
     }
 }

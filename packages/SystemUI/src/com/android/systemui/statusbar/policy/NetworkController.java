@@ -165,11 +165,9 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
 
     public interface NetworkSignalChangedCallback {
         void onWifiSignalChanged(boolean enabled, int wifiSignalIconId,
-                boolean activityIn, boolean activityOut,
-                String wifiSignalContentDescriptionId, String description);
+                String wifitSignalContentDescriptionId, String description);
         void onMobileDataSignalChanged(boolean enabled, int mobileSignalIconId,
                 String mobileSignalContentDescriptionId, int dataTypeIconId,
-                boolean activityIn, boolean activityOut,
                 String dataTypeContentDescriptionId, String description);
         void onAirplaneModeChanged(boolean enabled);
     }
@@ -311,38 +309,27 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         cluster.setIsAirplaneMode(mAirplaneMode, mAirplaneIconId);
     }
 
-    void notifySignalsChangedCallbacks(NetworkSignalChangedCallback cb) {
+    public void notifySignalsChangedCallbacks(NetworkSignalChangedCallback cb) {
         // only show wifi in the cluster if connected or if wifi-only
         boolean wifiEnabled = mWifiEnabled && (mWifiConnected || !mHasMobileDataFeature);
         String wifiDesc = wifiEnabled ?
                 mWifiSsid : null;
-        boolean wifiIn = wifiEnabled && mWifiSsid != null
-                && (mWifiActivity == WifiManager.DATA_ACTIVITY_INOUT
-                || mWifiActivity == WifiManager.DATA_ACTIVITY_IN);
-        boolean wifiOut = wifiEnabled && mWifiSsid != null
-                && (mWifiActivity == WifiManager.DATA_ACTIVITY_INOUT
-                || mWifiActivity == WifiManager.DATA_ACTIVITY_OUT);
-        cb.onWifiSignalChanged(wifiEnabled, mQSWifiIconId, wifiIn, wifiOut,
-                mContentDescriptionWifi, wifiDesc);
+        cb.onWifiSignalChanged(wifiEnabled, mQSWifiIconId, mContentDescriptionWifi, wifiDesc);
 
-        boolean mobileIn = mDataConnected && (mDataActivity == TelephonyManager.DATA_ACTIVITY_INOUT
-                || mDataActivity == TelephonyManager.DATA_ACTIVITY_IN);
-        boolean mobileOut = mDataConnected && (mDataActivity == TelephonyManager.DATA_ACTIVITY_INOUT
-                || mDataActivity == TelephonyManager.DATA_ACTIVITY_OUT);
         if (isEmergencyOnly()) {
             cb.onMobileDataSignalChanged(false, mQSPhoneSignalIconId,
-                    mContentDescriptionPhoneSignal, mQSDataTypeIconId, mobileIn, mobileOut,
-                    mContentDescriptionDataType, null);
+                    mContentDescriptionPhoneSignal, mQSDataTypeIconId, mContentDescriptionDataType,
+                    null);
         } else {
             if (mIsWimaxEnabled && mWimaxConnected) {
                 // Wimax is special
                 cb.onMobileDataSignalChanged(true, mQSPhoneSignalIconId,
-                        mContentDescriptionPhoneSignal, mQSDataTypeIconId, mobileIn, mobileOut,
+                        mContentDescriptionPhoneSignal, mQSDataTypeIconId,
                         mContentDescriptionDataType, mNetworkName);
             } else {
                 // Normal mobile data
                 cb.onMobileDataSignalChanged(mHasMobileDataFeature, mQSPhoneSignalIconId,
-                        mContentDescriptionPhoneSignal, mQSDataTypeIconId, mobileIn, mobileOut,
+                        mContentDescriptionPhoneSignal, mQSDataTypeIconId,
                         mContentDescriptionDataType, mNetworkName);
             }
         }
@@ -1153,11 +1140,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     + " mBluetoothTetherIconId=0x" + Integer.toHexString(mBluetoothTetherIconId));
         }
 
-        // update QS
-        for (NetworkSignalChangedCallback cb : mSignalsChangedCallbacks) {
-            notifySignalsChangedCallbacks(cb);
-        }
-
         if (mLastPhoneSignalIconId          != mPhoneSignalIconId
          || mLastWifiIconId                 != mWifiIconId
          || mLastWimaxIconId                != mWimaxIconId
@@ -1168,6 +1150,9 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             // NB: the mLast*s will be updated later
             for (SignalCluster cluster : mSignalClusters) {
                 refreshSignalCluster(cluster);
+            }
+            for (NetworkSignalChangedCallback cb : mSignalsChangedCallbacks) {
+                notifySignalsChangedCallbacks(cb);
             }
         }
 
