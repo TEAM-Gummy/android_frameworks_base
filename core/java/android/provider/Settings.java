@@ -3619,6 +3619,12 @@ public final class Settings {
         public static final String GESTURES_DOUBLE_TAP = "gestures_double_tap";
 
         /**
+         * Whether to remove the system sounds during quiet hours.
+         * @hide
+         */
+        public static final String QUIET_HOURS_SYSTEM = "quiet_hours_system";
+
+        /**
          * Show icon when stylus is used?
          * 0 = no
          * 1 = yes
@@ -3871,6 +3877,7 @@ public final class Settings {
             QUIET_HOURS_START,
             QUIET_HOURS_END,
             QUIET_HOURS_MUTE,
+            QUIET_HOURS_SYSTEM,
             QUIET_HOURS_STILL,
             QUIET_HOURS_DIM,
             LOCKSCREEN_VIBRATE_ENABLED,
