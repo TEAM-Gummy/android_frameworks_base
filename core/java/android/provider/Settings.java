@@ -718,6 +718,17 @@ public final class Settings {
     public static final String ACTION_PRINT_SETTINGS =
             "android.settings.ACTION_PRINT_SETTINGS";
 
+    /**
+     * Package name of the torch app
+     */
+    public static final String TORCH_PACKAGE_NAME = "net.cactii.flash2";
+
+    /**
+     * Intent for launching the torch application
+     */
+    public static Intent ACTION_TORCH_APP = new Intent(Intent.ACTION_MAIN)
+            .setClassName(TORCH_PACKAGE_NAME, TORCH_PACKAGE_NAME + ".MainActivity");
+
     // End of Intent actions for Settings
 
     /**

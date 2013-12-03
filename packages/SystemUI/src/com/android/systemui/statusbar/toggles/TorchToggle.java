@@ -3,9 +3,11 @@ package com.android.systemui.statusbar.toggles;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.View;
 
 import static com.android.internal.util.gummy.GummyConstants.*;
 import com.android.systemui.R;
@@ -38,6 +40,12 @@ public class TorchToggle extends StatefulToggle {
     @Override
     protected void doDisable() {
         GummyAction.launchAction(mContext, GummyConstant.ACTION_TORCH.value());
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        startActivity(android.provider.Settings.ACTION_TORCH_APP);
+        return super.onLongClick(v);
     }
 
     @Override
