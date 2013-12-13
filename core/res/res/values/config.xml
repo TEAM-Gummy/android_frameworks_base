@@ -1406,4 +1406,7 @@
     <!-- Boolean to enable Stylus gestures -->
     <bool name="config_stylusGestures">false</bool>
 
+    <!-- Configuration to sending and receiving Mms when mobile data is disable.-->
+    <bool name="config_setup_mms_data">false</bool>
+
 </resources>
