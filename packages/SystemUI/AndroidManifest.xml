@@ -78,6 +78,7 @@
 
     <!-- Quick Settings --> 
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <permission android:name="android.permission.SCREENSHOT"
