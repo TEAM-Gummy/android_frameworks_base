@@ -20,10 +20,9 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.hardware.display.DisplayManager;
-import android.hardware.display.WifiDisplayStatus;
 import android.net.ConnectivityManager;
 import android.nfc.NfcAdapter;
+import android.os.Vibrator;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.DisplayInfo;
@@ -50,12 +49,6 @@ public class DeviceUtils {
         return (cm.getTetherableUsbRegexs().length != 0);
     }
 
-    public static boolean deviceSupportsWifiDisplay(Context context) {
-        DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
-        return (dm.getWifiDisplayStatus().getFeatureState()
-                    != WifiDisplayStatus.FEATURE_STATE_UNAVAILABLE);
-    }
-
     public static boolean deviceSupportsMobileData(Context context) {
         ConnectivityManager cm =
             (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -75,6 +68,29 @@ public class DeviceUtils {
             (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return (tm.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE)
                     || tm.getLteOnGsmMode() != 0;
+    }
+
+    public static boolean deviceSupportsGps(Context context) {
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS);
+    }
+
+    public static boolean deviceSupportsVibrator(Context ctx) {
+        Vibrator vibrator = (Vibrator) ctx.getSystemService(Context.VIBRATOR_SERVICE);
+        return vibrator.hasVibrator();
+    }
+
+    public static boolean deviceSupportsTorch(Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            List<ApplicationInfo> packages = pm.getInstalledApplications(0);
+                for (ApplicationInfo packageInfo : packages) {
+                    if (packageInfo.packageName.equals(TorchConstants.APP_PACKAGE_NAME)) {
+                        return true;
+                    }
+                }
+        } catch (Exception e) {
+        }
+        return false;
     }
 
     public static FilteredDeviceFeaturesArray filterUnsupportedDeviceFeatures(Context context,
@@ -101,6 +117,14 @@ public class DeviceUtils {
     }
 
     private static boolean isSupportedFeature(Context context, String action) {
+        if (action.equals(ButtonsConstants.ACTION_TORCH)
+                        && !deviceSupportsTorch(context)
+                || action.equals(ButtonsConstants.ACTION_VIB)
+                        && !deviceSupportsVibrator(context)
+                || action.equals(ButtonsConstants.ACTION_VIB_SILENT)
+                        && !deviceSupportsVibrator(context)) {
+            return false;
+        }
         return true;
     }
 
