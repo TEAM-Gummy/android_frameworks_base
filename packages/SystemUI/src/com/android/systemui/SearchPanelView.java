@@ -58,7 +58,7 @@ import android.widget.FrameLayout;
 import com.android.internal.util.gummy.ButtonConfig;
 import com.android.internal.util.gummy.ButtonsConstants;
 import com.android.internal.util.gummy.ButtonsHelper;
-import com.android.internal.util.gummy.ColorHelper;
+import com.android.internal.util.gummy.ImageHelper;
 import com.android.internal.util.gummy.DeviceUtils;
 import com.android.internal.util.gummy.TGActions;
 import com.android.internal.widget.multiwaveview.GlowPadView;
@@ -506,14 +506,19 @@ public class SearchPanelView extends FrameLayout implements
                 try {
                     Drawable customIcon;
                     if (iconFile.exists()) {
-                        customIcon = ColorHelper.resize(mContext,
-                            new BitmapDrawable(getResources(), iconFile.getAbsolutePath()), 50);
+                        customIcon = new BitmapDrawable(getResources(),
+                                        ImageHelper.getRoundedCornerBitmap(
+                                        new BitmapDrawable(getResources(),
+                                        iconFile.getAbsolutePath()).getBitmap()));
+                        customIcon = ImageHelper.resize(mContext, customIcon, 50);
                     } else {
-                        customIcon = ColorHelper.resize(mContext,
-                                    mResources.getDrawable(mResources.getIdentifier(
+                        customIcon = new BitmapDrawable(getResources(),
+                                    ImageHelper.getColoredBitmap(ImageHelper.resize(mContext,
+                                    getResources().getDrawable(getResources().getIdentifier(
                                     customIconUri.substring(
                                     ButtonsConstants.SYSTEM_ICON_IDENTIFIER.length()),
-                                    "drawable", "android")), 50);
+                                    "drawable", "android")), 50),
+                                    getResources().getColor(R.color.navring_system_icon_default_color)));
                     }
                     return new TargetDrawable(mResources, setStateListDrawable(customIcon));
                 } catch (Exception e) {
@@ -565,7 +570,7 @@ public class SearchPanelView extends FrameLayout implements
 
         if (aInfo != null && pm != null) {
             return new TargetDrawable(mResources,
-                setStateListDrawable(ColorHelper.resize(mContext, aInfo.loadIcon(pm), 50)));
+                setStateListDrawable(ImageHelper.resize(mContext, aInfo.loadIcon(pm), 50)));
         }
         return noneDrawable;
     }
@@ -574,9 +579,9 @@ public class SearchPanelView extends FrameLayout implements
         if (activityIcon == null) {
             return null;
         }
-        Drawable iconBg = ColorHelper.resize(mContext,
+        Drawable iconBg = ImageHelper.resize(mContext,
             mResources.getDrawable(R.drawable.ic_navbar_blank), 50);
-        Drawable iconBgActivated = ColorHelper.resize(mContext,
+        Drawable iconBgActivated = ImageHelper.resize(mContext,
             mResources.getDrawable(R.drawable.ic_navbar_blank_activated), 50);
         int margin = (int)(iconBg.getIntrinsicHeight() / 3);
         LayerDrawable icon = new LayerDrawable (new Drawable[] {iconBg, activityIcon});
