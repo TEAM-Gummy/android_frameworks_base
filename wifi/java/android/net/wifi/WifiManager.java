@@ -1037,7 +1037,7 @@ public class WifiManager {
      */
     public boolean setWifiEnabled(boolean enabled) {
         try {
-            return mService.setWifiEnabled(enabled);
+            return mService.setWifiEnabled(mContext.getBasePackageName(), enabled);
         } catch (RemoteException e) {
             return false;
         }
