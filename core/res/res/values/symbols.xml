@@ -1793,4 +1793,6 @@
 
   <java-symbol type="bool" name="config_setup_mms_data" />
 
+  <java-symbol type="string" name="config_partial_segment_expire_age" />
+
 </resources>
