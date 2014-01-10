@@ -3660,11 +3660,17 @@ public final class Settings {
          */
         public static final String MISSED_CALL_BREATH = "missed_call_breath";
 
-       /**
+        /**
          * Give Voicemail notifications a breathing effect
          * @hide
          */
         public static final String VOICEMAIL_BREATH = "voicemail_breath";
+
+        /**
+         * Whether incomming call UI stays in background
+         * @hide
+         */
+        public static final String CALL_UI_IN_BACKGROUND = "call_ui_in_background";
 
         /**
          * Show the pending notification counts as overlays on the statusbar
