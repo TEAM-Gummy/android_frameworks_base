@@ -35,6 +35,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
@@ -116,13 +118,13 @@ public class KeyguardViewManager {
         }
 
         void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_NOTIFICATIONS), false, this);
         }
 
         @Override
         public void onChange(boolean selfChange) {
-            setKeyguardParams();
             updateSettings();
             try {
                 mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
