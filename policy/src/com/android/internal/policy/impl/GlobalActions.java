@@ -464,7 +464,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 R.string.global_actions_expanded_desktop_mode_off_status) {
 
             void onToggle(boolean on) {
-                SlimActions.processAction(
+                TGActions.processAction(
                     mContext, PolicyConstants.ACTION_EXPANDED_DESKTOP, false);
             }
 
