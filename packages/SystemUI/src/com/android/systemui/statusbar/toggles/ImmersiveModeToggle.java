@@ -39,7 +39,7 @@ public class ImmersiveModeToggle extends StatefulToggle {
                 Settings.System.EXPANDED_DESKTOP_STATE, false);
         enabled = mImmersiveModeEnabled;
         setEnabledState(enabled);
-        setIcon(enabled ? R.ic_qs_expanded_desktop_on : R.ic_qs_expanded_desktop_off);
+        setIcon(enabled ? R.drawable.ic_qs_expanded_desktop_on : R.drawable.ic_qs_expanded_desktop_off);
         setLabel(enabled ? R.string.quick_settings_immersive_mode_on
                 : R.string.quick_settings_immersive_mode_off);
         super.updateView();
