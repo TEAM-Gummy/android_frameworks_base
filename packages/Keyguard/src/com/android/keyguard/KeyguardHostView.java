@@ -1769,13 +1769,14 @@ public class KeyguardHostView extends KeyguardViewBase {
      *
      * @return true if the menu key should be enabled
      */
-    private static final String ENABLE_MENU_KEY_FILE = "/data/local/enable_menu_key";
+    // private static final String ENABLE_MENU_KEY_FILE = "/data/local/enable_menu_key";
     private boolean shouldEnableMenuKey() {
-        final Resources res = getResources();
-        final boolean configDisabled = res.getBoolean(R.bool.config_disableMenuKeyInLockScreen);
-        final boolean isTestHarness = ActivityManager.isRunningInTestHarness();
-        final boolean fileOverride = (new File(ENABLE_MENU_KEY_FILE)).exists();
-        return !configDisabled || isTestHarness || fileOverride;
+        ///final Resources res = getResources();
+        // final boolean configDisabled = res.getBoolean(R.bool.config_disableMenuKeyInLockScreen);
+        // final boolean isTestHarness = ActivityManager.isRunningInTestHarness();
+        // final boolean fileOverride = (new File(ENABLE_MENU_KEY_FILE)).exists();
+        final boolean menuOverride = Settings.System.getInt(getContext().getContentResolver(), Settings.System.MENU_UNLOCK_SCREEN, 0) == 1;
+        return menuOverride;
     }
 
     private boolean shouldEnableHomeKey() {
