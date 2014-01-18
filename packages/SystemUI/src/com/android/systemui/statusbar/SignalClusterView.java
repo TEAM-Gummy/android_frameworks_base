@@ -16,7 +16,12 @@
 
 package com.android.systemui.statusbar;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +29,11 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.NetworkController;
+import com.android.systemui.statusbar.policy.SignalText;
 
 // Intimately tied to the design of res/layout/signal_cluster_view.xml
 public class SignalClusterView
@@ -46,8 +53,11 @@ public class SignalClusterView
     private int mAirplaneIconId = 0;
     private String mWifiDescription, mMobileDescription, mMobileTypeDescription;
 
+    private boolean mShowSignalText = false;
+
     ViewGroup mWifiGroup, mMobileGroup;
     ImageView mWifi, mMobile, mMobileType, mAirplane;
+    TextView mMobileText;
     View mSpacer;
 
     public SignalClusterView(Context context) {
@@ -71,11 +81,16 @@ public class SignalClusterView
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
+        ContentResolver res = mContext.getContentResolver();
+        res.registerContentObserver(Settings.System.getUriFor(Settings.System.STATUSBAR_SIGNAL_TEXT), false, mSettingsObserver);
+        updateSettings();
+
         mWifiGroup      = (ViewGroup) findViewById(R.id.wifi_combo);
         mWifi           = (ImageView) findViewById(R.id.wifi_signal);
         mMobileGroup    = (ViewGroup) findViewById(R.id.mobile_combo);
         mMobile         = (ImageView) findViewById(R.id.mobile_signal);
         mMobileType     = (ImageView) findViewById(R.id.mobile_type);
+        mMobileText     = (TextView)  findViewById(R.id.signal_text);
         mSpacer         =             findViewById(R.id.spacer);
         mAirplane       = (ImageView) findViewById(R.id.airplane);
 
@@ -84,11 +99,14 @@ public class SignalClusterView
 
     @Override
     protected void onDetachedFromWindow() {
+        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
+
         mWifiGroup      = null;
         mWifi           = null;
         mMobileGroup    = null;
         mMobile         = null;
         mMobileType     = null;
+        mMobileText     = null;
         mSpacer         = null;
         mAirplane       = null;
 
@@ -182,6 +200,14 @@ public class SignalClusterView
 
             mMobileGroup.setContentDescription(mMobileTypeDescription + " " + mMobileDescription);
             mMobileGroup.setVisibility(View.VISIBLE);
+
+            if (mShowSignalText && !mIsAirplaneMode) {
+                mMobile.setVisibility(View.GONE);
+                mMobileText.setVisibility(View.VISIBLE);
+            } else{
+                mMobile.setVisibility(View.VISIBLE);
+                mMobileText.setVisibility(View.GONE);
+            }
         } else {
             mMobileGroup.setVisibility(View.GONE);
         }
@@ -207,5 +233,28 @@ public class SignalClusterView
         mMobileType.setVisibility(
                 !mWifiVisible ? View.VISIBLE : View.GONE);
     }
+
+
+    protected void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+
+        mShowSignalText = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_SIGNAL_TEXT, SignalText.STYLE_HIDE) != SignalText.STYLE_HIDE;
+    }
+
+
+    private ContentObserver mSettingsObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+            apply();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            updateSettings();
+            apply();
+        }
+    };
 }
 
