@@ -45,7 +45,7 @@ import com.android.internal.telephony.PhoneConstants;
  */
 public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         implements KeyguardSecurityView, OnEditorActionListener, TextWatcher {
-    private static final String LOG_TAG = "KeyguardSimPukView";
+    public static final String LOG_TAG = "KeyguardSimPukView";
     private static final boolean DEBUG = KeyguardViewMediator.DEBUG;
     public static final String TAG = "KeyguardSimPukView";
 
@@ -54,7 +54,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
     protected String mPukText;
     protected String mPinText;
     protected StateMachine mStateMachine = new StateMachine();
-    private AlertDialog mRemainingAttemptsDialog;
+    protected AlertDialog mRemainingAttemptsDialog;
 
     protected class StateMachine {
         final int ENTER_PUK = 0;
@@ -104,7 +104,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         }
     }
 
-    private String getPukPasswordErrorMessage(int attemptsRemaining) {
+    protected String getPukPasswordErrorMessage(int attemptsRemaining) {
         String displayMessage;
 
         if (attemptsRemaining == 0) {
@@ -258,7 +258,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         return mSimUnlockProgressDialog;
     }
 
-    private Dialog getPukRemainingAttemptsDialog(int remaining) {
+    protected Dialog getPukRemainingAttemptsDialog(int remaining) {
         String msg = getPukPasswordErrorMessage(remaining);
         if (mRemainingAttemptsDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
