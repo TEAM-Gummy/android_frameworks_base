@@ -824,11 +824,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mLocationController = new LocationController(mContext); // will post a notification
         mBatteryController = new BatteryController(mContext);
         mBluetoothController = new BluetoothController(mContext);
-        mNotificationShortcutsHideCarrier = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.NOTIFICATION_SHORTCUTS_HIDE_CARRIER, 0, UserHandle.USER_CURRENT) != 0;
-
-        mCarrierAndWifiView = mStatusBarWindow.findViewById(R.id.carrier_wifi);
-        mWifiView = mStatusBarWindow.findViewById(R.id.wifi_view);
 
         if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
             mMSimNetworkController = new MSimNetworkController(mContext);
@@ -838,6 +833,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mMSimNetworkController.addSignalCluster(mSimSignalCluster, i);
             }
             mSimSignalCluster.setNetworkController(mMSimNetworkController);
+
+            mNotificationShortcutsHideCarrier = Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.NOTIFICATION_SHORTCUTS_HIDE_CARRIER, 0, UserHandle.USER_CURRENT) != 0;
+
+            mCarrierAndWifiView = mStatusBarWindow.findViewById(R.id.carrier_wifi);
+            mWifiView = mStatusBarWindow.findViewById(R.id.wifi_view);
 
             mEmergencyCallLabel = (TextView)mStatusBarWindow.findViewById(
                                                           R.id.emergency_calls_only);
@@ -860,7 +861,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" +
                                     mShowCarrierInPanel + "operator label=" + mSubsLabel);
             if (mShowCarrierInPanel) {
-                lpCarrierLabel = (FrameLayout.LayoutParams) mCarrierAndWifiView.getLayoutParams();
                 mCarrierLabel.setVisibility((mCarrierAndWifiViewVisible && !mNotificationShortcutsHideCarrier) ? View.VISIBLE : View.INVISIBLE);
                 if (mNotificationShortcutsHideCarrier)
                     mShowCarrierInPanel = false;
@@ -873,6 +873,33 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 }
                 mSubsLabel.setVisibility(View.VISIBLE);
                 mMSimNetworkController.addSubsLabelView(mSubsLabel);
+
+                mWifiLabel = (TextView)mStatusBarWindow.findViewById(R.id.wifi_text);
+
+                if (mWifiLabel != null) {
+                    mNetworkController.addWifiLabelView(mWifiLabel);
+
+                    mWifiLabel.addTextChangedListener(new TextWatcher() {
+
+                        public void afterTextChanged(Editable s) {
+                        }
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                                int after) {
+                        }
+                        public void onTextChanged(CharSequence s, int start, int before,
+                                int count) {
+                            if (Settings.System.getInt(mContext.getContentResolver(),
+                                    Settings.System.NOTIFICATION_SHOW_WIFI_SSID, 0) == 1 &&
+                                    count > 0) {
+                            mWifiView.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                mWifiView.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                }
 
                 // set up the dynamic hide/show of the label
                 mPile.setOnSizeChangedListener(new OnSizeChangedListener() {
@@ -907,13 +934,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                         }});
                 }
             }
+            mNotificationShortcutsHideCarrier = Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.NOTIFICATION_SHORTCUTS_HIDE_CARRIER, 0, UserHandle.USER_CURRENT) != 0;
+
+            mCarrierAndWifiView = mStatusBarWindow.findViewById(R.id.carrier_wifi);
+            mWifiView = mStatusBarWindow.findViewById(R.id.wifi_view);
 
             mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
             mShowCarrierInPanel = (mCarrierLabel != null);
             if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" +
                                                                   mShowCarrierInPanel);
             if (mShowCarrierInPanel) {
-                lpCarrierLabel = (FrameLayout.LayoutParams) mCarrierAndWifiView.getLayoutParams();
                 mCarrierLabel.setVisibility((mCarrierAndWifiViewVisible && !mNotificationShortcutsHideCarrier) ? View.VISIBLE : View.INVISIBLE);
                 if (mNotificationShortcutsHideCarrier)
                     mShowCarrierInPanel = false;
