@@ -877,7 +877,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mWifiLabel = (TextView)mStatusBarWindow.findViewById(R.id.wifi_text);
 
                 if (mWifiLabel != null) {
-                    mNetworkController.addWifiLabelView(mWifiLabel);
+                    mMSimNetworkController.addWifiLabelView(mWifiLabel);
 
                     mWifiLabel.addTextChangedListener(new TextWatcher() {
 
@@ -1573,10 +1573,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             }
 
             final boolean emergencyCallsShownElsewhere = mEmergencyCallLabel != null;
-            final boolean makeVisible =
-                !(emergencyCallsShownElsewhere && mNetworkController.isEmergencyOnly())
-                && mPile.getHeight() < (mNotificationPanel.getHeight() - mCarrierAndWifiViewHeight)
-                && mScrollView.getVisibility() == View.VISIBLE;
+            final boolean makeVisible;
+            if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
+                makeVisible =
+                    !(emergencyCallsShownElsewhere && mMSimNetworkController.isEmergencyOnly())
+                    && mPile.getHeight() < (mNotificationPanel.getHeight() - mCarrierAndWifiViewHeight)
+                    && mScrollView.getVisibility() == View.VISIBLE;
+            } else {
+                makeVisible =
+                    !(emergencyCallsShownElsewhere && mNetworkController.isEmergencyOnly())
+                    && mPile.getHeight() < (mNotificationPanel.getHeight() - mCarrierAndWifiViewHeight)
+                    && mScrollView.getVisibility() == View.VISIBLE;
+            }
 
             if (force || mCarrierAndWifiViewVisible != makeVisible) {
                 mCarrierAndWifiViewVisible = makeVisible;
