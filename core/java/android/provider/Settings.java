@@ -3453,17 +3453,23 @@ public final class Settings {
          */
         public static final String QUIET_HOURS_DIM = "quiet_hours_dim";
 
-        /**  
+        /**
          * Give MMS Notifications a breathing effect
          * @hide
          */
         public static final String MMS_BREATH = "mms_breath";
 
-        /**  
+        /**
          * Give MMS Notifications a breathing effect
          * @hide
          */
         public static final String MISSED_CALL_BREATH = "missed_call_breath";
+
+       /**
+         * Give Voicemail notifications a breathing effect
+         * @hide
+         */
+        public static final String VOICEMAIL_BREATH = "voicemail_breath";
 
         /**
          * Show the pending notification counts as overlays on the statusbar
