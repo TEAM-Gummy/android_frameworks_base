@@ -53,6 +53,12 @@ public class TGActions {
     private static final int MSG_INJECT_KEY_UP = 1067;
 
     public static void processAction(Context context, String action, boolean isLongpress) {
+        processActionWithOptions(context, action, isLongpress, true);
+    }
+
+    public static void processActionWithOptions(Context context,
+            String action, boolean isLongpress, boolean collapseShade) {
+
             if (action == null || action.equals(ButtonsConstants.ACTION_NULL)) {
                 return;
             }
@@ -75,29 +81,36 @@ public class TGActions {
             } catch (RemoteException e) {
             }
 
-            if (!action.equals(ButtonsConstants.ACTION_QS)
-                    && !action.equals(ButtonsConstants.ACTION_NOTIFICATIONS)) {
-                try {
-                    barService.collapsePanels();
-                } catch (RemoteException ex) {
+            if (collapseShade) {
+                if (!action.equals(ButtonsConstants.ACTION_QS)
+                        && !action.equals(ButtonsConstants.ACTION_NOTIFICATIONS)
+                        && !action.equals(ButtonsConstants.ACTION_TORCH)) {
+                    try {
+                        barService.collapsePanels();
+                    } catch (RemoteException ex) {
+                    }
                 }
             }
 
             // process the actions
             if (action.equals(ButtonsConstants.ACTION_HOME)) {
-                injectKeyDelayed(KeyEvent.KEYCODE_HOME, isLongpress, false);
+                triggerVirtualKeypress(KeyEvent.KEYCODE_HOME, isLongpress);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_BACK)) {
-                injectKeyDelayed(KeyEvent.KEYCODE_BACK, isLongpress, false);
+                triggerVirtualKeypress(KeyEvent.KEYCODE_BACK, isLongpress);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_SEARCH)) {
-                injectKeyDelayed(KeyEvent.KEYCODE_SEARCH, isLongpress, false);
+                triggerVirtualKeypress(KeyEvent.KEYCODE_SEARCH, isLongpress);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_MENU)) {
-                injectKeyDelayed(KeyEvent.KEYCODE_MENU, isLongpress, false);
+                triggerVirtualKeypress(KeyEvent.KEYCODE_MENU, isLongpress);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_POWER_MENU)) {
-                injectKeyDelayed(KeyEvent.KEYCODE_POWER, isLongpress, true);
+                try {
+                    windowManagerService.toggleGlobalMenu();
+                } catch (RemoteException e) {
+                }
+                return;
             } else if (action.equals(ButtonsConstants.ACTION_POWER)) {
                 PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
                 pm.goToSleep(SystemClock.uptimeMillis());
@@ -277,60 +290,79 @@ public class TGActions {
         }
     }
 
+    public static void startIntent(Context context, Intent intent, boolean collapseShade) {
+        if (intent == null) {
+            return;
+        }
+        final IStatusBarService barService = IStatusBarService.Stub.asInterface(
+                ServiceManager.getService(Context.STATUS_BAR_SERVICE));
+
+        final IWindowManager windowManagerService = IWindowManager.Stub.asInterface(
+                ServiceManager.getService(Context.WINDOW_SERVICE));
+
+        boolean isKeyguardShowing = false;
+        try {
+            isKeyguardShowing = windowManagerService.isKeyguardLocked();
+        } catch (RemoteException e) {
+        }
+
+        if (collapseShade) {
+            try {
+                barService.collapsePanels();
+            } catch (RemoteException ex) {
+            }
+        }
+
+        if (isKeyguardShowing) {
+            // Have keyguard show the bouncer and launch the activity if the user succeeds.
+            try {
+                windowManagerService.showCustomIntentOnKeyguard(intent);
+            } catch (RemoteException e) {
+            }
+        } else {
+            // otherwise let us do it here
+            try {
+                ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
+            } catch (RemoteException e) {
+                // too bad, so sad...
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivityAsUser(intent,
+                    new UserHandle(UserHandle.USER_CURRENT));
+        }
+    }
+
     public static boolean isActionKeyEvent(String action) {
         if (action.equals(ButtonsConstants.ACTION_HOME)
                 || action.equals(ButtonsConstants.ACTION_BACK)
                 || action.equals(ButtonsConstants.ACTION_SEARCH)
                 || action.equals(ButtonsConstants.ACTION_MENU)
-                || action.equals(ButtonsConstants.ACTION_POWER_MENU)
                 || action.equals(ButtonsConstants.ACTION_NULL)) {
             return true;
         }
         return false;
     }
 
-    private static class H extends Handler {
-        public void handleMessage(Message m) {
-            final InputManager inputManager = InputManager.getInstance();
-            switch (m.what) {
-                case MSG_INJECT_KEY_DOWN:
-                    inputManager.injectInputEvent((KeyEvent) m.obj,
-                            InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
-                    break;
-                case MSG_INJECT_KEY_UP:
-                    inputManager.injectInputEvent((KeyEvent) m.obj,
-                            InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
-                    break;
-            }
-        }
-    }
-    private static H mHandler = new H();
+    public static void triggerVirtualKeypress(final int keyCode, boolean longpress) {
+        InputManager im = InputManager.getInstance();
+        long now = SystemClock.uptimeMillis();
 
-    private static void injectKeyDelayed(int keyCode,
-            boolean longpress, boolean sendOnlyDownMessage) {
-        long when = SystemClock.uptimeMillis();
         int downflags = KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY;
         if (longpress) {
             downflags |= KeyEvent.FLAG_LONG_PRESS;
         }
-        mHandler.removeMessages(MSG_INJECT_KEY_DOWN);
-        mHandler.removeMessages(MSG_INJECT_KEY_UP);
 
-        KeyEvent down = new KeyEvent(when, when + 10, KeyEvent.ACTION_DOWN, keyCode, 0, 0,
-                KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+        final KeyEvent downEvent = new KeyEvent(now, now, KeyEvent.ACTION_DOWN,
+                keyCode, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
                 downflags,
                 InputDevice.SOURCE_KEYBOARD);
-        mHandler.sendMessageDelayed(Message.obtain(mHandler, MSG_INJECT_KEY_DOWN, down), 10);
+        im.injectInputEvent(downEvent, InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
 
-        if (sendOnlyDownMessage) {
-            return;
-        }
-        KeyEvent up = new KeyEvent(when, when + 30, KeyEvent.ACTION_UP, keyCode, 0, 0,
-                KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+        final KeyEvent upEvent = new KeyEvent(now, now, KeyEvent.ACTION_UP,
+                keyCode, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
                 KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
                 InputDevice.SOURCE_KEYBOARD);
-        mHandler.sendMessageDelayed(Message.obtain(mHandler, MSG_INJECT_KEY_UP, up), 30);
+        im.injectInputEvent(upEvent, InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
     }
 
 }
-

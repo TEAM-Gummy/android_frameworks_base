@@ -1230,4 +1230,12 @@ public interface WindowManagerPolicy {
      * @hide
      */
     public int getCurrentNavigationBarSize();
+
+    /**
+     * Toggle global menu
+     *
+     * @hide
+     */
+    public void toggleGlobalMenu();
+
 }
