@@ -15,7 +15,15 @@
 -->
 <resources>
 
-    <!-- Color for the "No recent apps" text in the recent apps list. -->
-    <color name="no_recent_apps">#bebebe</color>
+    <!-- Active display -->
+    <dimen name="glowpad_overflow_notifications_margin_top">64dp</dimen>
+    <dimen name="ad_clock_margin_bottom">60dp</dimen>
+    <dimen name="ad_notification_margin">4dp</dimen>
+    <dimen name="overflow_icon_size">28dp</dimen>
+    <dimen name="handle_icon_size">32dp</dimen>
+    <dimen name="overflow_icon_padding">2dp</dimen>
+    <dimen name="ad_clock_font_size">75dp</dimen>
+    <dimen name="ad_date_font_size">18dp</dimen>
+    <dimen name="ad_ampm_font_size">32dp</dimen>   
 
 </resources>
