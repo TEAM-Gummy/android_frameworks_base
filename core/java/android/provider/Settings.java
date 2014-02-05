@@ -3449,6 +3449,18 @@ public final class Settings {
         public static final String LOCKSCREEN_CAMERA_WIDGET = "lockscreen_camera_widget";
 
         /**
+         * Sets the lockscreen background style
+         * @hide
+         */
+        public static final String LOCKSCREEN_BACKGROUND_STYLE = "lockscreen_background_style";
+
+        /**
+         * Color for lockscreen background when set to color fill
+         * @hide
+         */
+        public static final String LOCKSCREEN_BACKGROUND_COLOR = "lockscreen_background_color";
+
+        /**
          * number of tiles per row in quick settings
          *
          * @hide
