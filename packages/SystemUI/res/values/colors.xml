@@ -52,4 +52,14 @@
     <color name="toggle_text_changing_state_color">#ff787878</color>
     <color name="toggle_image_changing_state_overlay">@color/toggle_text_changing_state_color</color>
 
+    <!-- Pie controls -->
+    <color name="pie_overlay_color">#ff000000</color>
+    <color name="pie_snap_color">#ffffffff</color>
+    <color name="pie_text_color">#ffffffff</color>
+    <color name="pie_foreground_color">#ffffffff</color>
+    <color name="pie_background_color">#ff000000</color>
+    <color name="pie_selected_color">#ff5c5c5c</color>
+    <color name="pie_long_pressed_color">#ff8c8c8c</color>
+    <color name="pie_outline_color">#ff5c5c5c</color>
+
 </resources>
