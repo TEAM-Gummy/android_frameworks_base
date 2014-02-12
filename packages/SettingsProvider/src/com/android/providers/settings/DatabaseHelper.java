@@ -2011,6 +2011,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadStringSetting(stmt, Settings.System.UI_FORCE_OVERFLOW_BUTTON,
                     R.integer.def_menu_overflow);
 
+            loadBooleanSetting(stmt, Settings.System.ENABLE_TRANSLUCENT_DECOR,
+                    R.bool.def_enable_translucent_decor);
+
         } finally {
             if (stmt != null) stmt.close();
         }

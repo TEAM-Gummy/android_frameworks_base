@@ -109,6 +109,8 @@ public class KeyguardViewManager {
     private NotificationViewManager mNotificationViewManager;
     private boolean mLockscreenNotifications = false;
 
+    private boolean mEnableTranslucentDecor = true;
+
     private static final String WALLPAPER_IMAGE_PATH =
             "/data/data/com.android.settings/files/lockscreen_wallpaper";
 
@@ -118,7 +120,7 @@ public class KeyguardViewManager {
             mKeyguardHost.setCustomBackground(bmp != null ?
                     new BitmapDrawable(mContext.getResources(), bmp) : null);
              updateShowWallpaper(bmp == null);
-         }
+        }
     };
 
     public interface ShowListener {
@@ -221,8 +223,14 @@ public class KeyguardViewManager {
 
     private boolean shouldEnableTranslucentDecor() {
         Resources res = mContext.getResources();
-        return res.getBoolean(R.bool.config_enableLockScreenTranslucentDecor)
-            && res.getBoolean(R.bool.config_enableTranslucentDecor);
+        mEnableTranslucentDecor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.ENABLE_TRANSLUCENT_DECOR, 1) == 1;
+        if (mEnableTranslucentDecor == true) {
+            return true;
+        } else {
+            return res.getBoolean(R.bool.config_enableLockScreenTranslucentDecor)
+                && res.getBoolean(R.bool.config_enableTranslucentDecor);
+        }
     }
 
     class ViewManagerHost extends FrameLayout {

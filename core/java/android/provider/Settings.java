@@ -2858,6 +2858,12 @@ public final class Settings {
         public static final String EGG_MODE = "egg_mode";
 
         /**
+         * Enable the translucent statusbar navbar decor
+         * @hide
+         */
+        public static final String ENABLE_TRANSLUCENT_DECOR = "enable_translucent_decor";
+
+        /**
          * Show or hide clock
          * 0 - hide
          * 1 - show (default)

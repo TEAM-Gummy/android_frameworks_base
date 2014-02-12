@@ -723,6 +723,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVIGATION_BAR_SHOW), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ENABLE_TRANSLUCENT_DECOR), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -1200,8 +1203,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.integer.config_lidNavigationAccessibility);
         mLidControlsSleep = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_lidControlsSleep);
-        mTranslucentDecorEnabled = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_enableTranslucentDecor);
         mBackKillTimeout = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_backKillTimeout);
         mDeviceHardwareKeys = mContext.getResources().getInteger(
@@ -1415,6 +1416,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
         boolean updateRotation = false;
+        int translucentDecor = mContext.getResources().getInteger(
+                com.android.internal.R.bool.config_enableTranslucentDecor);
+        mTranslucentDecorEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.ENABLE_TRANSLUCENT_DECOR, translucentDecor,
+                UserHandle.USER_CURRENT) == 1;
         synchronized (mLock) {
             mEndcallBehavior = Settings.System.getIntForUser(resolver,
                     Settings.System.END_BUTTON_BEHAVIOR,
