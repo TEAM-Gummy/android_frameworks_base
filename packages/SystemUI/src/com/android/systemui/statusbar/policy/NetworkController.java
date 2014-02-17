@@ -235,8 +235,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 com.android.internal.R.string.lockscreen_carrier_default);
         mNetworkName = mNetworkNameDefault;
 
-        createWifiHandler();
-
         // broadcasts
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.android.settings.LABEL_CHANGED");
@@ -315,17 +313,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
 
     public void addDataTypeIconView(ImageView v) {
         mDataTypeIconViews.add(v);
-    }
-
-    protected void createWifiHandler() {
-        // wifi
-        mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-        Handler handler = new WifiHandler();
-        mWifiChannel = new AsyncChannel();
-        Messenger wifiMessenger = mWifiManager.getWifiServiceMessenger();
-        if (wifiMessenger != null) {
-            mWifiChannel.connect(mContext, handler, wifiMessenger);
-        }
     }
 
     protected void registerPhoneStateListener(Context context) {
