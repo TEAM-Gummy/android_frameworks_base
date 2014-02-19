@@ -2920,6 +2920,13 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_DATE_FORMAT = "statusbar_clock_date_format";
 
         /**
+         * Config for showing signal and wifi direction indicators
+         *
+         * @hide
+         */
+        public static final String SHOW_ACTIVITY_INDICATORS = "show_activity_indicators";
+
+        /**
          * Config for advanced power menu
          *
          * @hide

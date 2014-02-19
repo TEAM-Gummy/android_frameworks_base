@@ -137,6 +137,9 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     private Locale mLocale = null;
     private Locale mLastLocale = null;
 
+    // Activity Indicators
+    private boolean mShowIndicators = false;
+
     // our ui
     Context mContext;
     ArrayList<ImageView> mPhoneSignalIconViews = new ArrayList<ImageView>();
@@ -266,6 +269,16 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         return (mServiceState != null && mServiceState.isEmergencyOnly());
     }
 
+    public boolean ShouldShowIndicators() {
+        mShowIndicators = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_ACTIVITY_INDICATORS, 0) == 1;
+        if (mShowIndicators == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void addPhoneSignalIconView(ImageView v) {
         mPhoneSignalIconViews.add(v);
     }
@@ -281,6 +294,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     public void addWifiIconView(ImageView v) {
         mWifiIconViews.add(v);
     }
+
     public void addWimaxIconView(ImageView v) {
         mWimaxIconViews.add(v);
     }
@@ -1063,13 +1077,25 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 combinedSignalIconId = mDataSignalIconId;
                 switch (mDataActivity) {
                     case TelephonyManager.DATA_ACTIVITY_IN:
-                        mMobileActivityIconId = R.drawable.stat_sys_signal_in;
+                        if (ShouldShowIndicators() == true) {
+                            mMobileActivityIconId = R.drawable.stat_sys_signal_in;
+                        } else {
+                            mMobileActivityIconId = R.drawable.stat_sys_signal_noinout;
+                        }
                         break;
                     case TelephonyManager.DATA_ACTIVITY_OUT:
-                        mMobileActivityIconId = R.drawable.stat_sys_signal_out;
+                        if (ShouldShowIndicators() == true) {
+                            mMobileActivityIconId = R.drawable.stat_sys_signal_out;
+                        } else {
+                            mMobileActivityIconId = R.drawable.stat_sys_signal_noinout;
+                        }
                         break;
                     case TelephonyManager.DATA_ACTIVITY_INOUT:
-                        mMobileActivityIconId = R.drawable.stat_sys_signal_inout;
+                        if (ShouldShowIndicators() == true) {
+                            mMobileActivityIconId = R.drawable.stat_sys_signal_inout;
+                        } else {
+                            mMobileActivityIconId = R.drawable.stat_sys_signal_noinout;
+                        }
                         break;
                     default:
                         mMobileActivityIconId = R.drawable.stat_sys_signal_noinout;
@@ -1096,13 +1122,25 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 }
                 switch (mWifiActivity) {
                     case WifiManager.DATA_ACTIVITY_IN:
-                        mWifiActivityIconId = R.drawable.stat_sys_wifi_in;
+                        if (ShouldShowIndicators() == true) {
+                            mWifiActivityIconId = R.drawable.stat_sys_wifi_in;
+                        } else {
+                            mWifiActivityIconId = R.drawable.stat_sys_wifi_noinout;
+                        }
                         break;
                     case WifiManager.DATA_ACTIVITY_OUT:
-                        mWifiActivityIconId = R.drawable.stat_sys_wifi_out;
+                        if (ShouldShowIndicators() == true) {
+                            mWifiActivityIconId = R.drawable.stat_sys_wifi_out;
+                        } else {
+                            mWifiActivityIconId = R.drawable.stat_sys_wifi_noinout;
+                        }
                         break;
                     case WifiManager.DATA_ACTIVITY_INOUT:
-                        mWifiActivityIconId = R.drawable.stat_sys_wifi_inout;
+                        if (ShouldShowIndicators() == true) {
+                            mWifiActivityIconId = R.drawable.stat_sys_wifi_inout;
+                                                } else {
+                            mWifiActivityIconId = R.drawable.stat_sys_wifi_noinout;
+                        }
                         break;
                     case WifiManager.DATA_ACTIVITY_NONE:
                         mWifiActivityIconId = R.drawable.stat_sys_wifi_noinout;
