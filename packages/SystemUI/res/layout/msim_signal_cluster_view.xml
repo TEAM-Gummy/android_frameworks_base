@@ -94,17 +94,19 @@
                 android:id="@+id/mobile_signal_sub3"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center|bottom"
                 />
             <ImageView
                 android:id="@+id/mobile_type_sub3"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center|bottom"
                 />
             <ImageView
                 android:id="@+id/mobile_inout_sub3"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_gravity="end|bottom"
+                android:layout_gravity="right|bottom"
                 />
             <ImageView
                 android:id="@+id/no_sim_slot3"
@@ -136,17 +138,19 @@
                 android:id="@+id/mobile_signal_sub2"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center|bottom"
                 />
             <ImageView
                 android:id="@+id/mobile_type_sub2"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center|bottom"
                 />
             <ImageView
                 android:id="@+id/mobile_inout_sub2"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_gravity="end|bottom"
+                android:layout_gravity="right|bottom"
                 />
             <ImageView
                 android:id="@+id/no_sim_slot2"

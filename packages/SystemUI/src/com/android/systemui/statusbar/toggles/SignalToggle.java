@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.QuickSettingsTileView;
+import com.android.systemui.statusbar.policy.MSimNetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.NetworkSignalChangedCallback;
 
 public class SignalToggle extends StatefulToggle implements NetworkSignalChangedCallback {
