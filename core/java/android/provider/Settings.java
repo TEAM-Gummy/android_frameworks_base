@@ -2927,6 +2927,13 @@ public final class Settings {
         public static final String SHOW_ACTIVITY_INDICATORS = "show_activity_indicators";
 
         /**
+         * Config for showing LTE for 4g
+         *
+         * @hide
+         */
+        public static final String SHOW_4G_FOR_LTE = "show_4g_for_lte";
+
+        /**
          * Config for advanced power menu
          *
          * @hide

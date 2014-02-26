@@ -2014,6 +2014,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadBooleanSetting(stmt, Settings.System.ENABLE_TRANSLUCENT_DECOR,
                     R.bool.def_enable_translucent_decor);
 
+            loadBooleanSetting(stmt, Settings.System.SHOW_4G_FOR_LTE,
+                    R.bool.def_show_4g_for_lte);
+
         } finally {
             if (stmt != null) stmt.close();
         }
