@@ -75,4 +75,9 @@ public class NfcToggle extends StatefulToggle {
             mNfcAdapter.disable();
         }
     }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_nfc_on;
+    }
 }

@@ -1,4 +1,3 @@
-
 package com.android.systemui.statusbar.toggles;
 
 import android.content.Context;
@@ -11,7 +10,7 @@ import com.android.systemui.statusbar.policy.NetworkController.NetworkSignalChan
 public class AirplaneModeToggle extends StatefulToggle implements NetworkSignalChangedCallback {
 
     @Override
-    protected void init(Context c, int style) {
+    public void init(Context c, int style) {
         super.init(c, style);
 
         boolean enabled = Settings.Global.getInt(c.getContentResolver(),
@@ -48,21 +47,26 @@ public class AirplaneModeToggle extends StatefulToggle implements NetworkSignalC
     }
 
     @Override
-    public void onWifiSignalChanged(boolean enabled, int wifiSignalIconId,
-            String wifitSignalContentDescriptionId, String description) {
-    }
-
-    @Override
-    public void onMobileDataSignalChanged(boolean enabled, int mobileSignalIconId,
-            String mobileSignalContentDescriptionId, int dataTypeIconId,
-            String dataTypeContentDescriptionId, String description) {
-    }
-
-    @Override
     public void onAirplaneModeChanged(boolean enabled) {
         setLabel(R.string.quick_settings_airplane_mode_label);
         setIcon(enabled ? R.drawable.ic_qs_airplane_on : R.drawable.ic_qs_airplane_off);
         updateCurrentState(enabled ? State.ENABLED : State.DISABLED);
         scheduleViewUpdate();
+    }
+
+    @Override
+    public void onWifiSignalChanged(boolean enabled, int wifiSignalIconId, boolean activityIn,
+            boolean activityOut, String wifiSignalContentDescriptionId, String description) {
+    }
+
+    @Override
+    public void onMobileDataSignalChanged(boolean enabled, int mobileSignalIconId,
+            String mobileSignalContentDescriptionId, int dataTypeIconId, boolean activityIn,
+            boolean activityOut, String dataTypeContentDescriptionId, String description) {
+    }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_airplane_on;
     }
 }

@@ -63,4 +63,9 @@ public class GpsToggle extends StatefulToggle implements LocationGpsStateChangeC
         mGpsFix = hasFix;
         scheduleViewUpdate();
     }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_gps_on;
+    }
 }

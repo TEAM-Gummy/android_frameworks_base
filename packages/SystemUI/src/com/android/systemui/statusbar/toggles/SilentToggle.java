@@ -50,4 +50,9 @@ public class SilentToggle extends StatefulToggle {
         mAudioManager = null;
         super.updateView();
     }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_silence_on;
+    }
 }

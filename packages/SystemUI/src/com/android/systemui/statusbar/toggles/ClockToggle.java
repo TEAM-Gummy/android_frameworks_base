@@ -53,4 +53,8 @@ public class ClockToggle extends BaseToggle {
         return quick;
     }
 
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_clock_circle;
+    }
 }

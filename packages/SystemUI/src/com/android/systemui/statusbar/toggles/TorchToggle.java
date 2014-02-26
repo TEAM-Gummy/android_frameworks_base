@@ -81,4 +81,8 @@ public class TorchToggle extends StatefulToggle {
         }
     }
 
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_torch_on;
+    }
 }

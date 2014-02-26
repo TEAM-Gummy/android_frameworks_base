@@ -52,4 +52,8 @@ public class VibrateToggle extends StatefulToggle {
         super.updateView();
     }
 
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_vibrate_on;
+    }
 }

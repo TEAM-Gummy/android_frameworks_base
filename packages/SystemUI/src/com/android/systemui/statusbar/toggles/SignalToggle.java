@@ -26,7 +26,7 @@ public class SignalToggle extends StatefulToggle implements NetworkSignalChanged
     private ConnectivityManager connManager;
 
     @Override
-    protected void init(Context c, int style) {
+    public void init(Context c, int style) {
         super.init(c, style);
         setIcon(R.drawable.ic_qs_signal_no_signal);
         setLabel(R.string.quick_settings_rssi_emergency_only);
@@ -37,40 +37,6 @@ public class SignalToggle extends StatefulToggle implements NetworkSignalChanged
     protected void cleanup() {
         connManager = null;
         super.cleanup();
-    }
-
-    @Override
-    public void onWifiSignalChanged(boolean enabled, int wifiSignalIconId,
-            String wifiSignalContentDescription, String enabledDesc) {
-        boolean wifiConnected = enabled && (wifiSignalIconId > 0) && (enabledDesc != null);
-        mWifiState.enabled = enabled;
-        mWifiState.connected = wifiConnected;
-    }
-
-    @Override
-    public void onMobileDataSignalChanged(
-            boolean enabled, int mobileSignalIconId, String signalContentDescription,
-            int dataTypeIconId, String dataContentDescription, String enabledDesc) {
-        // TODO: If view is in awaiting state, disable
-        Resources r = mContext.getResources();
-        mRSSIState.signalIconId = enabled && (mobileSignalIconId > 0)
-                ? mobileSignalIconId
-                : R.drawable.ic_qs_signal_no_signal;
-        mRSSIState.signalContentDescription = enabled && (mobileSignalIconId > 0)
-                ? signalContentDescription
-                : r.getString(R.string.accessibility_no_signal);
-        mRSSIState.dataTypeIconId = enabled && (dataTypeIconId > 0) && !mWifiState.enabled
-                ? dataTypeIconId
-                : 0;
-        mRSSIState.dataContentDescription = enabled && (dataTypeIconId > 0)
-                && !mWifiState.enabled
-                ? dataContentDescription
-                : r.getString(R.string.accessibility_no_data);
-        mRSSIState.label = enabled
-                ? removeTrailingPeriod(enabledDesc)
-                : r.getString(R.string.quick_settings_rssi_emergency_only);
-        setEnabledState(dataTypeIconId > 0 ? true : false);
-        scheduleViewUpdate();
     }
 
     @Override
@@ -166,4 +132,42 @@ public class SignalToggle extends StatefulToggle implements NetworkSignalChanged
         return network;
     }
 
+    @Override
+    public void onWifiSignalChanged(boolean enabled, int wifiSignalIconId, boolean activityIn,
+            boolean activityOut, String wifiSignalContentDescriptionId, String description) {
+        boolean wifiConnected = enabled && (wifiSignalIconId > 0) && (description != null);
+        mWifiState.enabled = enabled;
+        mWifiState.connected = wifiConnected;
+    }
+
+    @Override
+    public void onMobileDataSignalChanged(boolean enabled, int mobileSignalIconId,
+            String mobileSignalContentDescriptionId, int dataTypeIconId, boolean activityIn,
+            boolean activityOut, String dataTypeContentDescriptionId, String description) {
+        // TODO: If view is in awaiting state, disable
+        Resources r = mContext.getResources();
+        mRSSIState.signalIconId = enabled && (mobileSignalIconId > 0)
+                ? mobileSignalIconId
+                : R.drawable.ic_qs_signal_no_signal;
+        mRSSIState.signalContentDescription = enabled && (mobileSignalIconId > 0)
+                ? mobileSignalContentDescriptionId
+                : r.getString(R.string.accessibility_no_signal);
+        mRSSIState.dataTypeIconId = enabled && (dataTypeIconId > 0) && !mWifiState.enabled
+                ? dataTypeIconId
+                : 0;
+        mRSSIState.dataContentDescription = enabled && (dataTypeIconId > 0)
+                && !mWifiState.enabled
+                ? mobileSignalContentDescriptionId
+                : r.getString(R.string.accessibility_no_data);
+        mRSSIState.label = enabled
+                ? removeTrailingPeriod(description)
+                : r.getString(R.string.quick_settings_rssi_emergency_only);
+        setEnabledState(dataTypeIconId > 0 ? true : false);
+        scheduleViewUpdate();
+    }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_signal_full_3;
+    }
 }

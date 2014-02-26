@@ -61,4 +61,9 @@ public class QuietHoursToggle extends StatefulToggle {
         scheduleSms.setAction(SCHEDULE_SERVICE_COMMAND);
         mContext.sendBroadcast(scheduleSms);
     }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_quiet_hours_on;
+    }
 }

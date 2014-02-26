@@ -359,4 +359,8 @@ public class CustomToggle extends BaseToggle {
             updateSettings();
         }
     }
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_custom_blank;
+    }
 }

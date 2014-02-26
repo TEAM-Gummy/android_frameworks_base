@@ -179,9 +179,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
 
     public interface NetworkSignalChangedCallback {
         void onWifiSignalChanged(boolean enabled, int wifiSignalIconId,
-                String wifitSignalContentDescriptionId, String description);
+                boolean activityIn, boolean activityOut,
+                String wifiSignalContentDescriptionId, String description);
         void onMobileDataSignalChanged(boolean enabled, int mobileSignalIconId,
                 String mobileSignalContentDescriptionId, int dataTypeIconId,
+                boolean activityIn, boolean activityOut,
                 String dataTypeContentDescriptionId, String description);
         void onAirplaneModeChanged(boolean enabled);
     }
@@ -369,22 +371,33 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         boolean wifiEnabled = mWifiEnabled && (mWifiConnected || !mHasMobileDataFeature);
         String wifiDesc = wifiEnabled ?
                 mWifiSsid : null;
-        cb.onWifiSignalChanged(wifiEnabled, mQSWifiIconId, mContentDescriptionWifi, wifiDesc);
+        boolean wifiIn = wifiEnabled && mWifiSsid != null
+                && (mWifiActivity == WifiManager.DATA_ACTIVITY_INOUT
+                || mWifiActivity == WifiManager.DATA_ACTIVITY_IN);
+        boolean wifiOut = wifiEnabled && mWifiSsid != null
+                && (mWifiActivity == WifiManager.DATA_ACTIVITY_INOUT
+                || mWifiActivity == WifiManager.DATA_ACTIVITY_OUT);
+        cb.onWifiSignalChanged(wifiEnabled, mQSWifiIconId, wifiIn, wifiOut,
+                mContentDescriptionWifi, wifiDesc);
 
+        boolean mobileIn = mDataConnected && (mDataActivity == TelephonyManager.DATA_ACTIVITY_INOUT
+                || mDataActivity == TelephonyManager.DATA_ACTIVITY_IN);
+        boolean mobileOut = mDataConnected && (mDataActivity == TelephonyManager.DATA_ACTIVITY_INOUT
+                || mDataActivity == TelephonyManager.DATA_ACTIVITY_OUT);
         if (isEmergencyOnly()) {
             cb.onMobileDataSignalChanged(false, mQSPhoneSignalIconId,
-                    mContentDescriptionPhoneSignal, mQSDataTypeIconId, mContentDescriptionDataType,
-                    null);
+                    mContentDescriptionPhoneSignal, mQSDataTypeIconId, mobileIn, mobileOut,
+                    mContentDescriptionDataType, null);
         } else {
             if (mIsWimaxEnabled && mWimaxConnected) {
                 // Wimax is special
                 cb.onMobileDataSignalChanged(true, mQSPhoneSignalIconId,
-                        mContentDescriptionPhoneSignal, mQSDataTypeIconId,
+                        mContentDescriptionPhoneSignal, mQSDataTypeIconId, mobileIn, mobileOut,
                         mContentDescriptionDataType, mNetworkName);
             } else {
                 // Normal mobile data
                 cb.onMobileDataSignalChanged(mHasMobileDataFeature, mQSPhoneSignalIconId,
-                        mContentDescriptionPhoneSignal, mQSDataTypeIconId,
+                        mContentDescriptionPhoneSignal, mQSDataTypeIconId, mobileIn, mobileOut,
                         mContentDescriptionDataType, mNetworkName);
             }
         }

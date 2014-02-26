@@ -16,7 +16,7 @@ public class WifiToggle extends StatefulToggle implements NetworkSignalChangedCa
     private WifiManager wifiManager;
 
     @Override
-    protected void init(Context c, int style) {
+    public void init(Context c, int style) {
         super.init(c, style);
         setInfo(mContext.getString(R.string.quick_settings_wifi_off_label),
                 R.drawable.ic_qs_wifi_no_network);
@@ -52,8 +52,8 @@ public class WifiToggle extends StatefulToggle implements NetworkSignalChangedCa
     }
 
     @Override
-    public void onWifiSignalChanged(boolean enabled, int wifiSignalIconId,
-            String wifiSignalContentDescription, String enabledDesc) {
+    public void onWifiSignalChanged(boolean enabled, int wifiSignalIconId, boolean activityIn,
+            boolean activityOut, String wifiSignalContentDescriptionId, String enabledDesc) {
         Resources r = mContext.getResources();
 
         boolean wifiConnected = enabled && (wifiSignalIconId > 0) && (enabledDesc != null);
@@ -82,8 +82,8 @@ public class WifiToggle extends StatefulToggle implements NetworkSignalChangedCa
 
     @Override
     public void onMobileDataSignalChanged(boolean enabled, int mobileSignalIconId,
-            String mobileSignalContentDescriptionId, int dataTypeIconId,
-            String dataTypeContentDescriptionId, String description) {
+            String mobileSignalContentDescriptionId, int dataTypeIconId, boolean activityIn,
+            boolean activityOut, String dataTypeContentDescriptionId, String description) {
     }
 
     @Override
@@ -98,5 +98,10 @@ public class WifiToggle extends StatefulToggle implements NetworkSignalChangedCa
     @Override
     protected void doDisable() {
         changeWifiState(false);
+    }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_wifi_full_3;
     }
 }

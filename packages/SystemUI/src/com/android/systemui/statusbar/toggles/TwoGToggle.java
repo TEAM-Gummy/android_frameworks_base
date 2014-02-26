@@ -94,4 +94,9 @@ public class TwoGToggle extends StatefulToggle {
                 .getSystemService(Context.TELEPHONY_SERVICE);
         tm.toggle2G(false);
     }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_2g_on;
+    }
 }
