@@ -129,4 +129,8 @@ public class FastChargeToggle extends StatefulToggle {
         return super.onLongClick(v);
     }
 
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_fcharge_off;
+    }
 }

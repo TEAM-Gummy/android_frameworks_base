@@ -77,6 +77,8 @@ public abstract class BaseToggle
         scheduleViewUpdate();
     }
 
+    public abstract int getDefaultIconResId();
+
     protected final void setTextSize(int s) {
         mTextSize = s;
     }

@@ -57,4 +57,9 @@ public class SoundStateToggle extends StatefulToggle {
         mAudioManager = null;
         super.updateView();
     }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_sound_vibrate;
+    }
 }

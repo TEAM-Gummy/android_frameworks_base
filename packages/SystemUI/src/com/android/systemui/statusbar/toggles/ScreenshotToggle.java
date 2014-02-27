@@ -56,4 +56,9 @@ public class ScreenshotToggle extends BaseToggle {
             mContext.sendBroadcast(intent);
         }
     };
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_screenshot;
+    }
 }

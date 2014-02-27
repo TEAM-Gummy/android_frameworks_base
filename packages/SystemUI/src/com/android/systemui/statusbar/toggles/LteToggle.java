@@ -102,4 +102,9 @@ public class LteToggle extends StatefulToggle {
                 || mode == PhoneConstants.NT_MODE_LTE_ONLY
                 || mode == PhoneConstants.NT_MODE_LTE_WCDMA;
     }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_lte_on;
+    }
 }

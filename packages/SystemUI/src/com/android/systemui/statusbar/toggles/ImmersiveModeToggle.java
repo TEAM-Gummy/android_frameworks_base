@@ -56,4 +56,9 @@ public class ImmersiveModeToggle extends StatefulToggle {
         Settings.System.putBoolean(mContext.getContentResolver(),
                 Settings.System.EXPANDED_DESKTOP_STATE, false);
     }
+
+    @Override
+    public int getDefaultIconResId() {
+        return R.drawable.ic_qs_expanded_desktop_on;
+    }
 }
