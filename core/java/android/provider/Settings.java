@@ -2934,6 +2934,13 @@ public final class Settings {
         public static final String SHOW_4G_FOR_LTE = "show_4g_for_lte";
 
         /**
+         * Hide Singal Bars
+         *
+         * @hide
+         */
+        public static final String STATUSBAR_HIDE_SIGNAL_BARS = "statusbar_hide_signal_bars";
+
+        /**
          * Config for advanced power menu
          *
          * @hide

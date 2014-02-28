@@ -144,6 +144,8 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
 
     private boolean mShow4G;
 
+    private boolean mHideSignal;
+
     // our ui
     Context mContext;
     ArrayList<ImageView> mPhoneSignalIconViews = new ArrayList<ImageView>();
@@ -581,15 +583,15 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     private final void updateTelephonySignalStrength() {
         if (!hasService()) {
             if (CHATTY) Log.d(TAG, "updateTelephonySignalStrength: !hasService()");
-            mPhoneSignalIconId = R.drawable.stat_sys_signal_null;
+            mPhoneSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null);
             mQSPhoneSignalIconId = R.drawable.ic_qs_signal_no_signal;
-            mDataSignalIconId = R.drawable.stat_sys_signal_null;
+            mDataSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null);
         } else {
             if (mSignalStrength == null) {
                 if (CHATTY) Log.d(TAG, "updateTelephonySignalStrength: mSignalStrength == null");
-                mPhoneSignalIconId = R.drawable.stat_sys_signal_null;
+                mPhoneSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null);
                 mQSPhoneSignalIconId = R.drawable.ic_qs_signal_no_signal;
-                mDataSignalIconId = R.drawable.stat_sys_signal_null;
+                mDataSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null);
                 mContentDescriptionPhoneSignal = mContext.getString(
                         AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[0]);
             } else {
@@ -618,12 +620,12 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                         iconList = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH[mInetCondition];
                     }
                 }
-                mPhoneSignalIconId = iconList[iconLevel];
+                mPhoneSignalIconId = (mHideSignal ? 0 : iconList[iconLevel]);
                 mQSPhoneSignalIconId =
                         TelephonyIcons.QS_TELEPHONY_SIGNAL_STRENGTH[mInetCondition][iconLevel];
                 mContentDescriptionPhoneSignal = mContext.getString(
                         AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[iconLevel]);
-                mDataSignalIconId = TelephonyIcons.DATA_SIGNAL_STRENGTH[mInetCondition][iconLevel];
+                mDataSignalIconId = (mHideSignal ? 0 : TelephonyIcons.DATA_SIGNAL_STRENGTH[mInetCondition][iconLevel]);
             }
         }
     }
@@ -1705,6 +1707,9 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.SHOW_4G_FOR_LTE), false,
                     this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.STATUSBAR_HIDE_SIGNAL_BARS), false,
+                    this);
             updateSettings();
         }
 
@@ -1717,6 +1722,8 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     protected void updateSettings() {
         mShow4G = (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_4G_FOR_LTE, 0) == 1);
+        mHideSignal = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUSBAR_HIDE_SIGNAL_BARS, 0) == 1);
         updateTelephonySignalStrength();
         updateDataNetType();
     }
