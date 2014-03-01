@@ -21,6 +21,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -34,6 +35,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -167,6 +169,17 @@ public class BatteryMeterView extends View implements DemoMode {
 
     BatteryTracker mTracker = new BatteryTracker();
 
+    private ContentObserver mObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            updateBatteryVisibility();
+        }
+
+        public void onChange(boolean selfChange, android.net.Uri uri) {
+            updateBatteryVisibility();
+        };
+    };
+
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -178,6 +191,11 @@ public class BatteryMeterView extends View implements DemoMode {
         if (sticky != null) {
             // preload the battery level
             mTracker.onReceive(getContext(), sticky);
+
+        getContext().getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.HIDE_BATTERY_ICON),
+                false, mObserver);
+            updateBatteryVisibility();
         }
     }
 
@@ -186,6 +204,7 @@ public class BatteryMeterView extends View implements DemoMode {
         super.onDetachedFromWindow();
 
         getContext().unregisterReceiver(mTracker);
+        getContext().getContentResolver().unregisterContentObserver(mObserver);
     }
 
     public BatteryMeterView(Context context) {
@@ -477,6 +496,7 @@ public class BatteryMeterView extends View implements DemoMode {
             }
 
             updateBattery();
+            updateBatteryVisibility();
         }
     }
 
@@ -540,4 +560,15 @@ public class BatteryMeterView extends View implements DemoMode {
         }
         postInvalidate();
     }
+
+    private void updateBatteryVisibility() {
+        boolean enabled = Settings.System.getBoolean(mContext.getContentResolver(),
+                                Settings.System.HIDE_BATTERY_ICON, false);
+        if (enabled) {
+            setVisibility(View.GONE);
+        } else {
+            setVisibility(View.VISIBLE);
+        }
+    }
+
 }
