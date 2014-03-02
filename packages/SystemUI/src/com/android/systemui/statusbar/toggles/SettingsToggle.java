@@ -10,6 +10,10 @@ import com.android.systemui.R;
 
 public class SettingsToggle extends BaseToggle {
 
+    public static final String SETTINGS_APP = "com.android.settings";
+    public static final String GUMMY_INTERFACE =
+            "com.android.settings.Settings$GummyInterfaceActivity";
+
     @Override
     protected void init(Context c, int style) {
         super.init(c, style);
@@ -29,12 +33,10 @@ public class SettingsToggle extends BaseToggle {
 
     @Override
     public boolean onLongClick(View v) {
-        Intent intent = new Intent("android.intent.action.MAIN");
-        intent.setComponent(ComponentName
-                .unflattenFromString("com.aokp.romcontrol/.ROMControlActivity"));
-        intent.addCategory("android.intent.category.LAUNCHER");
-
-        startActivity(intent);
+        Intent gummyInterface = new Intent().setClassName(SETTINGS_APP, GUMMY_INTERFACE);
+        collapseStatusBar();
+        dismissKeyguard();
+        startActivity(gummyInterface);
         return super.onLongClick(v);
     }
 
