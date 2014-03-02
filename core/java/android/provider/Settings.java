@@ -3236,6 +3236,12 @@ public final class Settings {
                 "status_bar_circle_battery_animationspeed";
 
         /**
+         * Make the battery icon hide
+         * @hide
+         */
+        public static final String HIDE_BATTERY_ICON = "hide_battery_icon";
+
+        /**
         * Whether to control brightness from status bar
         *
         * @hide

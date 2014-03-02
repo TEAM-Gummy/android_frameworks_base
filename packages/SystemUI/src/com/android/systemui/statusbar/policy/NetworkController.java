@@ -766,8 +766,12 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 mQSDataTypeIconId = TelephonyIcons.QS_DATA_R[mInetCondition];
             }
         } else if (mPhone.isNetworkRoaming()) {
-                mDataTypeIconId = R.drawable.stat_sys_data_fully_connected_roam;
-                mQSDataTypeIconId = TelephonyIcons.QS_DATA_R[mInetCondition];
+            mDataTypeIconId = R.drawable.stat_sys_data_fully_connected_roam;
+            mQSDataTypeIconId = TelephonyIcons.QS_DATA_R[mInetCondition];
+        }
+
+        if (updateSignalVisibility() == true) {
+            mDataTypeIconId = 0;
         }
     }
 
@@ -839,6 +843,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 iconId = 0;
                 visible = false;
             }
+        }
+
+        if (updateSignalVisibility() == true) {
+            iconId = 0;
+            visible = false;
         }
 
         mDataDirectionIconId = iconId;
@@ -1737,5 +1746,15 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
 
     public void setListener(UpdateUIListener listener) {
         mUpdateUIListener = listener;
+    }
+
+    private boolean updateSignalVisibility() {
+        boolean enabled = Settings.System.getBoolean(mContext.getContentResolver(),
+                                Settings.System.STATUSBAR_HIDE_SIGNAL_BARS, false);
+        if (enabled) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
