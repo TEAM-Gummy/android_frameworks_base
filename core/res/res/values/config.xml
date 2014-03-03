@@ -1379,4 +1379,7 @@
     <!-- bool value to for enabling motion accelerometer -->
     <bool name="use_motion_accel">false</bool>
 
+    <!-- Workaround for devices with broken keyboards -->
+    <bool name="config_forceDisableHardwareKeyboard">false</bool>
+
 </resources>
