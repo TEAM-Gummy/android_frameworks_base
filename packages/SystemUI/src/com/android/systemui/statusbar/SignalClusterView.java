@@ -138,7 +138,7 @@ public class SignalClusterView
 
     @Override
     public void setMobileDataIndicators(boolean visible, int strengthIcon, int activityIcon,
-            int typeIcon, String contentDescription, String typeContentDescription),
+            int typeIcon, String contentDescription, String typeContentDescription,
             int noSimIcon) {
         mMobileVisible = visible;
         mMobileStrengthId = strengthIcon;

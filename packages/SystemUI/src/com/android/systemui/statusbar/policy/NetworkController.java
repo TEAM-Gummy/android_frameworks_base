@@ -187,11 +187,9 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     public interface SignalCluster {
         void setWifiIndicators(boolean visible, int strengthIcon, int activityIcon,
                 String contentDescription);
-
         void setMobileDataIndicators(boolean visible, int strengthIcon, int activityIcon,
-                int typeIcon, String contentDescription, String typeContentDescription),
+                int typeIcon, String contentDescription, String typeContentDescription,
                 int noSimIcon);
-
         void setIsAirplaneMode(boolean is, int airplaneIcon);
     }
 
@@ -608,7 +606,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         if (!hasService() &&
                 (mDataServiceState != ServiceState.STATE_IN_SERVICE)) {
             if (DEBUG) Log.d(TAG, " No service");
-            mPhoneSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null;
+            mPhoneSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null);
             mQSPhoneSignalIconId = R.drawable.ic_qs_signal_no_signal;
             mDataSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null);
         } else {
@@ -617,7 +615,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     Log.d(TAG, " Null object, mSignalStrength= " + mSignalStrength
                             + " mServiceState " + mServiceState);
                 }
-                mPhoneSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null;
+                mPhoneSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null);
                 mQSPhoneSignalIconId = R.drawable.ic_qs_signal_no_signal;
                 mDataSignalIconId = (mHideSignal ? 0 : R.drawable.stat_sys_signal_null);
                 mContentDescriptionPhoneSignal = mContext.getString(
@@ -641,7 +639,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     iconList = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH[mInetCondition];
                 }
 
-                mPhoneSignalIconId = (mHideSignal ? 0 : iconList[iconLevel];
+                mPhoneSignalIconId = (mHideSignal ? 0 : iconList[iconLevel]);
 
                 mQSPhoneSignalIconId =
                         TelephonyIcons.QS_TELEPHONY_SIGNAL_STRENGTH[mInetCondition][iconLevel];
