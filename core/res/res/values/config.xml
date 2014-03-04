@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
+** Copyright (c) 2013 The Linux Foundation. All rights reserved.
+** Not a Contribution.
 ** Copyright 2009, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,6 +37,7 @@
        <item><xliff:g id="id">volume</xliff:g></item>
        <item><xliff:g id="id">wifi</xliff:g></item>
        <item><xliff:g id="id">cdma_eri</xliff:g></item>
+       <item><xliff:g id="id">phone_signal_second_sub</xliff:g></item>
        <item><xliff:g id="id">data_connection</xliff:g></item>
        <item><xliff:g id="id">phone_evdo_signal</xliff:g></item>
        <item><xliff:g id="id">phone_signal</xliff:g></item>
@@ -1133,6 +1136,10 @@
     <!-- Set to true to add links to Cell Broadcast app from Settings and MMS app. -->
     <bool name="config_cellBroadcastAppLinks">false</bool>
 
+    <!-- Boolean indicating if RADIO POWER OFF should be skipped on receiving SIM REFRESH with RESET-->
+    <!-- This will be handled by modem if it is true-->
+    <bool translatable="false" name="skip_radio_power_off_on_sim_refresh_reset">true</bool>
+
     <!-- The default value if the SyncStorageEngine should sync automatically or not -->
     <bool name="config_syncstorageengine_masterSyncAutomatically">true</bool>
 
@@ -1163,6 +1170,11 @@
     <!-- Configure mobile network MTU. The standard default is set here but each carrier
          may have a specific value set in an overlay config.xml file. -->
     <integer name="config_mobile_mtu">1500</integer>
+
+
+    <!-- Configuration to send sms on 1x when UE is attached to eHRPD and there is an active
+         1xRTT voice call, irrespective of IMS registration state  -->
+    <bool name="config_send_sms1x_on_voice_call">true</bool>
 
     <!-- Whether WiFi display is supported by this device.
          There are many prerequisites for this feature to work correctly.
@@ -1369,6 +1381,7 @@
     <!-- Disable the home key unlock setting -->
     <bool name="config_disableHomeUnlockSetting">true</bool>
 
+
     <!-- empty string to disable, or like: /sys/kernel/fast_charge/force_fast_charge
          it is disabled by default so devices need to add an overlay to enable-->
     <string name="config_fastChargePath" translatable="false"></string>
@@ -1381,5 +1394,16 @@
 
     <!-- Workaround for devices with broken keyboards -->
     <bool name="config_forceDisableHardwareKeyboard">false</bool>
+
+    <!-- set to false if we dont need to consider data
+         service state to display signal strength bars -->
+    <bool name="config_combined_signal">true</bool>
+
+    <!-- Configuration to restart radio upon PDP_DEACTIVATE with
+         error cause as Regular deactivation(36). -->
+    <bool name="config_radio_reset_on_regular_deactivation">true</bool>
+
+    <!-- Boolean to enable Stylus gestures -->
+    <bool name="config_stylusGestures">false</bool>
 
 </resources>
