@@ -711,10 +711,18 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     }
                     break;
                 case TelephonyManager.NETWORK_TYPE_HSPAP:
+                    if (mHspaDataDistinguishable) {
                     mDataIconList = TelephonyIcons.DATA_HP[mInetCondition];
                     mDataTypeIconId = R.drawable.stat_sys_data_connected_hp;
                     mContentDescriptionDataType = mContext.getString(
                             R.string.accessibility_data_connection_HP);
+                    } else {
+                        mDataIconList = TelephonyIcons.DATA_3G[mInetCondition];
+                        mDataTypeIconId = R.drawable.stat_sys_data_fully_connected_3g;
+                        mQSDataTypeIconId = TelephonyIcons.QS_DATA_3G[mInetCondition];
+                        mContentDescriptionDataType = mContext.getString(
+                                R.string.accessibility_data_connection_3g);
+                    }
                     break;
                 case TelephonyManager.NETWORK_TYPE_CDMA:
                     if (!mShowAtLeastThreeGees) {
