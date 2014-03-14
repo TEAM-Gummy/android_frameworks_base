@@ -276,9 +276,9 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     }
 
     public boolean ShouldShowIndicators() {
-        mShowIndicators = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_ACTIVITY_INDICATORS, 0) == 1;
-        if (mShowIndicators == true) {
+        mShowIndicators = Settings.System.getBoolean(mContext.getContentResolver(),
+                Settings.System.SHOW_ACTIVITY_INDICATORS,false);
+        if (mShowIndicators) {
             return true;
         } else {
             return false;
