@@ -127,6 +127,7 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
                 }
             } else {
                 if (target == mTargetOffset) {
+                    mCallback.userActivity(0);
                     mCallback.dismiss(false);
                 } else {
                     int realTarget = target - mTargetOffset - 1;
@@ -134,9 +135,11 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
                             ? mStoredTargets[realTarget] : null;
 
                     if (GlowPadView.EMPTY_TARGET.equals(targetUri)) {
+                        mCallback.userActivity(0);
                         mCallback.dismiss(false);
                     } else {
                         TGActions.processAction(mContext, targetUri, false);
+                        mCallback.userActivity(0);
                     }
                 }
             }
