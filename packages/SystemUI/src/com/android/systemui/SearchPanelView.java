@@ -98,6 +98,9 @@ public class SearchPanelView extends FrameLayout implements
     private int mTarget;
     private boolean mAppIsBinded;
 
+    private boolean mNavigationBarCanMove;
+    private boolean mGlowPadViewNotSet;
+
     public SearchPanelView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -248,7 +251,10 @@ public class SearchPanelView extends FrameLayout implements
         // TODO: fetch views
         mGlowPadView = (GlowPadView) findViewById(R.id.glow_pad_view);
         mGlowPadView.setOnTriggerListener(mGlowPadViewListener);
-        updateSettings();
+        if (mGlowPadViewNotSet) {
+            mGlowPadViewNotSet = false;
+            setDrawables();
+        }
     }
 
     private void maybeSwapSearchIcon() {
@@ -387,9 +393,12 @@ public class SearchPanelView extends FrameLayout implements
                 .getAssistIntent(mContext, false, UserHandle.USER_CURRENT) != null;
     }
 
-    public void updateSettings() {
-        mButtonsConfig = ButtonsHelper.getNavRingConfig(mContext);
-        setDrawables();
+    public void setNavigationBarCanMove(boolean navigationBarCanMove) {
+        mNavigationBarCanMove = navigationBarCanMove;
+    }
+
+    public void setNavigationRingConfig(ArrayList<ButtonConfig> buttonConfig) {
+        mButtonsConfig = buttonConfig;
     }
 
     public int screenLayout() {
@@ -402,7 +411,12 @@ public class SearchPanelView extends FrameLayout implements
         return mResources.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
-    private void setDrawables() {
+    public void setDrawables() {
+        if (mGlowPadView == null) {
+            mGlowPadViewNotSet = true;
+            return;
+        }
+
         mLongPress = false;
         mAppIsBinded = false;
         mSearchPanelLock = false;
@@ -414,13 +428,7 @@ public class SearchPanelView extends FrameLayout implements
         int startPosOffset;
         int middleBlanks = 0;
 
-        boolean navigationBarCanMove = DeviceUtils.isPhone(mContext) ?
-                Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.NAVIGATION_BAR_CAN_MOVE, 1,
-                    UserHandle.USER_CURRENT) == 1
-                : false;
-
-        if (isScreenPortrait() || !navigationBarCanMove) {
+        if (isScreenPortrait() || !mNavigationBarCanMove) {
             startPosOffset = 1;
             endPosOffset = (mButtonsConfig.size()) + 1;
         } else {

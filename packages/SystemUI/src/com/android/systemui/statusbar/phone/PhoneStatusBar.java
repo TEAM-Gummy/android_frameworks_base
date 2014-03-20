@@ -295,6 +295,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // on-screen navigation buttons
     private NavigationBarView mNavigationBarView = null;
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
+    private boolean mNavigationBarCanMove;
+    private ArrayList<ButtonConfig> mNavigationRingConfig;
 
     // the tracker view
     int mTrackingPosition; // the position of the top of the tracking view.
@@ -504,10 +506,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.NAVIGATION_BAR_CAN_MOVE))
                 || uri.equals(Settings.System.getUriFor(
                     Settings.System.NAVRING_CONFIG))) {
-                prepareNavigationBarView();
+                mNavigationBarCanMove = DeviceUtils.isPhone(mContext) ?
+                        Settings.System.getIntForUser(mContext.getContentResolver(),
+                            Settings.System.NAVIGATION_BAR_CAN_MOVE, 1,
+                            UserHandle.USER_CURRENT) == 1
+                        : false;
+                mNavigationRingConfig = ButtonsHelper.getNavRingConfig(mContext);
                 if (mSearchPanelView != null) {
-                    mSearchPanelView.updateSettings();
+                    mSearchPanelView.setNavigationBarCanMove(mNavigationBarCanMove);
+                    mSearchPanelView.setNavigationRingConfig(mNavigationRingConfig);
+                    mSearchPanelView.setDrawables();
                 }
+                if (mNavigationBarView != null) {
+                    mNavigationBarView.setNavigationBarCanMove(mNavigationBarCanMove);
+                }
+                prepareNavigationBarView();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.PIE_CONTROLS))) {
                 attachPieContainer(isPieEnabled());
@@ -1164,8 +1177,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     @Override
-    protected void updateSearchPanel() {
-        super.updateSearchPanel();
+    protected void updateSearchPanel(boolean navigationBarCanMove,
+            ArrayList<ButtonConfig> buttonConfig) {
+        super.updateSearchPanel(navigationBarCanMove, buttonConfig);
         if (mNavigationBarView != null) {
             mNavigationBarView.setDelegateView(mSearchPanelView);
         }
@@ -1283,7 +1297,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
         mNavigationBarView.getSearchLight().setOnTouchListener(mHomeSearchActionListener);
         setDisableHomeLongpress();
-        updateSearchPanel();
+        updateSearchPanel(mNavigationBarCanMove, mNavigationRingConfig);
     }
 
     // For small-screen devices (read: phones) that lack hardware navigation buttons
@@ -1297,6 +1311,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             // Nevermind, this will be re-created
             return;
         }
+
+        mNavigationBarCanMove = DeviceUtils.isPhone(mContext) ?
+                Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.NAVIGATION_BAR_CAN_MOVE, 1,
+                    UserHandle.USER_CURRENT) == 1
+                : false;
+        mNavigationRingConfig = ButtonsHelper.getNavRingConfig(mContext);
+
+        mNavigationBarView.setNavigationBarCanMove(mNavigationBarCanMove);
 
         prepareNavigationBarView();
 
@@ -3265,7 +3288,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 || Intent.ACTION_PACKAGE_ADDED.equals(action)) {
 
                 if (mSearchPanelView != null && mSearchPanelView.hasAppBinded()) {
-                    mSearchPanelView.updateSettings();
+                    mSearchPanelView.setDrawables();
                 }
                 if (mNavigationBarView != null && mNavigationBarView.hasAppBinded()) {
                     mNavigationBarView.recreateNavigationBar();
@@ -3303,17 +3326,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private void updateSwapXY() {
         if (mNavigationBarView != null
                 && mNavigationBarView.mDelegateHelper != null) {
-            boolean navigationBarCanMove = DeviceUtils.isPhone(mContext) ?
-                    Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.NAVIGATION_BAR_CAN_MOVE, 1,
-                        UserHandle.USER_CURRENT) == 1
-                    : false;
             // if we are in landscape mode and NavBar
             // can move swap the XY coordinates for NaVRing Swipe
             mNavigationBarView.mDelegateHelper.setSwapXY(
                     mContext.getResources().getConfiguration()
                             .orientation == Configuration.ORIENTATION_LANDSCAPE
-                    && navigationBarCanMove);
+                    && mNavigationBarCanMove);
         }
     }
 
