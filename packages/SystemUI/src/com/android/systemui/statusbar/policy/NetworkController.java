@@ -151,6 +151,8 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
 
     private boolean mHideSignal;
 
+    private boolean mHideSimIcon;
+
     // our ui
     ArrayList<ImageView> mPhoneSignalIconViews = new ArrayList<ImageView>();
     ArrayList<ImageView> mDataDirectionIconViews = new ArrayList<ImageView>();
@@ -442,6 +444,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 || action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
             updateWifiState(intent);
             refreshViews();
+            updateSimIcon();
         } else if (action.equals(TelephonyIntents.ACTION_SIM_STATE_CHANGED)) {
             updateSimState(intent);
             updateDataIcon();
@@ -841,9 +844,13 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     private final void updateSimIcon() {
         Log.d(TAG,"In updateSimIcon simState= " + mSimState);
         if (mSimState ==  IccCardConstants.State.ABSENT) {
-            mNoSimIconId = R.drawable.stat_sys_no_sim;
+            Settings.System.putBoolean(mContext.getContentResolver(),
+                    Settings.System.SIM_ICON_SHOWN, true);
+            mNoSimIconId = (mHideSimIcon ? 0 : R.drawable.stat_sys_no_sim);
         } else {
             mNoSimIconId = 0;
+            Settings.System.putBoolean(mContext.getContentResolver(),
+                    Settings.System.SIM_ICON_SHOWN, false);
         }
         refreshViews();
     }
@@ -879,7 +886,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     visible = false;
                 }
             } else {
-                iconId = R.drawable.stat_sys_no_sim;
+                iconId = (mHideSimIcon ? 0 : R.drawable.stat_sys_no_sim);
                 visible = false; // no SIM? no data
             }
         } else {
@@ -1796,6 +1803,9 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.STATUSBAR_HIDE_SIGNAL_BARS), false,
                     this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.STATUSBAR_HIDE_SIM_ICON), false,
+                    this);
             updateSettings();
         }
 
@@ -1810,8 +1820,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 Settings.System.SHOW_4G_FOR_LTE, 0) == 1);
         mHideSignal = (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUSBAR_HIDE_SIGNAL_BARS, 0) == 1);
+        mHideSimIcon = (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.STATUSBAR_HIDE_SIM_ICON, 0) == 1);
         updateTelephonySignalStrength();
         updateDataNetType();
+        updateSimIcon();
     }
 
     /**

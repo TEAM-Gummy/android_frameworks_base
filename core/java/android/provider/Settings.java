@@ -2957,6 +2957,20 @@ public final class Settings {
         public static final String STATUSBAR_HIDE_SIGNAL_BARS = "statusbar_hide_signal_bars";
 
         /**
+         * Is Sim icon showing
+         *
+         * @hide
+         */
+        public static final String SIM_ICON_SHOWN = "sim_icon_shown";
+
+        /**
+         * Hide Sim Icon
+         *
+         * @hide
+         */
+        public static final String STATUSBAR_HIDE_SIM_ICON = "statusbar_hide_sim_icon";
+
+        /**
          * Config for advanced power menu
          *
          * @hide
