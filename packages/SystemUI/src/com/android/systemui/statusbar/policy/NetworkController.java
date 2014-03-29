@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -1805,14 +1806,14 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.SHOW_4G_FOR_LTE), false,
-                    this);
+                    Settings.System.getUriFor(Settings.System.SHOW_4G_FOR_LTE),
+                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.STATUSBAR_HIDE_SIGNAL_BARS), false,
-                    this);
+                    Settings.System.getUriFor(Settings.System.STATUSBAR_HIDE_SIGNAL_BARS),
+                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.STATUSBAR_HIDE_SIM_ICON), false,
-                    this);
+                    Settings.System.getUriFor(Settings.System.STATUSBAR_HIDE_SIM_ICON),
+                    false, this, UserHandle.USER_ALL);
             updateSettings();
         }
 
