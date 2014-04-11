@@ -141,4 +141,8 @@
     <string name="perf_profile_bal">Balanced</string>
     <string name="perf_profile_perf">Performance</string>
 
+    <!-- Navigation bar IME navigation -->
+    <string name="accessibility_ime_navigation_left">Cursor left</string>
+    <string name="accessibility_ime_navigation_right">Cursor right</string>
+
 </resources>
