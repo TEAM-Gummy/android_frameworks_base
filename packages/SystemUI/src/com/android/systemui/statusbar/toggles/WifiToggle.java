@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.view.View;
 
 import com.android.systemui.R;
+import com.android.systemui.statusbar.policy.MSimNetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.NetworkSignalChangedCallback;
 
 public class WifiToggle extends StatefulToggle implements NetworkSignalChangedCallback {

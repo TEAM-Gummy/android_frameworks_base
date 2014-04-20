@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.provider.Settings;
 
 import com.android.systemui.R;
+import com.android.systemui.statusbar.policy.MSimNetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.NetworkSignalChangedCallback;
 
 public class AirplaneModeToggle extends StatefulToggle implements NetworkSignalChangedCallback {
