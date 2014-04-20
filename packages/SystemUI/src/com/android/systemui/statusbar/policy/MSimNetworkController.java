@@ -1348,4 +1348,20 @@ public class MSimNetworkController extends NetworkController {
         pw.print(mLastCombinedLabel);
         pw.println("");
     }
+
+   @Override
+    protected void updateSettings() {
+        mShow4G = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_4G_FOR_LTE, 0) == 1);
+        mHideSignal = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUSBAR_HIDE_SIGNAL_BARS, 0) == 1);
+        mHideSimIcon = (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.STATUSBAR_HIDE_SIM_ICON, 0) == 1);
+        for (int sub = 0; sub < MSimTelephonyManager.getDefault().getPhoneCount(); sub++) {
+            //updateTelephonySignalStrength(sub);
+            //updateDataNetType(sub);
+            //updateSimIcon(sub);
+        }
+    }
+
 }

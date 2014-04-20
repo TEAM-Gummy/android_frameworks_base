@@ -148,11 +148,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     // Activity Indicators
     private boolean mShowIndicators = false;
 
-    private boolean mShow4G;
+    protected boolean mShow4G;
 
-    private boolean mHideSignal;
+    protected boolean mHideSignal;
 
-    private boolean mHideSimIcon;
+    protected boolean mHideSimIcon;
 
     // our ui
     ArrayList<ImageView> mPhoneSignalIconViews = new ArrayList<ImageView>();
