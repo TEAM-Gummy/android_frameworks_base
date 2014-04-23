@@ -116,4 +116,8 @@
     <string name="pie_phone_status_airplane_mode">Airplane mode on</string>
     <string name="pie_phone_status_emergency_only">Emergency calls only</string>
 
+    <!-- Sim Slot number -->
+    <string name="sim_slot">1</string>
+    <string name="sim_slot_2">2</string>
+    <string name="sim_slot_3">3</string>
 </resources>
