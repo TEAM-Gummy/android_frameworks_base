@@ -25,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
 import static com.android.internal.util.gummy.GummyConstants.*;
+import com.android.internal.util.gummy.TorchConstants;
 import java.net.URISyntaxException;
 
 public class GummyHelpers {
@@ -115,5 +116,16 @@ public class GummyHelpers {
             return activityName + ": " + name;
         }
         return name != null ? name : intent.toUri(0);
+    }
+
+
+    public static boolean isTorchAvailable(Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            return pm.getPackageInfo(TorchConstants.APP_PACKAGE_NAME, 0) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            // ignored, just catched so we can return false below
+        }
+        return false;
     }
 }
