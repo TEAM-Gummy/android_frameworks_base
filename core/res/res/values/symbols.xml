@@ -1791,13 +1791,14 @@
   <!-- Irda Service -->
   <java-symbol type="bool" name="config_enableIrdaManagerService" />
 
+  <!-- Device key handler -->
+  <java-symbol type="string" name="config_deviceKeyHandlerLib" />
+  <java-symbol type="string" name="config_deviceKeyHandlerClass" />
+
   <!-- Wifi -->
   <java-symbol type="bool" name="config_wifiApFirmwareReload" />
-
   <java-symbol type="bool" name="use_motion_accel" />
-
   <java-symbol type="bool" name="config_setup_mms_data" />
-
   <java-symbol type="string" name="config_partial_segment_expire_age" />
 
   <!-- SMS RIL_REQUEST_SEND_SMS_EXPECT_MORE -->
