@@ -707,7 +707,7 @@ public class Resources {
     public Drawable getDrawable(int id) throws NotFoundException {
         //Check if an icon is themed
         PackageItemInfo info = mIcons != null ? mIcons.get(id) : null;
-        if (info != null && info.themedIcon >> 24 == THEME_ICON_PKG_ID) {
+        if (info != null && info.themedIcon != 0) {
             id = info.themedIcon;
         }
 
@@ -752,7 +752,7 @@ public class Resources {
     public Drawable getDrawableForDensity(int id, int density) throws NotFoundException {
         //Check if an icon was themed
         PackageItemInfo info = mIcons != null ? mIcons.get(id) : null;
-        if (info != null && info.themedIcon >> 24 == THEME_ICON_PKG_ID) {
+        if (info != null && info.themedIcon != 0) {
             id = info.themedIcon;
         }
 
@@ -1148,7 +1148,7 @@ public class Resources {
             throws NotFoundException {
         //Check if an icon was themed
         PackageItemInfo info = mIcons != null ? mIcons.get(id) : null;
-        if (info != null && info.themedIcon >> 24 == THEME_ICON_PKG_ID) {
+        if (info != null && info.themedIcon != 0) {
             id = info.themedIcon;
         }
         boolean found = mAssets.getResourceValue(id, 0, outValue, resolveRefs);
@@ -1176,7 +1176,7 @@ public class Resources {
             throws NotFoundException {
         //Check if an icon was themed
         PackageItemInfo info = mIcons != null ? mIcons.get(id) : null;
-        if (info != null && info.themedIcon >> 24 == THEME_ICON_PKG_ID) {
+        if (info != null && info.themedIcon != 0) {
             id = info.themedIcon;
         }
         boolean found = mAssets.getResourceValue(id, density, outValue, resolveRefs);
