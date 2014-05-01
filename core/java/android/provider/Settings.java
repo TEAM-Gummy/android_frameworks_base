@@ -3531,6 +3531,12 @@ public final class Settings {
         public static final String NAVIGATION_BAR_SHOW = "navigation_bar_show";
 
         /**
+         * Wether to disable hardware keys
+         * @hide
+         */
+        public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
+
+        /**
          * Wether navigation bar is on landscape on the bottom or on the right
          * @hide
          */

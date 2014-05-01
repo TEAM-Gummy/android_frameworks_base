@@ -366,6 +366,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mHasAssistKey;
     boolean mHasAppSwitchKey;
 
+    boolean mHardwareKeysDisable;
+
     int mLongPressPoweronTime = DEFAULT_LONG_PRESS_POWERON_TIME;
 
     // The last window we were told about in focusChanged.
@@ -746,6 +748,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DEV_FORCE_SHOW_NAVBAR), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HARDWARE_KEYS_DISABLE), false, this,
                     UserHandle.USER_ALL);
 
             updateSettings();
@@ -1500,75 +1505,128 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             boolean keyRebindingEnabled = Settings.System.getInt(resolver,
                     Settings.System.HARDWARE_KEY_REBINDING, 0) == 1;
 
+            mHardwareKeysDisable = Settings.System.getInt(resolver,
+                    Settings.System.HARDWARE_KEYS_DISABLE, 0) == 1;
+
             if (!keyRebindingEnabled) {
                 if (mHasHomeKey) {
-                    mPressOnHomeBehavior = getStr(KEY_ACTION_HOME);
-                    if (mHasAppSwitchKey) {
-                        mLongPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnHomeBehavior = getStr(KEY_ACTION_HOME);
+                        if (mHasAppSwitchKey) {
+                            mLongPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
+                        } else {
+                            mLongPressOnHomeBehavior = getStr(KEY_ACTION_APP_SWITCH);
+                        }
                     } else {
-                        mLongPressOnHomeBehavior = getStr(KEY_ACTION_APP_SWITCH);
+                        mPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
                     }
                 }
                 if (mHasBackKey) {
-                    mPressOnBackBehavior = getStr(KEY_ACTION_BACK);
-                    mLongPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnBackBehavior = getStr(KEY_ACTION_BACK);
+                        mLongPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
+                    } else {
+                        mPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
+                    }
                 }
                 if (mHasMenuKey) {
-                    mPressOnMenuBehavior = getStr(KEY_ACTION_MENU);
-                    if (mHasAssistKey) {
-                        mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnMenuBehavior = getStr(KEY_ACTION_MENU);
+                        if (mHasAssistKey) {
+                            mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
+                        } else {
+                            mLongPressOnMenuBehavior = getStr(KEY_ACTION_SEARCH);
+                        }
                     } else {
-                        mLongPressOnMenuBehavior = getStr(KEY_ACTION_SEARCH);
+                        mPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
                     }
                 }
                 if (mHasAssistKey) {
-                    mPressOnAssistBehavior = getStr(KEY_ACTION_SEARCH);
-                    mLongPressOnAssistBehavior = getStr(KEY_ACTION_VOICE_SEARCH);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnAssistBehavior = getStr(KEY_ACTION_SEARCH);
+                        mLongPressOnAssistBehavior = getStr(KEY_ACTION_VOICE_SEARCH);
+                    } else {
+                        mPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
+                    }
                 }
                 if (mHasAppSwitchKey) {
-                    mPressOnAppSwitchBehavior = getStr(KEY_ACTION_APP_SWITCH);
-                    mLongPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnAppSwitchBehavior = getStr(KEY_ACTION_APP_SWITCH);
+                        mLongPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
+                    } else {
+                        mPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
+                    }
                 }
             } else {
                 if (mHasHomeKey) {
-                    mPressOnHomeBehavior = getDefString(resolver,
-                            Settings.System.KEY_HOME_ACTION, KEY_ACTION_HOME);
-                    if (mHasAppSwitchKey) {
-                        mLongPressOnHomeBehavior = getDefString(resolver,
-                                Settings.System.KEY_HOME_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnHomeBehavior = getDefString(resolver,
+                                Settings.System.KEY_HOME_ACTION, KEY_ACTION_HOME);
+                        if (mHasAppSwitchKey) {
+                            mLongPressOnHomeBehavior = getDefString(resolver,
+                                    Settings.System.KEY_HOME_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
+                        } else {
+                            mLongPressOnHomeBehavior = getDefString(resolver,
+                                    Settings.System.KEY_HOME_LONG_PRESS_ACTION, KEY_ACTION_APP_SWITCH);
+                        }
                     } else {
-                        mLongPressOnHomeBehavior = getDefString(resolver,
-                                Settings.System.KEY_HOME_LONG_PRESS_ACTION, KEY_ACTION_APP_SWITCH);
+                        mPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
                     }
                 }
                 if (mHasBackKey) {
-                    mPressOnBackBehavior = getDefString(resolver,
-                            Settings.System.KEY_BACK_ACTION, KEY_ACTION_BACK);
-                    mLongPressOnBackBehavior = getDefString(resolver,
-                            Settings.System.KEY_BACK_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnBackBehavior = getDefString(resolver,
+                                Settings.System.KEY_BACK_ACTION, KEY_ACTION_BACK);
+                        mLongPressOnBackBehavior = getDefString(resolver,
+                                Settings.System.KEY_BACK_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
+                    } else {
+                        mPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
+                    }
                 }
                 if (mHasMenuKey) {
-                    mPressOnMenuBehavior = getDefString(resolver,
-                            Settings.System.KEY_MENU_ACTION, KEY_ACTION_MENU);
-                    if (mHasAssistKey) {
-                        mLongPressOnMenuBehavior = getDefString(resolver,
-                                Settings.System.KEY_MENU_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnMenuBehavior = getDefString(resolver,
+                                Settings.System.KEY_MENU_ACTION, KEY_ACTION_MENU);
+                        if (mHasAssistKey) {
+                            mLongPressOnMenuBehavior = getDefString(resolver,
+                                    Settings.System.KEY_MENU_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
+                        } else {
+                            mLongPressOnMenuBehavior = getDefString(resolver,
+                                    Settings.System.KEY_MENU_LONG_PRESS_ACTION, KEY_ACTION_SEARCH);
+                        }
                     } else {
-                        mLongPressOnMenuBehavior = getDefString(resolver,
-                                Settings.System.KEY_MENU_LONG_PRESS_ACTION, KEY_ACTION_SEARCH);
+                        mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
                     }
                 }
                 if (mHasAssistKey) {
-                    mPressOnAssistBehavior = getDefString(resolver,
-                            Settings.System.KEY_ASSIST_ACTION, KEY_ACTION_SEARCH);
-                    mLongPressOnAssistBehavior = getDefString(resolver,
-                            Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, KEY_ACTION_VOICE_SEARCH);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnAssistBehavior = getDefString(resolver,
+                                Settings.System.KEY_ASSIST_ACTION, KEY_ACTION_SEARCH);
+                        mLongPressOnAssistBehavior = getDefString(resolver,
+                                Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, KEY_ACTION_VOICE_SEARCH);
+                    } else {
+                        mPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
+                    }
                 }
                 if (mHasAppSwitchKey) {
-                    mPressOnAppSwitchBehavior = getDefString(resolver,
-                            Settings.System.KEY_APP_SWITCH_ACTION, KEY_ACTION_APP_SWITCH);
-                    mLongPressOnAppSwitchBehavior = getDefString(resolver,
-                            Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
+                    if (!mHardwareKeysDisable) {
+                        mPressOnAppSwitchBehavior = getDefString(resolver,
+                                Settings.System.KEY_APP_SWITCH_ACTION, KEY_ACTION_APP_SWITCH);
+                        mLongPressOnAppSwitchBehavior = getDefString(resolver,
+                                Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
+                    } else {
+                        mPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
+                        mLongPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
+                    }
                 }
             }
 
@@ -4717,16 +4775,23 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             & (WindowManagerPolicy.FLAG_WAKE | WindowManagerPolicy.FLAG_WAKE_DROPPED)) != 0
             || isVolumeWakeKey;
 
+        final boolean virtualKeyboardKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
+
         if (DEBUG_INPUT) {
-            Log.d(TAG, "interceptKeyTq keycode=" + keyCode
+            Slog.d(TAG, "interceptKeyTq keycode=" + keyCode
                     + " screenIsOn=" + isScreenOn + " keyguardActive=" + keyguardActive
                     + " policyFlags=" + Integer.toHexString(policyFlags)
-                    + " isWakeKey=" + isWakeKey);
+                    + " isWakeKey=" + isWakeKey + " scanCode=" + event.getScanCode()
+                    + " virtualKeyboardKey=" + virtualKeyboardKey);
         }
 
         if (down && (policyFlags & WindowManagerPolicy.FLAG_VIRTUAL) != 0
                 && event.getRepeatCount() == 0) {
-            performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+            if (virtualKeyboardKey){
+                performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+            } else if(!mHardwareKeysDisable) {
+                performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+            }
         }
 
         // Basic policy based on screen state and keyguard.
