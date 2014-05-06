@@ -54,7 +54,6 @@ import android.text.TextUtils;
 import android.util.AndroidException;
 import android.util.Log;
 
-import com.android.internal.util.gummy.LockscreenBackgroundUtil;
 import com.android.internal.widget.ILockSettings;
 
 import java.net.URISyntaxException;
@@ -3738,14 +3737,6 @@ public final class Settings {
         public static final String LOCKSCREEN_CAMERA_WIDGET = "lockscreen_camera_widget";
 
         /**
-         * Sets the lockscreen background style. Integer.
-         * @see LockscreenBackgroundUtil#LOCKSCREEN_STYLE_DEFAULT
-         * @see LockscreenBackgroundUtil#LOCKSCREEN_STYLE_IMAGE
-         * @hide
-         */
-        public static final String LOCKSCREEN_BACKGROUND_STYLE = "lockscreen_background_style";
-
-        /**
          * favorite contact for quick settings
          *
          * @hide
@@ -3758,6 +3749,13 @@ public final class Settings {
          * @hide
          */
         public static final String SHADE_COLLAPSE_ALL = "shade_collapse_all";
+
+        /**		
+	 * number of tiles per row in quick settings		
+	 *		
+	 * @hide		
+	 */
+        public static final String QUICK_TOGGLES_PER_ROW = "quick_toggles_per_row";
 
         /**
          * enable vibrate on toggle click
