@@ -63,4 +63,7 @@ interface IPowerManager
 
     void cpuBoost(int duration);
 
+    void setPowerProfile(String profile);
+    String getPowerProfile();
+
 }
