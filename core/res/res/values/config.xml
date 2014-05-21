@@ -1447,7 +1447,4 @@
 
          The default value is false which represents AOSP behavior. -->
     <bool name="config_smsUseExpectMore">false</bool>
-
-    <!-- Config to enable the tap to wake option -->
-    <bool name="config_showTapToWake">false</bool>
 </resources>
