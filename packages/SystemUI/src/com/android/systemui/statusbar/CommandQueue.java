@@ -55,15 +55,14 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_TOGGLE_RECENT_APPS         = 13 << MSG_SHIFT;
     private static final int MSG_PRELOAD_RECENT_APPS        = 14 << MSG_SHIFT;
     private static final int MSG_CANCEL_PRELOAD_RECENT_APPS = 15 << MSG_SHIFT;
-    private static final int MSG_SET_NAVIGATION_ICON_HINTS  = 16 << MSG_SHIFT;
-    private static final int MSG_SET_WINDOW_STATE           = 17 << MSG_SHIFT;
-    private static final int MSG_SET_AUTOROTATE_STATUS      = 18 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_NOTIFICATION_SHADE  = 19 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_QS_SHADE            = 20 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_SCREENSHOT          = 21 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_LAST_APP            = 22 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_KILL_APP            = 23 << MSG_SHIFT;
-    private static final int MSG_SET_PIE_TRIGGER_MASK       = 24 << MSG_SHIFT;
+    private static final int MSG_SET_WINDOW_STATE           = 16 << MSG_SHIFT;
+    private static final int MSG_SET_AUTOROTATE_STATUS      = 17 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_NOTIFICATION_SHADE  = 18 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_QS_SHADE            = 19 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_SCREENSHOT          = 20 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_LAST_APP            = 21 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_KILL_APP            = 22 << MSG_SHIFT;
+    private static final int MSG_SET_PIE_TRIGGER_MASK       = 23 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -105,7 +104,6 @@ public class CommandQueue extends IStatusBar.Stub {
         public void showSearchPanel();
         public void hideSearchPanel();
         public void cancelPreloadRecentApps();
-        public void setNavigationIconHints(int hints);
         public void setWindowState(int window, int state);
         public void setPieTriggerMask(int newMask, boolean lock);
         public void toggleNotificationShade();
@@ -238,13 +236,6 @@ public class CommandQueue extends IStatusBar.Stub {
         synchronized (mList) {
             mHandler.removeMessages(MSG_CANCEL_PRELOAD_RECENT_APPS);
             mHandler.sendEmptyMessage(MSG_CANCEL_PRELOAD_RECENT_APPS);
-        }
-    }
-
-    public void setNavigationIconHints(int hints) {
-        synchronized (mList) {
-            mHandler.removeMessages(MSG_SET_NAVIGATION_ICON_HINTS);
-            mHandler.obtainMessage(MSG_SET_NAVIGATION_ICON_HINTS, hints, 0, null).sendToTarget();
         }
     }
 
@@ -382,9 +373,6 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_CANCEL_PRELOAD_RECENT_APPS:
                     mCallbacks.cancelPreloadRecentApps();
-                    break;
-                case MSG_SET_NAVIGATION_ICON_HINTS:
-                    mCallbacks.setNavigationIconHints(msg.arg1);
                     break;
                 case MSG_SET_WINDOW_STATE:
                     mCallbacks.setWindowState(msg.arg1, msg.arg2);

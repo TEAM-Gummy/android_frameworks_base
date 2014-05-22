@@ -25,16 +25,12 @@ import android.graphics.Canvas;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.hardware.input.InputManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
-import android.view.InputDevice;
-import android.view.KeyCharacterMap;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
@@ -55,8 +51,6 @@ public class KeyButtonView extends ImageView {
     final float GLOW_MAX_SCALE_FACTOR = 1.8f;
     public static final float DEFAULT_QUIESCENT_ALPHA = 0.70f;
 
-    long mDownTime;
-    int mCode;
     String mClickAction;
     String mLongpressAction;
     int mTouchSlop;
@@ -100,8 +94,6 @@ public class KeyButtonView extends ImageView {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.KeyButtonView,
                 defStyle, 0);
 
-        mCode = a.getInteger(R.styleable.KeyButtonView_keyCode, 0);
-
         mSupportsLongpress = a.getBoolean(R.styleable.KeyButtonView_keyRepeat, true);
 
         mGlowBgId = a.getResourceId(R.styleable.KeyButtonView_glowBackground, 0);
@@ -116,10 +108,6 @@ public class KeyButtonView extends ImageView {
 
         setClickable(true);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-    }
-
-    public void setCode(int code) {
-        mCode = code;
     }
 
     public void setClickAction(String action) {
@@ -152,6 +140,7 @@ public class KeyButtonView extends ImageView {
             }
             mGlowBG.setColorFilter(null);
             mGlowBG.setColorFilter(mGlowBGColor, Mode.SRC_ATOP);
+
         }
     }
 
@@ -296,12 +285,8 @@ public class KeyButtonView extends ImageView {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                mDownTime = SystemClock.uptimeMillis();
                 mIsLongpressed = false;
                 setPressed(true);
-                if (mCode != 0) {
-                    sendEvent(KeyEvent.ACTION_DOWN, 0, mDownTime);
-                }
                 if (mSupportsLongpress) {
                     removeCallbacks(mCheckLongPress);
                     postDelayed(mCheckLongPress, ViewConfiguration.getLongPressTimeout());
@@ -317,40 +302,25 @@ public class KeyButtonView extends ImageView {
                 break;
             case MotionEvent.ACTION_CANCEL:
                 setPressed(false);
-                if (mCode != 0) {
-                    sendEvent(KeyEvent.ACTION_UP, KeyEvent.FLAG_CANCELED);
-                }
                 if (mSupportsLongpress) {
                     removeCallbacks(mCheckLongPress);
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                final boolean doIt = isPressed();
-                setPressed(false);
                 if (!mIsLongpressed) {
-                    if (mCode != 0) {
-                        if (doIt) {
-                            sendEvent(KeyEvent.ACTION_UP, 0);
-                        } else {
-                            sendEvent(KeyEvent.ACTION_UP, KeyEvent.FLAG_CANCELED);
+                    if (isPressed()) {
+                        if (mClickAction != null
+                            && !TGActions.isActionKeyEvent(mClickAction)) {
+                            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                         }
-                    } else {
-                        // no key code, it is a custom click action
-                        if (doIt) {
-                            if (mClickAction != null
-                                && !TGActions.isActionKeyEvent(mClickAction)) {
-                                performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                            }
-                            performClick();
-                        }
-                    }
-                    if (doIt) {
+                        performClick();
                         sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
                     }
                 }
                 if (mSupportsLongpress) {
                     removeCallbacks(mCheckLongPress);
                 }
+                setPressed(false);
                 break;
         }
 
@@ -373,19 +343,6 @@ public class KeyButtonView extends ImageView {
         }
     };
 
-    void sendEvent(int action, int flags) {
-        sendEvent(action, flags, SystemClock.uptimeMillis());
-    }
-
-    void sendEvent(int action, int flags, long when) {
-        final int repeatCount = (flags & KeyEvent.FLAG_LONG_PRESS) != 0 ? 1 : 0;
-        final KeyEvent ev = new KeyEvent(mDownTime, when, action, mCode, repeatCount,
-                0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
-                flags | KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
-                InputDevice.SOURCE_KEYBOARD);
-        InputManager.getInstance().injectInputEvent(ev,
-                InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
-    }
 }
 
 
