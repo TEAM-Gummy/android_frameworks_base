@@ -146,9 +146,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     // performs manual animation in sync with layout transitions
     private final NavTransitionListener mTransitionListener = new NavTransitionListener();
 
-    private boolean mModLockDisabled = true;
-    private SettingsObserver mObserver;
-
     private class NavTransitionListener implements TransitionListener {
         private boolean mBackTransitioning;
         private boolean mAppearing;
@@ -276,7 +273,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
                 mContext, "shortcut_action_values", "shortcut_action_entries");
         mButtonIdList = new ArrayList<Integer>();
 
-        mObserver = new SettingsObserver(new Handler());
     }
 
     private void watchForDevicePolicyChanges() {
@@ -745,7 +741,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         final View cameraButton = getCameraButton();
         if (cameraButton != null) {
             setVisibleOrGone(cameraButton, shouldShowCamera && !mCameraDisabledByDpm
-                    && !mCameraDisabledByUser && mModLockDisabled);
+                    && !mCameraDisabledByUser);
         }
 
         mBarTransitions.applyBackButtonQuiescentAlpha(mBarTransitions.getMode(), true /*animate*/);
@@ -869,24 +865,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         updateSettings();
 
         watchForAccessibilityChanges();
-    }
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-
-        final Bundle keyguard_metadata = NavigationBarView
-                    .getApplicationMetadata(mContext, "com.android.keyguard");
-                if (null != keyguard_metadata &&
-                    keyguard_metadata.getBoolean("com.cyanogenmod.keyguard", false)) {
-                        mObserver.observe();
-                }
-    }
-
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mObserver.unobserve();
     }
 
     private void watchForAccessibilityChanges() {
@@ -1168,38 +1146,5 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         }
 
         return null;
-    }
-
-    private class SettingsObserver extends ContentObserver {
-        private boolean mObserving = false;
-
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            mObserving = true;
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(
-                Settings.System.getUriFor(Settings.System.LOCKSCREEN_MODLOCK_ENABLED),
-                false, this);
-
-            // intialize mModlockDisabled
-            onChange(false);
-        }
-
-        void unobserve() {
-            if (mObserving) {
-                mContext.getContentResolver().unregisterContentObserver(this);
-                mObserving = false;
-            }
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            mModLockDisabled = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.LOCKSCREEN_MODLOCK_ENABLED, 1) == 0;
-            setDisabledFlags(mDisabledFlags, true /* force */);
-        }
     }
 }
