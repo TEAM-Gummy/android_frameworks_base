@@ -170,7 +170,8 @@ public class GummyAction {
                 mContext.sendBroadcast(new Intent("android.settings.SHOW_INPUT_METHOD_PICKER"));
                 break;
             case ACTION_TORCH:
-                mContext.sendBroadcast(new Intent("net.cactii.flash2.TOGGLE_FLASHLIGHT"));
+                Intent i = new Intent(TorchConstants.ACTION_TOGGLE_STATE);
+                mContext.sendBroadcast(i);
                 break;
             case ACTION_TODAY:
                 long startMillis = System.currentTimeMillis();
