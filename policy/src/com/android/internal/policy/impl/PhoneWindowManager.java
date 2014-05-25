@@ -113,6 +113,7 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.util.gesture.EdgeGesturePosition;
 import com.android.internal.util.gummy.Converter;
+import com.android.internal.util.gummy.TorchConstants;
 import com.android.internal.widget.PointerLocationView;
 
 import java.io.File;
@@ -1110,7 +1111,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     pm.goToSleep(SystemClock.uptimeMillis());
                     break;
                 case KEY_ACTION_TORCH:
-                    mContext.sendBroadcast(new Intent("net.cactii.flash2.TOGGLE_FLASHLIGHT"));
+                    Intent i = new Intent(TorchConstants.ACTION_TOGGLE_STATE);
+                    mContext.sendBroadcast(i);
                     break;
                 default:
                     break;
@@ -1123,7 +1125,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } catch (URISyntaxException ex) {
                 Slog.e(TAG, "URISyntaxException: [" + strBehavior + "]");
             } catch (ActivityNotFoundException ex){
-                 Slog.e(TAG, "ActivityNotFound: [" + strBehavior + "]");
+                Slog.e(TAG, "ActivityNotFound: [" + strBehavior + "]");
             }
         }
     }
