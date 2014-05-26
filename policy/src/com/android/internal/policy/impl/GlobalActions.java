@@ -1312,6 +1312,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         mNavBarState = navBarModeOn ? ToggleAction.State.On : ToggleAction.State.Off;
         if (mNavBarModeOn != null) {
             mNavBarModeOn.updateState(mNavBarState);
+            PolicyHelper.navBarModeChanged(mContext);
         }
     }
 

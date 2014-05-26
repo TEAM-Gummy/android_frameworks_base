@@ -44,6 +44,7 @@ import android.view.WindowManagerGlobal;
 import android.widget.Toast;
 
 import com.android.internal.statusbar.IStatusBarService;
+import com.android.internal.util.gummy.PolicyHelper;
 
 import java.net.URISyntaxException;
 
@@ -150,6 +151,7 @@ public class TGActions {
                         context.getContentResolver(),
                         Settings.System.NAVIGATION_BAR_SHOW,
                         navBarState ? 0 : 1, UserHandle.USER_CURRENT);
+                PolicyHelper.navBarModeChanged(context);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_EXPANDED_DESKTOP)) {
                 boolean expandDesktopModeOn = Settings.System.getIntForUser(

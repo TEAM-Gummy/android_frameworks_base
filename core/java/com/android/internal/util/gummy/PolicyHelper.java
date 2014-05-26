@@ -194,4 +194,15 @@ public class PolicyHelper {
         return null;
     }
 
+    public static void navBarModeChanged(Context context) {
+        boolean defaultValue = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_showNavigationBar);
+        boolean isNavBarModeOn = Settings.System.getInt(context.getContentResolver(),
+                Settings.System.NAVIGATION_BAR_SHOW,
+                defaultValue ? 1 : 0) == 1;
+        Settings.System.putInt(context.getContentResolver(),
+                Settings.System.HARDWARE_KEYS_DISABLE,
+                isNavBarModeOn ? 1 : 0);
+    }
+
 }
