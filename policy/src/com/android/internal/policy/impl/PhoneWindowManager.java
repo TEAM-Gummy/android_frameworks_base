@@ -1510,63 +1510,38 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mHardwareKeysDisable = Settings.System.getInt(resolver,
                     Settings.System.HARDWARE_KEYS_DISABLE, 0) == 1;
 
-            if (!keyRebindingEnabled) {
-                if (mHasHomeKey) {
-                    if (!mHardwareKeysDisable) {
+            if (!mHardwareKeysDisable) {
+                if (!keyRebindingEnabled) {
+                    if (mHasHomeKey) {
                         mPressOnHomeBehavior = getStr(KEY_ACTION_HOME);
                         if (mHasAppSwitchKey) {
                             mLongPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
                         } else {
                             mLongPressOnHomeBehavior = getStr(KEY_ACTION_APP_SWITCH);
                         }
-                    } else {
-                        mPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-                if (mHasBackKey) {
-                    if (!mHardwareKeysDisable) {
+                    if (mHasBackKey) {
                         mPressOnBackBehavior = getStr(KEY_ACTION_BACK);
                         mLongPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
-                    } else {
-                        mPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-                if (mHasMenuKey) {
-                    if (!mHardwareKeysDisable) {
+                    if (mHasMenuKey) {
                         mPressOnMenuBehavior = getStr(KEY_ACTION_MENU);
                         if (mHasAssistKey) {
                             mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
                         } else {
                             mLongPressOnMenuBehavior = getStr(KEY_ACTION_SEARCH);
                         }
-                    } else {
-                        mPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-                if (mHasAssistKey) {
-                    if (!mHardwareKeysDisable) {
+                    if (mHasAssistKey) {
                         mPressOnAssistBehavior = getStr(KEY_ACTION_SEARCH);
                         mLongPressOnAssistBehavior = getStr(KEY_ACTION_VOICE_SEARCH);
-                    } else {
-                        mPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-                if (mHasAppSwitchKey) {
-                    if (!mHardwareKeysDisable) {
+                    if (mHasAppSwitchKey) {
                         mPressOnAppSwitchBehavior = getStr(KEY_ACTION_APP_SWITCH);
                         mLongPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
-                    } else {
-                        mPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-            } else {
-                if (mHasHomeKey) {
-                    if (!mHardwareKeysDisable) {
+                } else {
+                    if (mHasHomeKey) {
                         mPressOnHomeBehavior = getDefString(resolver,
                                 Settings.System.KEY_HOME_ACTION, KEY_ACTION_HOME);
                         if (mHasAppSwitchKey) {
@@ -1576,24 +1551,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             mLongPressOnHomeBehavior = getDefString(resolver,
                                     Settings.System.KEY_HOME_LONG_PRESS_ACTION, KEY_ACTION_APP_SWITCH);
                         }
-                    } else {
-                        mPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-                if (mHasBackKey) {
-                    if (!mHardwareKeysDisable) {
+                    if (mHasBackKey) {
                         mPressOnBackBehavior = getDefString(resolver,
                                 Settings.System.KEY_BACK_ACTION, KEY_ACTION_BACK);
                         mLongPressOnBackBehavior = getDefString(resolver,
                                 Settings.System.KEY_BACK_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
-                    } else {
-                        mPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-                if (mHasMenuKey) {
-                    if (!mHardwareKeysDisable) {
+                    if (mHasMenuKey) {
                         mPressOnMenuBehavior = getDefString(resolver,
                                 Settings.System.KEY_MENU_ACTION, KEY_ACTION_MENU);
                         if (mHasAssistKey) {
@@ -1603,33 +1568,29 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             mLongPressOnMenuBehavior = getDefString(resolver,
                                     Settings.System.KEY_MENU_LONG_PRESS_ACTION, KEY_ACTION_SEARCH);
                         }
-                    } else {
-                        mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-                if (mHasAssistKey) {
-                    if (!mHardwareKeysDisable) {
+                    if (mHasAssistKey) {
                         mPressOnAssistBehavior = getDefString(resolver,
                                 Settings.System.KEY_ASSIST_ACTION, KEY_ACTION_SEARCH);
                         mLongPressOnAssistBehavior = getDefString(resolver,
                                 Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, KEY_ACTION_VOICE_SEARCH);
-                    } else {
-                        mPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
                     }
-                }
-                if (mHasAppSwitchKey) {
-                    if (!mHardwareKeysDisable) {
+                    if (mHasAppSwitchKey) {
                         mPressOnAppSwitchBehavior = getDefString(resolver,
                                 Settings.System.KEY_APP_SWITCH_ACTION, KEY_ACTION_APP_SWITCH);
                         mLongPressOnAppSwitchBehavior = getDefString(resolver,
                                 Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
-                    } else {
-                        mPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
-                        mLongPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
                     }
                 }
+            } else {
+                mPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
+                mLongPressOnHomeBehavior = getStr(KEY_ACTION_NOTHING);
+                mPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
+                mLongPressOnBackBehavior = getStr(KEY_ACTION_NOTHING);
+                mPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
+                mLongPressOnMenuBehavior = getStr(KEY_ACTION_NOTHING);
+                mPressOnAssistBehavior = getStr(KEY_ACTION_NOTHING);
+                mLongPressOnAppSwitchBehavior = getStr(KEY_ACTION_NOTHING);
             }
 
             boolean devForceNavbar = Settings.System.getIntForUser(resolver,
