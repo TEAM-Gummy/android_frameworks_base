@@ -26,4 +26,6 @@
     <dimen name="ad_date_font_size">18dp</dimen>
     <dimen name="ad_ampm_font_size">32dp</dimen>   
 
+    <dimen name="wifi_combo_margin_end">-6dp</dimen>
+
 </resources>
