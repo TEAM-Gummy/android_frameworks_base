@@ -90,6 +90,11 @@ public class Build {
         public static final String RELEASE = getString("ro.build.version.release");
 
         /**
+         * The Gummy release version
+         */
+        public static final String GUMMY = getString("ro.tg.release");
+
+        /**
          * The user-visible SDK version of the framework in its raw String
          * representation; use {@link #SDK_INT} instead.
          * 

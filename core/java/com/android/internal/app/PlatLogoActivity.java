@@ -19,6 +19,8 @@ package com.android.internal.app;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.provider.Settings;
@@ -41,14 +43,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class PlatLogoActivity extends Activity {
+
     FrameLayout mContent;
     int mCount;
     final Handler mHandler = new Handler();
     static final int BGCOLOR = 0xffed1d24;
+    static final int INVERTED_BGCOLOR = 0xff000000;
+
+    private boolean mInvertedMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getResources().getConfiguration().uiInvertedMode
+                == Configuration.UI_INVERTED_MODE_YES) {
+            mInvertedMode = true;
+        } else {
+            mInvertedMode = false;
+        }
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -65,22 +78,32 @@ public class PlatLogoActivity extends Activity {
         lp.gravity = Gravity.CENTER;
 
         final ImageView logo = new ImageView(this);
-        logo.setImageResource(com.android.internal.R.drawable.platlogo);
+        if (mInvertedMode != true) {
+            logo.setImageResource(com.android.internal.R.drawable.platlogo);
+        } else {
+            logo.setImageResource(com.android.internal.R.drawable.gummy_platlogo);
+        }
         logo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         logo.setVisibility(View.INVISIBLE);
 
         final View bg = new View(this);
-        bg.setBackgroundColor(BGCOLOR);
+        if (mInvertedMode != true) {
+            bg.setBackgroundColor(BGCOLOR);
+        } else {
+            bg.setBackgroundColor(INVERTED_BGCOLOR);
+        }
         bg.setAlpha(0f);
 
         final TextView letter = new TextView(this);
-
         letter.setTypeface(bold);
         letter.setTextSize(300);
         letter.setTextColor(0xFFFFFFFF);
         letter.setGravity(Gravity.CENTER);
-        letter.setText(String.valueOf(Build.ID).substring(0, 1));
-
+        if (mInvertedMode != true) {
+            letter.setText(String.valueOf(Build.ID).substring(0, 1));
+        } else {
+            letter.setText(com.android.internal.R.string.inverted_platlogo_letter);
+        }
         final int p = (int)(4 * metrics.density);
 
         final TextView tv = new TextView(this);
@@ -90,7 +113,12 @@ public class PlatLogoActivity extends Activity {
         tv.setTextColor(0xFFFFFFFF);
         tv.setGravity(Gravity.CENTER);
         tv.setTransformationMethod(new AllCapsTransformationMethod(this));
-        tv.setText("Android " + Build.VERSION.RELEASE);
+        if (mInvertedMode != true) {
+            tv.setText("Android " + Build.VERSION.RELEASE);
+        } else {
+            String string = getString(com.android.internal.R.string.inverted_platlogo_build_version);
+            tv.setText(string + " " + Build.VERSION.GUMMY + " " + Build.VERSION.RELEASE);
+        }
         tv.setVisibility(View.INVISIBLE);
 
         mContent.addView(bg);

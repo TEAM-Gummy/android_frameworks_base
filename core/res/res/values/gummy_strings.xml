@@ -153,4 +153,8 @@
     <string name="permdesc_writeThemesDesc">Allows the app to insert new themes and
        modify which theme you have applied.</string>
 
+    <!-- Gummy Inverted mode platlogo -->
+    <string name="inverted_platlogo_letter">G</string>
+    <string name="inverted_platlogo_build_version">Team Gummy </string>
+
 </resources>

@@ -147,4 +147,9 @@
   <java-symbol type="drawable" name="ic_lock_navbar" />
   <java-symbol type="string" name="disable_navigation_pie_error" />
 
+  <!-- Inverted mode platlogo -->
+  <java-symbol type="drawable" name="gummy_platlogo" />
+  <java-symbol type="string" name="inverted_platlogo_letter" />
+  <java-symbol type="string" name="inverted_platlogo_build_version" />
+
 </resources>
