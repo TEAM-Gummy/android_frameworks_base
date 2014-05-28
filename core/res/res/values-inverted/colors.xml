@@ -20,5 +20,9 @@
 <resources>
     <color name="dim_foreground_holo_dark">#33b5e5</color>
     <color name="dim_foreground_holo_light">#33b5e5</color>
+
+    <!-- TRDS colors -->
+    <color name="trds_background">#ff000000</color>
+    <color name="trds_text">#ffffffff</color>
 </resources>
 
