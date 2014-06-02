@@ -157,4 +157,7 @@
     <string name="inverted_platlogo_letter">G</string>
     <string name="inverted_platlogo_build_version">Team Gummy </string>
 
+    <!-- test string -->
+    <string name="aj_is_a_whore">Aj is a whore</string>
+
 </resources>
