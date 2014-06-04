@@ -390,6 +390,5 @@ interface ITelephony {
        * Unregister a callback.
        */
       void removeListener(ITelephonyListener listener);
->>>>>>> android-4.4.3_r1.1
 }
 
