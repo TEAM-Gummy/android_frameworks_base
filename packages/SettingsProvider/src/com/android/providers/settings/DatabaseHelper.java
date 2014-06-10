@@ -2069,6 +2069,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
                     R.integer.def_double_tap_sleep_gesture);
 
+            loadIntegerSetting(stmt, Settings.System.INCALL_GLOWPAD_TRANSPARENCY,
+                    R.integer.def_incall_glowpad_transparency);
+
         } finally {
             if (stmt != null) stmt.close();
         }
