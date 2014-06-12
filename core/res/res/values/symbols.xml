@@ -1792,6 +1792,9 @@
   <!-- Irda Service -->
   <java-symbol type="bool" name="config_enableIrdaManagerService" />
 
+  <!-- Wallpaper width -->
+  <java-symbol type="integer" name="config_wallpaperMaxWidth" />
+
   <!-- Device key handler -->
   <java-symbol type="string" name="config_deviceKeyHandlerLib" />
   <java-symbol type="string" name="config_deviceKeyHandlerClass" />
