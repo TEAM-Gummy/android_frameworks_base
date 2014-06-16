@@ -26,7 +26,6 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_OPAQUE;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_SEMI_TRANSPARENT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSLUCENT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_LIGHTS_OUT;
-import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSPARENT;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -43,7 +42,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.content.res.CustomTheme;
+import android.content.res.ThemeConfig;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Canvas;
@@ -70,7 +69,6 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.telephony.MSimTelephonyManager;
-import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
@@ -84,7 +82,6 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.WindowManagerGlobal;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewPropertyAnimator;
 import android.view.ViewStub;
@@ -95,7 +92,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -322,6 +318,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     int[] mAbsPos = new int[2];
     Runnable mPostCollapseCleanup = null;
 
+    // last theme that was applied in order to detect theme change (as opposed
+    // to some other configuration change).
+    ThemeConfig mCurrentTheme;
+    private boolean mRecreating = false;
+
     // status bar brightness control
     private boolean mBrightnessControl;
     private float mScreenWidth;
@@ -331,12 +332,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     int mLinger;
     int mInitialTouchX;
     int mInitialTouchY;
-
-    // last theme that was applied in order to detect theme change (as opposed
-    // to some other configuration change).
-    CustomTheme mCurrentTheme;
-
-    private boolean mRecreating = false;
 
     // for disabling the status bar
     int mDisabled = 0;
@@ -703,9 +698,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 .getDefaultDisplay();
         updateDisplaySize();
 
-        CustomTheme currentTheme = mContext.getResources().getConfiguration().customTheme;
+        ThemeConfig currentTheme = mContext.getResources().getConfiguration().themeConfig;
         if (currentTheme != null) {
-            mCurrentTheme = (CustomTheme)currentTheme.clone();
+            mCurrentTheme = (ThemeConfig)currentTheme.clone();
         }
 
         super.start(); // calls createAndAddWindows()
@@ -1379,7 +1374,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (DEBUG) Log.v(TAG, "addNavigationBar: about to add " + mNavigationBarView);
         if (mNavigationBarView == null) return;
 
-        CustomTheme newTheme = mContext.getResources().getConfiguration().customTheme;
+        ThemeConfig newTheme = mContext.getResources().getConfiguration().themeConfig;
         if (newTheme != null &&
                 (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
             // Nevermind, this will be re-created
@@ -1413,12 +1408,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private void repositionNavigationBar() {
         if (mNavigationBarView == null || !mNavigationBarView.isAttachedToWindow()) return;
 
-        CustomTheme newTheme = mContext.getResources().getConfiguration().customTheme;
-        if (newTheme != null &&
-                (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
-            // Nevermind, this will be re-created
-            return;
-        }
         prepareNavigationBarView();
 
         mWindowManager.updateViewLayout(mNavigationBarView, getNavigationBarLayoutParams());
@@ -3587,10 +3576,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         final Resources res = context.getResources();
 
         // detect theme change.
-        CustomTheme newTheme = res.getConfiguration().customTheme;
+        ThemeConfig newTheme = res.getConfiguration().themeConfig;
         if (newTheme != null &&
                 (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
-            mCurrentTheme = (CustomTheme)newTheme.clone();
+            mCurrentTheme = (ThemeConfig)newTheme.clone();
             recreateStatusBar(false);
         } else {
 
