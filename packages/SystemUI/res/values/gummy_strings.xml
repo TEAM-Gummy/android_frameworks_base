@@ -120,4 +120,10 @@
     <string name="sim_slot">1</string>
     <string name="sim_slot_2">2</string>
     <string name="sim_slot_3">3</string>
+
+    <!-- Title shown in recents popup for showing app in floating mode -->
+    <string name="status_bar_recent_floating_item_title">Floating mode</string>
+
+    <!-- Title shown in notification popup for launching notification in floating mode -->
+    <string name="status_bar_notification_floating_item_title">Floating mode</string>
 </resources>
