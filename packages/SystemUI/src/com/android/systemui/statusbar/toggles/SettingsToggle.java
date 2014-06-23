@@ -34,6 +34,7 @@ public class SettingsToggle extends BaseToggle {
     @Override
     public boolean onLongClick(View v) {
         Intent gummyInterface = new Intent().setClassName(SETTINGS_APP, GUMMY_INTERFACE);
+        gummyInterface.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_FLOATING_WINDOW);
         collapseStatusBar();
         dismissKeyguard();
         startActivity(gummyInterface);
