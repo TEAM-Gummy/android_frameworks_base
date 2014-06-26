@@ -3840,6 +3840,11 @@ public final class Settings {
         };
         
         /**
+         * @hide
+         */
+        public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
+
+        /**
          * Whether to remove the sound from phone ringing during quiet hours.
          * @hide
          */
