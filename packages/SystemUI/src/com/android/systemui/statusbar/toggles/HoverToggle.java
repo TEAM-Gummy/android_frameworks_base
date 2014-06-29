@@ -14,6 +14,10 @@ import com.android.systemui.R;
 public class HoverToggle extends StatefulToggle {
     HoverObserver mObserver = null;
 
+    public static final String SETTINGS_APP = "com.android.settings";
+    public static final String HOVER_OPTIONS =
+            "com.android.settings.Settings$HoverOptionsActivity";
+
     @Override
     public void init(Context c, int style) {
         super.init(c, style);
@@ -40,6 +44,16 @@ public class HoverToggle extends StatefulToggle {
     protected void doDisable() {
         Settings.System.putInt(mContext.getContentResolver(),
                 Settings.System.HOVER_STATE, 0);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        Intent hoverOptions = new Intent().setClassName(SETTINGS_APP, HOVER_OPTIONS);
+        hoverOptions.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_FLOATING_WINDOW);
+        collapseStatusBar();
+        dismissKeyguard();
+        startActivity(hoverOptions);
+        return super.onLongClick(v);
     }
 
     @Override

@@ -210,6 +210,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     // Hover
     protected Hover mHover;
     protected int mHoverState;
+    protected boolean mHoverHideButton;
     protected ImageView mHoverButton;
     protected HoverCling mHoverCling;
 
@@ -459,6 +460,16 @@ public abstract class BaseStatusBar extends SystemUI implements
             }
         });
 
+        // Listen for HOVER button override
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.HOVER_HIDE_BUTTON),
+                        false, new ContentObserver(new Handler()) {
+            @Override
+            public void onChange(boolean selfChange) {
+                updateHoverState();
+            }
+        });
+
         updateHoverState();
 
         mContext.getContentResolver().registerContentObserver(
@@ -523,14 +534,22 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
     }
 
+    protected void updateHoverButton() {
+        if (mHoverHideButton) {
+            mHoverButton.setVisibility(View.GONE);
+        }
+    }
+
     protected void updateHoverState() {
         mHoverState = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HOVER_STATE, HOVER_DISABLED);
 
-        mHoverButton.setImageResource(mHoverState != HOVER_DISABLED
-                ? R.drawable.ic_notify_hover_pressed
-                        : R.drawable.ic_notify_hover_normal);
+        mHoverHideButton = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HOVER_HIDE_BUTTON, 0) == 1;
 
+        mHoverButton.setImageResource(mHoverState != HOVER_DISABLED ?
+                R.drawable.ic_notify_hover_pressed : R.drawable.ic_notify_hover_normal);
+        updateHoverButton();
         mHover.setHoverActive(mHoverState == HOVER_ENABLED);
     }
 

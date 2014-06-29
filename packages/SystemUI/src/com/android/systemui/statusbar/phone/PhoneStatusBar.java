@@ -337,6 +337,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private boolean mRecreating = false;
 
+    protected boolean mHoverHideButton;
+
     // for disabling the status bar
     int mDisabled = 0;
     boolean mDisableHomeLongpress;
@@ -914,6 +916,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (mHoverButton != null) {
             mHoverButton.setOnClickListener(mHoverButtonListener);
             mHoverButton.setVisibility(View.VISIBLE);
+            updateHoverButtonVisibility();
         }
 
         if (mHasFlipSettings) {
@@ -1177,6 +1180,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mHoverButton.setImageResource(mHoverState != HOVER_DISABLED
                             ? R.drawable.ic_notify_hover_pressed
                                     : R.drawable.ic_notify_hover_normal);
+                    updateHoverButtonVisibility();
                 }
 
             }
@@ -1618,6 +1622,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             // Force asset reloading
             mHoverButton.setImageDrawable(null);
             mHoverButton.setImageResource(R.drawable.ic_notify_hover_normal);
+            updateHoverButtonVisibility();
         }
 
         if (mSettingsButton != null) {
@@ -2252,6 +2257,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mNotificationPanelIsOpen = true;
         mQSPanelIsOpen = false;
+        updateHoverButtonVisibility();
+    }
+
+    protected void updateHoverButtonVisibility() {
+        mHoverHideButton = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HOVER_HIDE_BUTTON, 0) == 1;
+        if (mHoverHideButton) {
+            mHoverButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -2447,6 +2461,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mFlipSettingsView.setVisibility(View.GONE);
             mNotificationButton.setVisibility(View.GONE);
             setAreThereNotifications(); // show the clear button
+            updateHoverButtonVisibility();
         }
 
         mExpandedVisible = false;
