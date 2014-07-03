@@ -101,7 +101,6 @@ public class ToggleManager {
     public static final String WIRELESS_ADB_TOGGLE = "WIRELESSADB";
     public static final String IMMERSIVE_MODE_TOGGLE = "IMMERSIVE_MODE";
     public static final String DARK_GUMMY = "DARK_GUMMY";
-    public static final String HOVER_TOGGLE = "HOVER";
 
     private int mStyle;
 
@@ -171,7 +170,6 @@ public class ToggleManager {
             // toggleMap.put(BT_TETHER_TOGGLE, null);
             toggleMap.put(IMMERSIVE_MODE_TOGGLE, ImmersiveModeToggle.class);
             toggleMap.put(DARK_GUMMY, DarkGummyToggle.class);
-            toggleMap.put(HOVER_TOGGLE, HoverToggle.class);
         }
         return toggleMap;
     }

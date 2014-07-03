@@ -210,4 +210,9 @@
     <!-- Default value of Settings.System.INCALL_GLOWPAD_TRANSPARENCY -->
     <integer name="def_incall_glowpad_transparency">1</integer>
 
+    <!-- Default DnD values of Settings.System.HEADS_UP_NOTIFICATION -->
+    <string name="def_heads_up_notification_dnd_values"></string>
+
+    <!-- Default Blacklist values of Settings.System.HEADS_UP_NOTIFICATION -->
+    <string name="def_heads_up_notification_blacklist_values"></string>
 </resources>

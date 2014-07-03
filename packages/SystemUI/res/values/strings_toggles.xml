@@ -51,7 +51,6 @@
     <string name="toggle_WIRELESSADB">Wireless ADB</string>
     <string name="toggle_IMMERSIVE_MODE">Expanded Desktop</string>
     <string name="toggle_DARK_GUMMY">Dark Gummy</string>
-    <string name="toggle_HOVER">Hover</string>
 
     <!--  Quick Settings -->
     <string name="quick_settings_vibrate_on_label">Vibrate On</string>
@@ -101,6 +100,4 @@
     <string name="quick_settings_clock_alarm_off">Alarm Off</string>
     <string name="quick_settings_dark_gummy_on_label">Inverted UI</string>
     <string name="quick_settings_dark_gummy_off_label">Stock UI</string>
-    <string name="quick_settings_hover_on_label">Hover On</string>
-    <string name="quick_settings_hover_off_label">Hover Off</string>
 </resources>
