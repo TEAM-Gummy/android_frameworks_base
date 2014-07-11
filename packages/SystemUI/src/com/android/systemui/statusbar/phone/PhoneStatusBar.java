@@ -2601,9 +2601,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         if (mBrightnessControl) {
             brightnessControl(event);
-            if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
-                return true;
-            }
+        }
+
+        if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
+            return true;
         }
 
         return false;
