@@ -642,6 +642,7 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
             if (mGlowTorchRunning) {
                 mGlowTorchRunning = false;
                 Intent i = new Intent(TorchConstants.ACTION_TOGGLE_STATE);
+                i.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
                 mContext.sendBroadcastAsUser(
                         i, new UserHandle(UserHandle.USER_CURRENT));
                 // Restore user rotation policy
@@ -657,6 +658,7 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
             // Lock device so user doesn't accidentally rotate and lose torch
             RotationPolicy.setRotationLock(mContext, true);
             Intent i = new Intent(TorchConstants.ACTION_TOGGLE_STATE);
+            i.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             mContext.sendBroadcastAsUser(
                     i, new UserHandle(UserHandle.USER_CURRENT));
         }

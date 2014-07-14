@@ -1170,6 +1170,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     break;
                 case KEY_ACTION_TORCH:
                     Intent i = new Intent(TorchConstants.ACTION_TOGGLE_STATE);
+                    i.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
                     mContext.sendBroadcast(i);
                     break;
                 default:
