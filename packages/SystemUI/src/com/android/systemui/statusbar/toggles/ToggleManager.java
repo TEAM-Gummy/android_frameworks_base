@@ -80,7 +80,6 @@ public class ToggleManager {
     public static final String BLUETOOTH_TOGGLE = "BLUETOOTH";
     public static final String VIBRATE_TOGGLE = "VIBRATE";
     public static final String SILENT_TOGGLE = "SILENT";
-    public static final String FCHARGE_TOGGLE = "FCHARGE";
     public static final String SYNC_TOGGLE = "SYNC";
     public static final String NFC_TOGGLE = "NFC";
     public static final String TORCH_TOGGLE = "TORCH";
@@ -145,7 +144,6 @@ public class ToggleManager {
                 toggleMap.put(SOUND_STATE_TOGGLE, SoundStateToggle.class);
             }
             toggleMap.put(SILENT_TOGGLE, SilentToggle.class);
-            toggleMap.put(FCHARGE_TOGGLE, FastChargeToggle.class);
             toggleMap.put(SYNC_TOGGLE, SyncToggle.class);
             if (mContext.getSystemService(Context.NFC_SERVICE) != null) {
                 toggleMap.put(NFC_TOGGLE, NfcToggle.class);
