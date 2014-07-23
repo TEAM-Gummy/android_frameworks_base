@@ -163,6 +163,38 @@ public final class Settings {
             "android.settings.SECURITY_SETTINGS";
 
     /**
+     * Activity Action: Show trusted credentials settings, opening to the user tab,
+     * to allow management of installed credentials.
+     * <p>
+     * In some cases, a matching Activity may not exist, so ensure you
+     * safeguard against this.
+     * <p>
+     * Input: Nothing.
+     * <p>
+     * Output: Nothing.
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String ACTION_TRUSTED_CREDENTIALS_USER =
+            "com.android.settings.TRUSTED_CREDENTIALS_USER";
+
+    /**
+     * Activity Action: Show dialog explaining that an installed CA cert may enable
+     * monitoring of encrypted network traffic.
+     * <p>
+     * In some cases, a matching Activity may not exist, so ensure you
+     * safeguard against this.
+     * <p>
+     * Input: Nothing.
+     * <p>
+     * Output: Nothing.
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String ACTION_MONITORING_CERT_INFO =
+            "com.android.settings.MONITORING_CERT_INFO";
+
+    /**
      * Activity Action: Show settings to allow configuration of privacy options.
      * <p>
      * In some cases, a matching Activity may not exist, so ensure you
@@ -719,17 +751,6 @@ public final class Settings {
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_PRINT_SETTINGS =
             "android.settings.ACTION_PRINT_SETTINGS";
-
-    /**
-     * Package name of the torch app
-     */
-    public static final String TORCH_PACKAGE_NAME = "net.cactii.flash2";
-
-    /**
-     * Intent for launching the torch application
-     */
-    public static Intent ACTION_TORCH_APP = new Intent(Intent.ACTION_MAIN)
-            .setClassName(TORCH_PACKAGE_NAME, TORCH_PACKAGE_NAME + ".MainActivity");
 
     // End of Intent actions for Settings
 
@@ -3335,12 +3356,6 @@ public final class Settings {
         public static final String REVERSE_LOOKUP_PROVIDER = "reverse_lookup_provider";
 
         /**
-         * Screenshot toggle delay
-         * @hide
-         */
-        public static final String SCREENSHOT_TOGGLE_DELAY = "screenshot_toggle_delay";
-
-        /**
          * Whether to show the battery bar
          * @hide
          */
@@ -3738,13 +3753,6 @@ public final class Settings {
         public static final int QUIET_HOURS_RINGER_DISABLED = 3;
 
         /**
-         * enabled and order of quick toggles
-         *
-         * @hide
-         */
-        public static final String QUICK_TOGGLES = "quick_toggles";
-
-        /**
          * Whether or not to show circle battery around the lockscreen ring
          * @hide
          */
@@ -3766,58 +3774,6 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_CAMERA_WIDGET = "lockscreen_camera_widget";
-
-        /**
-         * favorite contact for quick settings
-         *
-         * @hide
-         */
-        public static final String QUICK_TOGGLE_FAV_CONTACT = "quick_toggle_fav_contact";
-
-        /**
-         * enable and disable shade collapse on click
-         *
-         * @hide
-         */
-        public static final String SHADE_COLLAPSE_ALL = "shade_collapse_all";
-
-        /**		
-	 * number of tiles per row in quick settings		
-	 *		
-	 * @hide		
-	 */
-        public static final String QUICK_TOGGLES_PER_ROW = "quick_toggles_per_row";
-
-        /**
-         * enable vibrate on toggle click
-         *
-         * @hid
-         */
-        public static final String QUICK_TOGGLE_VIBRATE = "quick_toggle_vibrate";
-
-        /**
-         * enable and disable fast toggle in settings
-         *
-         * @hide
-         */
-        public static final String FAST_TOGGLE = "fast_toggle";
-
-        /**
-         * enable and disable fast toggle in settings
-         *
-         * @hide
-         */
-        public static final String CHOOSE_FASTTOGGLE_SIDE = "choose_fasttoggle_side";
-
-        /**
-         * @hide
-         */
-        public static final String CUSTOM_TOGGLE_REVERT = "custom_toggle_revert";
-
-        /**
-         * @hide
-         */
-        public static final String DCLICK_TOGGLE_REVERT = "dclick_toggle_revert";
 
         /**
          * Enable Stylus Gestures
@@ -3881,55 +3837,6 @@ public final class Settings {
          * @hide
          */
         public static final String STYLUS_ICON_ENABLED = "stylus_icon_enabled";
-
-        /**
-         * Whether power menu airplane toggle is enabled
-         * @hide
-         */
-        public static final String MATCH_ACTION_ICON = "match_action_icon";
-
-        /**
-         * @hide
-         */
-        public static final String COLLAPSE_SHADE = "collapse_shade";
-
-        /**
-         * @hide
-         */
-        public static final String CUSTOM_TOGGLE_QTY = "custom_toggle_qty";
-
-        /**
-         * @hide
-         */
-        public static final String[] CUSTOM_PRESS_TOGGLE = new String[] {
-            "toggle_custom_app_intent_0",
-            "toggle_custom_app_intent_1",
-            "toggle_custom_app_intent_2",
-            "toggle_custom_app_intent_3",
-            "toggle_custom_app_intent_4",
-        };
-
-        /**
-         * @hide
-         */
-        public static final String[] CUSTOM_LONGPRESS_TOGGLE = new String[] {
-            "toggle_custom_app_longintent_0",
-            "toggle_custom_app_longintent_1",
-            "toggle_custom_app_longintent_2",
-            "toggle_custom_app_longintent_3",
-            "toggle_custom_app_longintent_4",
-        };
-
-        /**
-         * @hide
-         */
-        public static final String[] CUSTOM_TOGGLE_ICONS = new String[] {
-            "custom_toggle_icons_0",
-            "custom_toggle_icons_1",
-            "custom_toggle_icons_2",
-            "custom_toggle_icons_3",
-            "custom_toggle_icons_4",
-        };
 
         /**
          * Whether to enable quiet hours.
@@ -4474,15 +4381,6 @@ public final class Settings {
         @Deprecated
         public static final String WIFI_WATCHDOG_PING_TIMEOUT_MS =
             Secure.WIFI_WATCHDOG_PING_TIMEOUT_MS;
-
-        /**
-         * 0 == QuickSettings Tile
-         * 1 == Toggle Switch (Not implemented Yet)
-         * 2 == Traditional
-         * 3 == Traditional (Scrolling)
-         * @hide
-         */
-        public static final String TOGGLES_STYLE = "toggls_style";
     }
 
     /**

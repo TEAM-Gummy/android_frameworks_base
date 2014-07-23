@@ -672,27 +672,6 @@ public class TelephonyManager {
         return propVal == null ? defaultVal : propVal;
     }
 
-    /**
-     * @hide
-     */
-    public void toggle2G(boolean twoGees) {
-        try {
-            getITelephony().toggle2G(twoGees);
-        } catch (RemoteException e) {
-        }
-    }
-
-    /**
-     * {@hide}
-     */
-    public void toggleLTE(boolean on) {
-        try {
-            getITelephony().toggleLTE(on);
-        } catch (RemoteException e) {
-            //Silently fail
-        }
-    }
-
     /** Network type is unknown */
     public static final int NETWORK_TYPE_UNKNOWN = 0;
     /** Current network is GPRS */

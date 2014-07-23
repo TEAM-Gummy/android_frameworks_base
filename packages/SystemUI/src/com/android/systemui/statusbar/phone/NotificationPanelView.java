@@ -52,9 +52,6 @@ import java.io.File;
 public class NotificationPanelView extends PanelView {
     public static final boolean DEBUG_GESTURES = true;
 
-    private static final float STATUS_BAR_SETTINGS_FLIP_PERCENTAGE_RIGHT = 0.15f;
-    private static final float STATUS_BAR_SETTINGS_FLIP_PERCENTAGE_LEFT = 0.85f;
-
     Drawable mHandleBar;
     Drawable mBackgroundDrawable;
     Drawable mBackgroundDrawableLandscape;
@@ -64,11 +61,6 @@ public class NotificationPanelView extends PanelView {
     int mFingers;
     PhoneStatusBar mStatusBar;
     boolean mOkToFlip;
-    boolean mFastToggleEnabled;
-    int mFastTogglePos;
-    ContentObserver mEnableObserver;
-    ContentObserver mChangeSideObserver;
-    int mToggleStyle;
     Handler mHandler = new Handler();
 
     private static final float STATUS_BAR_SWIPE_TRIGGER_PERCENTAGE = 0.05f;
@@ -99,51 +91,13 @@ public class NotificationPanelView extends PanelView {
         mHandleBarHeight = resources.getDimensionPixelSize(R.dimen.close_handle_height);
         mHandleView = findViewById(R.id.handle);
 
-        final ContentResolver resolver = getContext().getContentResolver();
-        mEnableObserver = new ContentObserver(mHandler) {
-            @Override
-            public void onChange(boolean selfChange) {
-                mFastToggleEnabled = Settings.System.getBoolean(resolver,
-                        Settings.System.FAST_TOGGLE, false);
-                mToggleStyle = Settings.System.getInt(resolver,
-                        Settings.System.TOGGLES_STYLE, 0);
-            }
-        };
-
-        mChangeSideObserver = new ContentObserver(mHandler) {
-            @Override
-            public void onChange(boolean selfChange) {
-                mFastTogglePos = Settings.System.getInt(resolver,
-                        Settings.System.CHOOSE_FASTTOGGLE_SIDE, 1);
-            }
-        };
-
-        // Initialization
-        mFastToggleEnabled = Settings.System.getBoolean(resolver,
-                Settings.System.FAST_TOGGLE, false);
-        mFastTogglePos = Settings.System.getInt(resolver,
-                Settings.System.CHOOSE_FASTTOGGLE_SIDE, 1);
-        mToggleStyle = Settings.System.getInt(resolver,
-                Settings.System.TOGGLES_STYLE, 0);
-
-        resolver.registerContentObserver(
-                Settings.System.getUriFor(Settings.System.FAST_TOGGLE),
-                true, mEnableObserver);
-        resolver.registerContentObserver(
-                Settings.System.getUriFor(Settings.System.TOGGLES_STYLE),
-                true, mEnableObserver);
-
-        resolver.registerContentObserver(
-                Settings.System.getUriFor(Settings.System.CHOOSE_FASTTOGGLE_SIDE),
-                true, mChangeSideObserver);
         mBackground = (ImageView) findViewById(R.id.notification_wallpaper);
         setBackgroundDrawables();
     }
 
     @Override
     public void fling(float vel, boolean always) {
-        GestureRecorder gr =
-                ((PhoneStatusBarView) mBar).mBar.getGestureRecorder();
+        GestureRecorder gr = ((PhoneStatusBarView) mBar).mBar.getGestureRecorder();
         if (gr != null) {
             gr.tag(
                 "fling " + ((vel > 0) ? "open" : "closed"),
@@ -163,8 +117,7 @@ public class NotificationPanelView extends PanelView {
         return super.dispatchPopulateAccessibilityEvent(event);
     }
 
-    // We draw the handle ourselves so that it's
-    // always glued to the bottom of the window.
+    // We draw the handle ourselves so that it's always glued to the bottom of the window.
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -206,27 +159,8 @@ public class NotificationPanelView extends PanelView {
                         // Pointer is at the handle portion of the view?
                         mGestureStartY > getHeight() - mHandleBarHeight - getPaddingBottom();
                     mOkToFlip = getExpandedHeight() == 0;
-                    if(mToggleStyle != 0) {
-                        // don't allow settings panel with non-tile toggles
-                        shouldFlip = false;
-                        break;
-                    }
-                    if (mFastTogglePos == 1) {
-                        if ((event.getX(0) > getWidth()
-                                * (1.0f - STATUS_BAR_SETTINGS_FLIP_PERCENTAGE_RIGHT)
-                                && mFastToggleEnabled)
-                            || (mStatusBar.skipToSettingsPanel())
-                                && !mFastToggleEnabled) {
-                            shouldFlip = true;
-                        }
-                    } else if (mFastTogglePos == 2) {
-                        if ((event.getX(0) < getWidth()
-                                * (1.0f - STATUS_BAR_SETTINGS_FLIP_PERCENTAGE_LEFT)
-                                && mFastToggleEnabled)
-                            || (mStatusBar.skipToSettingsPanel())
-                                && !mFastToggleEnabled) {
-                            shouldFlip = true;
-                        }
+                    if(mStatusBar.skipToSettingsPanel()) {
+                        shouldFlip = true;
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
