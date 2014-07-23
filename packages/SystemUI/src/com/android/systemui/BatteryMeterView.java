@@ -73,6 +73,7 @@ public class BatteryMeterView extends View implements DemoMode {
     int[] mColors;
 
     boolean mShowIcon = true;
+    boolean mIsQuickSettings = false;
     boolean mShowPercent = false;
     Paint mFramePaint, mBatteryPaint, mWarningTextPaint, mTextPaint, mBoltPaint;
     int mButtonHeight;
@@ -133,7 +134,7 @@ public class BatteryMeterView extends View implements DemoMode {
 
                 setContentDescription(
                         context.getString(R.string.accessibility_battery_level, level));
-                updateSettings(false);
+                updateSettings(mIsQuickSettings);
             } else if (action.equals(ACTION_LEVEL_TEST)) {
                 testmode = true;
                 post(new Runnable() {
@@ -271,7 +272,7 @@ public class BatteryMeterView extends View implements DemoMode {
         mBoltPoints = loadBoltPoints(res);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-        updateSettings(false);
+        updateSettings(mIsQuickSettings);
     }
 
     private static float[] loadBoltPoints(Resources res) {
@@ -482,8 +483,10 @@ public class BatteryMeterView extends View implements DemoMode {
         mBatteryStyle = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_BATTERY, 0, UserHandle.USER_CURRENT);
 
+        mIsQuickSettings = isQuickSettingsTile;
+
         if (isQuickSettingsTile && mBatteryStyle == BATTERY_STYLE_GONE) {
-            mBatteryStyle = 0;
+            mBatteryStyle = BATTERY_STYLE_NORMAL;
         }
 
         mBatteryColor = Settings.System.getIntForUser(resolver,
@@ -531,8 +534,8 @@ public class BatteryMeterView extends View implements DemoMode {
                 }
                 lp = new LinearLayout.LayoutParams((int) width, (int) height);
                 lp.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-                lp.setMargins(0, res.getDimensionPixelSize(R.dimen.qs_tile_margin_above_icon),
-                    0, res.getDimensionPixelSize(R.dimen.qs_tile_margin_below_icon));
+                lp.setMargins(0, res.getDimensionPixelSize(R.dimen.qs_battery_tile_margin_above_icon),
+                    0, res.getDimensionPixelSize(R.dimen.qs_battery_tile_margin_below_icon));
                 setLayoutParams(lp);
             }
 

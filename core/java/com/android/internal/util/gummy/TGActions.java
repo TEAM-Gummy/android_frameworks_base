@@ -22,6 +22,7 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.hardware.input.InputManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -118,13 +119,16 @@ public class TGActions {
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_TORCH)) {
                 Intent i = new Intent(TorchConstants.ACTION_TOGGLE_STATE);
-                context.sendBroadcast(i);
+                i.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+                context.sendBroadcastAsUser(i, new UserHandle(UserHandle.USER_CURRENT));
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_IME)) {
                 if (isKeyguardShowing) {
                     return;
                 }
-                context.sendBroadcast(new Intent("android.settings.SHOW_INPUT_METHOD_PICKER"));
+                context.sendBroadcastAsUser(
+                        new Intent("android.settings.SHOW_INPUT_METHOD_PICKER"),
+                        new UserHandle(UserHandle.USER_CURRENT));
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_PIE)) {
                 boolean pieState = isPieEnabled(context);
@@ -280,6 +284,13 @@ public class TGActions {
                         }
                     }
                 }
+            } else if (action.equals(ButtonsConstants.ACTION_TG_UI_SWITCH)) {
+                boolean isModeInverted = context.getResources().getConfiguration().uiInvertedMode
+                         == Configuration.UI_INVERTED_MODE_YES;
+                Settings.Secure.putInt(context.getContentResolver(),
+                Settings.Secure.UI_INVERTED_MODE,
+                        isModeInverted ? 1 : 2);
+                return;
             } else {
                 // we must have a custom uri
                 Intent intent = null;

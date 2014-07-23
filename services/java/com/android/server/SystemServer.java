@@ -47,7 +47,9 @@ import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.service.dreams.DreamService;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
@@ -103,6 +105,32 @@ class ServerThread {
     void reportWtf(String msg, Throwable e) {
         Slog.w(TAG, "***********************************************");
         Log.wtf(TAG, "BOOT FAILURE " + msg, e);
+    }
+
+    private class PerformanceProfileObserver extends ContentObserver {
+        private final String mPropName;
+        private final String mPropDef;
+
+        public PerformanceProfileObserver(Context ctx) {
+            super(null);
+            mPropName =
+                    ctx.getString(com.android.internal.R.string.config_perf_profile_prop);
+            mPropDef =
+                    ctx.getString(com.android.internal.R.string.config_perf_profile_default_entry);
+        }
+        @Override
+        public void onChange(boolean selfChange) {
+            setSystemSetting();
+        }
+
+        void setSystemSetting() {
+            String perfProfile = Settings.System.getString(mContentResolver,
+                    Settings.System.PERFORMANCE_PROFILE);
+            if (perfProfile == null) {
+                perfProfile = mPropDef;
+            }
+            SystemProperties.set(mPropName, perfProfile);
+        }
     }
 
     public void initAndLoop() {
@@ -930,6 +958,18 @@ class ServerThread {
             } catch (Throwable e) {
                 Slog.e(TAG, "Failure starting EdgeGesture service", e);
             }
+        }
+
+        // register observer to listen for settings changes
+        if (!TextUtils.isEmpty(context.getString(
+                com.android.internal.R.string.config_perf_profile_prop))) {
+            PerformanceProfileObserver observer = new PerformanceProfileObserver(context);
+            mContentResolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.PERFORMANCE_PROFILE),
+                    false, observer);
+
+            // Sync the system property with the current setting
+            observer.setSystemSetting();
         }
 
         // Before things start rolling, be sure we have decided whether

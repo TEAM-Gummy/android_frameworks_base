@@ -3027,6 +3027,7 @@ public final class Settings {
          *
          * @hide
          */
+
         public static final String POWER_MENU_CONFIG = "power_menu_config";
 
         /**
@@ -3438,6 +3439,122 @@ public final class Settings {
          * @hide
          */
         public static final String SYSTEM_POWER_CRT_MODE = "system_power_crt_mode";
+
+        /**
+         * QuickSettings configuration
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_TILES = "quick_settings_tiles";
+
+        /**
+         * QuickSettings dynamic tiles configuration
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_DYNAMIC_TILES = "quick_settings_dynamic_tiles";
+
+        /**
+         * Number of QuickSettings tiles per row
+         * @hide
+         */
+        public static final String QUICK_TILES_PER_ROW = "quick_tiles_per_row";
+
+        /**
+         * Whether on landscape tiles quantity per row are duplicated
+         * @hide
+         */
+        public static final String QUICK_TILES_PER_ROW_DUPLICATE_LANDSCAPE =
+                "quick_tiles_per_row_duplicate_landscape";
+
+        /**
+         * Color of QuickSettings tiles text
+         * @hide
+         */
+        public static final String QUICK_TILES_TEXT_COLOR = "quick_tiles_text_color";
+
+
+        /**
+         * QuickSettings tiles background color
+         *
+         * @hide
+         */
+        public static final String QUICK_TILES_BG_COLOR = "quick_tiles_bg_color";
+
+        /**
+         * QuickSettings tiles background color on pressed
+         *
+         * @hide
+         */
+        public static final String QUICK_TILES_BG_PRESSED_COLOR = "quick_tiles_bg_pressed_color";
+
+        /**
+         * QuickSettings tiles background alpha
+         *
+         * @hide
+         */
+        public static final String QUICK_TILES_BG_ALPHA = "quick_tiles_bg_alpha";
+
+        /**
+         * QuickSettings music tile mode
+         * @hide
+         */
+        public static final String MUSIC_TILE_MODE = "music_tile_mode";
+
+        /**
+         * Custom toggle click/long-click/icons for infinite toggles: actions 1-5
+         * @hide
+         */
+        public static final String CUSTOM_TOGGLE_ACTIONS = "custom_toggle_actions";
+
+        /**
+         * Parsed booleans from string for infinite toggles (unlock/collapse-shade/match-icon)
+         * @hide
+         */
+        public static final String CUSTOM_TOGGLE_EXTRAS = "custom_toggle_extras";
+
+        /**
+         * Contact strings for infinite toggles
+         * @hide
+         */
+        public static final String TILE_CONTACT_ACTIONS = "tile_contact_actions";
+
+        /**
+         * Quick Settings Panel Dynamic Tiles
+         *
+         * @hide
+         */
+        public static final String QS_DYNAMIC_EQUALIZER = "qs_dynamic_equalizer";
+
+        /**
+         * QuickSettings network modes to switch
+         * @hide
+         */
+        public static final String EXPANDED_NETWORK_MODE = "expanded_network_mode";
+
+        /**
+         * QuickSettings screen timeout modes to switch
+         * @hide
+         */
+        public static final String EXPANDED_SCREENTIMEOUT_MODE = "expanded_screentimeout_mode";
+
+        /**
+         * QuickSettings ring modes to switch
+         * @hide
+         */
+        public static final String EXPANDED_RING_MODE = "expanded_ring_mode";
+
+        /**
+         * Quick Settings Quick Pulldown
+         *
+         * @hide
+         */
+        public static final String QS_QUICK_PULLDOWN = "qs_quick_pulldown";
+
+        /**
+         * Quick Settings Collapse Pane
+         *
+         * @hide
+         */
+        public static final String QS_COLLAPSE_PANEL = "qs_collapse_panel";
 
         /**
          * Display style of the status bar battery information
@@ -4066,6 +4183,13 @@ public final class Settings {
          * @hide
          */
         public static final String HEADS_UP_FLOATING_WINDOW = "heads_up_floating_window";
+
+        /**
+         * Performance profile
+         * @see config_perf_profile_prop in frameworks/base/core/res/res/values/config.xml
+         * @hide
+         */
+        public static final String PERFORMANCE_PROFILE = "performance_profile";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -5042,6 +5166,17 @@ public final class Settings {
          * modes that might be added in the future.
          */
         public static final String LOCATION_MODE = "location_mode";
+
+        /**
+         * The last degree of location access enabled by the user.
+         * <p/>
+         * Must be one of {@link
+         * #LOCATION_MODE_HIGH_ACCURACY}, {@link #LOCATION_MODE_SENSORS_ONLY}, {@link
+         * #LOCATION_MODE_BATTERY_SAVING}.
+         *
+         * @hide
+         */
+        public static final String LOCATION_LAST_MODE = "location_last_mode";
 
         /**
          * Location access disabled.

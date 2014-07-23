@@ -80,6 +80,8 @@
     <!-- Kill app permission -->
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
 
+    <!-- Dark Gummy Tile --> 
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <!-- Wifi Display -->
     <uses-permission android:name="android.permission.CONFIGURE_WIFI_DISPLAY" />
@@ -89,6 +91,20 @@
 
     <!-- WallpaperManager -->
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
+    <!-- Equalizer -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- Sync -->
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+
+    <!-- Reboot -->
+    <uses-permission android:name="android.permission.REBOOT" />
+
+    <!-- Record Audio QuickRecord -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:persistent="true"
@@ -220,6 +236,34 @@
             android:launchMode="singleTop"
             android:taskAffinity="com.android.systemui.net"
             android:excludeFromRecents="true" />
+
+        <!-- Quick Record Tile Recordings -->
+        <activity
+            android:name="com.android.systemui.quicksettings.QuickRecordingsDialog"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:taskAffinity="com.android.systemui.quicksettings.QuickRecordingsDialog"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="com.android.systemui.quicksettings.QuickRecordingsDialog" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Music Tile Sleep Timer -->
+        <activity
+            android:name="com.android.systemui.timedialog.MusicTileTimeDialog"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:taskAffinity="com.android.systemui.timedialog.MusicTileTimeDialog"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="com.android.systemui.timedialog.MusicTileTimeDialog" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!-- platform logo easter egg activity -->
         <activity
