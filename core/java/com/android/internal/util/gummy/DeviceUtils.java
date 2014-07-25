@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.hardware.Camera;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.WifiDisplayStatus;
 import android.hardware.Sensor;
@@ -69,6 +70,10 @@ public class DeviceUtils {
     public static boolean deviceSupportsBluetooth() {
         return (BluetoothAdapter.getDefaultAdapter() != null);
     }
+
+    public static boolean deviceSupportsCamera() {
+             return Camera.getNumberOfCameras() > 0;
+     }
 
     public static boolean deviceSupportsNfc(Context context) {
         return NfcAdapter.getDefaultAdapter(context) != null;
