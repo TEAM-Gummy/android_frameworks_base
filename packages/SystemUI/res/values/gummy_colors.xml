@@ -39,4 +39,10 @@
     <color name="qs_background_color">#FF212121</color>
     <color name="qs_background_pressed_color">#FF161616</color>
 
+    <!-- Colors for the system bars -->
+    <color name="status_bar_background_opaque">@color/system_bar_background_opaque</color>
+    <color name="status_bar_background_semi_transparent">@color/system_bar_background_semi_transparent</color>
+    <color name="navigation_bar_background_opaque">@color/system_bar_background_opaque</color>
+    <color name="navigation_bar_background_semi_transparent">@color/system_bar_background_semi_transparent</color>
+
 </resources>
