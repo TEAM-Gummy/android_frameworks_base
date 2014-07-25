@@ -57,7 +57,7 @@ import static com.android.internal.util.gummy.QSConstants.TILE_WIFIAP;
 import static com.android.internal.util.gummy.QSConstants.TILE_REBOOT;
 import static com.android.internal.util.gummy.QSConstants.TILE_DARKGUMMY;
 import static com.android.internal.util.gummy.QSConstants.TILE_REMOTEDISPLAY;
-import static com.android.internal.util.gummy.QSConstants.TILE_EQUALIZER;
+// import static com.android.internal.util.gummy.QSConstants.TILE_EQUALIZER;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -319,12 +319,12 @@ public class QuickSettingsController {
             }
         }
 
-        if (Settings.System.getIntForUser(resolver,
-                Settings.System.QS_DYNAMIC_EQUALIZER, 1, UserHandle.USER_CURRENT) == 1) {
-            QuickSettingsTile qs = new EqualizerTile(mContext, this);
-            qs.setupQuickSettingsTile(inflater, mContainerView);
-            mQuickSettingsTiles.add(qs);
-        }
+//        if (Settings.System.getIntForUser(resolver,
+//                Settings.System.QS_DYNAMIC_EQUALIZER, 1, UserHandle.USER_CURRENT) == 1) {
+//            QuickSettingsTile qs = new EqualizerTile(mContext, this);
+//            qs.setupQuickSettingsTile(inflater, mContainerView);
+//            mQuickSettingsTiles.add(qs);
+//        }
     }
 
     private String findCustomKey (String tile) {

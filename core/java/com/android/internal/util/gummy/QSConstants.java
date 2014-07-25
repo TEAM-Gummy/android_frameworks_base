@@ -50,7 +50,7 @@ public class QSConstants {
         public static final String TILE_DARKGUMMY = "toggleDarkGummy";
         public static final String TILE_CUSTOM = "toggleCustom";
         public static final String TILE_CONTACT = "tileContact";
-        public static final String TILE_EQUALIZER = "tileEqualizer";
+//        public static final String TILE_EQUALIZER = "tileEqualizer";
         public static final String TILE_COMPASS = "toggleCompass";
 
         // dynamic tiles
