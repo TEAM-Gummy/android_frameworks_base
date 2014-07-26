@@ -111,6 +111,7 @@
     <string name="quick_settings_music_schedule_update">Update timer</string>
     <string name="quick_settings_reboot_recovery">Recovery</string>
     <string name="quick_settings_reboot">Reboot</string>
+    <string name="quick_settings_camera_label">Camera</string>
     <string name="quick_settings_dark_gummy_on_label">Inverted UI</string>
     <string name="quick_settings_dark_gummy_off_label">Stock UI</string>
     <string name="quick_settings_quick_record_deleted">Deleted...</string>
@@ -131,6 +132,9 @@
     <string name="quick_settings_heads_up_on">Heads up enabled</string>
     <string name="quick_settings_heads_up_off">No interruptions</string>
     <string name="quick_settings_remote_display_no_connection_label">No connection</string>
+
+    <!-- Camera tile toasts -->
+    <string name="quick_settings_camera_error_connect">Can\'t connect to camera</string>
 
     <!-- Performance profile modes -->
     <string name="perf_profile_pwrsv">Power save</string>
