@@ -213,7 +213,7 @@
     <!-- Quick Settings tile geometry: top interior margin, above icon -->
     <dimen name="qs_battery_tile_margin_above_icon">24dp</dimen>
     <!-- Quick Settings tile geometry: gap between icon and text 3 per row-->
-    <dimen name="qs_battery_tile_margin_below_icon">15dp</dimen>
+    <dimen name="qs_battery_tile_margin_below_icon">14dp</dimen>
     <!-- Quick Settings tile geometry: icon size -->
     <dimen name="qs_tile_icon_size">32dp</dimen>
     <!-- Quick Settings CA Cert Warning tile geometry: gap between icon and text -->
