@@ -2910,56 +2910,57 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             return -1;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (down) {
-                if (!mRecentAppsPreloaded && (mPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH)) ||
-                        mLongPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH)))) {
-                    preloadRecentApps();
-                }
-                if (repeatCount == 0) {
-                    mBackLongPressed = false;
-                    if (!mPressOnBackBehavior.equals(getStr(KEY_ACTION_BACK)) &&
-                            !mIsVirtualKeypress && event.getDeviceId() != KeyCharacterMap.VIRTUAL_KEYBOARD) {
-                        mBackDoCustomAction = true;
-                        return -1;
+            if (mPressOnBackBehavior != null) {
+                if (down) {
+                    if (!mRecentAppsPreloaded && (mPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH)) ||
+                            mLongPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH)))) {
+                        preloadRecentApps();
                     }
-                } else if (longPress) {
-                    if (mRecentAppsPreloaded &&
-                            !mLongPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH))) {
-                        cancelPreloadRecentApps();
-                    }
-                    if (!keyguardOn && !mLongPressOnBackBehavior.equals(getStr(KEY_ACTION_NOTHING))) {
-                        performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
-                        performKeyAction(mLongPressOnBackBehavior);
-                        // Do not perform action when key is released
-                        mBackDoCustomAction = false;
-                        mBackLongPressed = true;
-                    }
-                }
-                if (mBackLongPressed) {
-                    return -1;
-                }
-            } else {
-                if (mRecentAppsPreloaded && !mPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH)) &&
-                        !mLongPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH))) {
-                    cancelPreloadRecentApps();
-                }
-                if (mBackLongPressed) {
-                    mBackLongPressed = false;
-                    return -1;
-                } else {
-                    if (mBackDoCustomAction) {
-                        mBackDoCustomAction = false;
-                        if (!canceled && !keyguardOn) {
-                            performKeyAction(mPressOnBackBehavior);
+                    if (repeatCount == 0) {
+                        mBackLongPressed = false;
+                        if (!mPressOnBackBehavior.equals(getStr(KEY_ACTION_BACK)) &&
+                                !mIsVirtualKeypress && event.getDeviceId() != KeyCharacterMap.VIRTUAL_KEYBOARD) {
+                            mBackDoCustomAction = true;
                             return -1;
                         }
+                    } else if (longPress) {
+                        if (mRecentAppsPreloaded &&
+                            !mLongPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH))) {
+                            cancelPreloadRecentApps();
+                        }
+                        if (!keyguardOn && !mLongPressOnBackBehavior.equals(getStr(KEY_ACTION_NOTHING))) {
+                            performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
+                            performKeyAction(mLongPressOnBackBehavior);
+                            // Do not perform action when key is released
+                            mBackDoCustomAction = false;
+                            mBackLongPressed = true;
+                        }
                     }
-                    if (canceled)
+                    if (mBackLongPressed) {
                         return -1;
+                    }
+                } else {
+                    if (mRecentAppsPreloaded && !mPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH)) &&
+                        !mLongPressOnBackBehavior.equals(getStr(KEY_ACTION_APP_SWITCH))) {
+                    cancelPreloadRecentApps();
+                    }
+                    if (mBackLongPressed) {
+                        mBackLongPressed = false;
+                        return -1;
+                    } else {
+                        if (mBackDoCustomAction) {
+                            mBackDoCustomAction = false;
+                            if (!canceled && !keyguardOn) {
+                                performKeyAction(mPressOnBackBehavior);
+                                return -1;
+                            }
+                        }
+                        if (canceled)
+                            return -1;
+                    }
                 }
             }
         }
-
 
         // Shortcuts are invoked through Search+key, so intercept those here
         // Any printing key that is chorded with Search should be consumed
