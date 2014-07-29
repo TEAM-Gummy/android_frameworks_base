@@ -3077,8 +3077,13 @@ public final class Settings {
           * 8 - Power Off
           * 0 - Kill App
           * 10 - Last App
-          * 11- Custom App
-          * 12- Custom App
+          * 11 - Custom App
+          * 12 - Torch
+          * 13 - TG UI
+          * 14 - Expanded Desktop
+          * 15 - Pie
+          * 16 - QS
+          * 17 - Notification Panel
           * @hide
           */
          public static final String KEY_HOME_ACTION = "key_home_action";

@@ -117,7 +117,9 @@ import com.android.internal.policy.impl.keyguard.KeyguardServiceDelegate;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.util.gesture.EdgeGesturePosition;
+import com.android.internal.util.gummy.ButtonsConstants;
 import com.android.internal.util.gummy.Converter;
+import com.android.internal.util.gummy.TGActions;
 import com.android.internal.util.gummy.TorchConstants;
 import com.android.internal.widget.PointerLocationView;
 
@@ -202,6 +204,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int KEY_ACTION_LAST_APP = 10;
     private static final int KEY_ACTION_CUSTOM_APP = 11;
     private static final int KEY_ACTION_TORCH = 12;
+    private static final int KEY_ACTION_TG_UI = 13;
+    private static final int KEY_ACTION_EXPANDED_DESKTOP = 14;
+    private static final int KEY_ACTION_PIE = 15;
+    private static final int KEY_ACTION_QS = 16;
+    private static final int KEY_ACTION_NOTIFICATIONS = 17;
 
     // Masks for checking presence of hardware keys.
     // Must match values in core/res/res/values/config.xml
@@ -1172,6 +1179,21 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Intent i = new Intent(TorchConstants.ACTION_TOGGLE_STATE);
                     i.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
                     mContext.sendBroadcast(i);
+                    break;
+                case KEY_ACTION_TG_UI:
+                    TGActions.processAction(mContext, ButtonsConstants.ACTION_TG_UI_SWITCH, false);
+                    break;
+                case KEY_ACTION_EXPANDED_DESKTOP:
+                    TGActions.processAction(mContext, ButtonsConstants.ACTION_EXPANDED_DESKTOP, false);
+                    break;
+                case KEY_ACTION_PIE:
+                    TGActions.processAction(mContext, ButtonsConstants.ACTION_PIE, false);
+                    break;
+                case KEY_ACTION_QS:
+                    TGActions.processAction(mContext, ButtonsConstants.ACTION_QS, false);
+                    break;
+                case KEY_ACTION_NOTIFICATIONS:
+                    TGActions.processAction(mContext, ButtonsConstants.ACTION_NOTIFICATIONS, false);
                     break;
                 default:
                     break;
