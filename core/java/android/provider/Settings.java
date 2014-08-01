@@ -4194,12 +4194,6 @@ public final class Settings {
          */
         public static final String HEADS_UP_FLOATING_WINDOW = "heads_up_floating_window";
 
-         /**
-         * Locale for secondary overlay on dialer for t9 search input
-         * @hide
-         */
-        public static final String T9_SEARCH_INPUT_LOCALE = "t9_search_input_locale";
-
         /**
          * Locale for secondary overlay on dialer for t9 search input
          * @hide
