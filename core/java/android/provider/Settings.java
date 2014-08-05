@@ -3452,6 +3452,12 @@ public final class Settings {
         public static final String QUICK_SETTINGS_TILES = "quick_settings_tiles";
 
         /**
+         * QuickSettings configuration
+         * @hide
+         */
+        public static final String ADAPTIVE_BACKLIGHT_MODE = "adaptive_backlight_mode";
+
+        /**
          * QuickSettings dynamic tiles configuration
          * @hide
          */
