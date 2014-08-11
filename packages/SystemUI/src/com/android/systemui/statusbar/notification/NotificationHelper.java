@@ -35,7 +35,6 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -50,7 +49,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.internal.widget.SizeAdaptiveLayout;
-
 import com.android.systemui.R;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.BaseStatusBar.NotificationClicker;
@@ -59,7 +57,6 @@ import com.android.systemui.statusbar.NotificationData.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import java.util.List;
 
 /* This class has some helper methods and also works as a bridge for Peek's notifications and its surrounding layers */
@@ -238,10 +235,5 @@ public class NotificationHelper {
         return state == TelephonyManager.SIM_STATE_PIN_REQUIRED
                 | state == TelephonyManager.SIM_STATE_PUK_REQUIRED
                 | state == TelephonyManager.SIM_STATE_NETWORK_LOCKED;
-    }
-
-    public boolean openInFloatingMode() {
-        return Settings.System.getBoolean(mContext.getContentResolver(),
-                Settings.System.HEADS_UP_FLOATING_WINDOW, true);
     }
 }

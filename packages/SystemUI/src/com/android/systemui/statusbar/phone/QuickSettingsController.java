@@ -33,7 +33,6 @@ import static com.android.internal.util.gummy.QSConstants.TILE_CUSTOM_KEY;
 import static com.android.internal.util.gummy.QSConstants.TILE_DELIMITER;
 import static com.android.internal.util.gummy.QSConstants.TILE_EXPANDEDDESKTOP;
 import static com.android.internal.util.gummy.QSConstants.TILE_IMESWITCHER;
-import static com.android.internal.util.gummy.QSConstants.TILE_HEADS_UP;
 import static com.android.internal.util.gummy.QSConstants.TILE_LOCATION;
 import static com.android.internal.util.gummy.QSConstants.TILE_LOCKSCREEN;
 import static com.android.internal.util.gummy.QSConstants.TILE_LTE;
@@ -91,7 +90,6 @@ import com.android.systemui.quicksettings.CustomTile;
 import com.android.systemui.quicksettings.CompassTile;
 import com.android.systemui.quicksettings.EqualizerTile;
 import com.android.systemui.quicksettings.ExpandedDesktopTile;
-import com.android.systemui.quicksettings.HeadsUpTile;
 import com.android.systemui.quicksettings.InputMethodTile;
 import com.android.systemui.quicksettings.LocationTile;
 import com.android.systemui.quicksettings.LteTile;
@@ -295,8 +293,6 @@ public class QuickSettingsController {
                 qs = new ContactTile(mContext, this, findCustomKey(tile));
             } else if (tile.equals(TILE_COMPASS)) {
                 qs = new CompassTile(mContext, this);
-            } else if (tile.equals(TILE_HEADS_UP)) {
-                qs = new HeadsUpTile(mContext, this);
             }
 
             if (qs != null) {
