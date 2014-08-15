@@ -2122,6 +2122,13 @@ public final class Settings {
         public static final int VOLUME_OVERLAY_NONE = 3;
 
         /**
+         * Volume panel background color
+         *
+         * @hide
+         */
+        public static final String VOLUME_PANEL_BG_COLOR = "volume_panel_bg_color";
+
+        /**
          * Whether the blacklisting feature for phone calls is enabled
          * @hide
          */

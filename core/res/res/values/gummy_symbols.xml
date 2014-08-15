@@ -175,4 +175,7 @@
   <!-- Proximity check timeout -->
   <java-symbol type="integer" name="config_proximityCheckTimeout" />
 
+  <!-- Volume Panel BG -->
+  <java-symbol type="drawable" name="dialog_full_holo_dark" />
+
 </resources>
