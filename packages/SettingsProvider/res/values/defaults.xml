@@ -188,6 +188,9 @@
     6. Dotted Circle with Percentage -->
     <integer name="def_battery_style">0</integer>
 
+    <!-- Default for Settings.Global.SEND_ACTION_APP_ERROR -->
+    <integer name="def_send_action_app_error">0</integer> 
+
     <!-- Default setting for menu overflow button -->
     <integer name="def_menu_overflow">1</integer>
 
