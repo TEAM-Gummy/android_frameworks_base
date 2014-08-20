@@ -156,9 +156,7 @@ public final class ShutdownThread extends Thread {
 
                                 if (actions != null && which < actions.length) {
                                     mRebootReason = actions[which];
-                                    if (actions[which].equals(SOFT_REBOOT)) {
-                                        mRebootSoft = true;
-                                    }
+                                    mRebootSoft = actions[which].equals(SOFT_REBOOT);
                                 }
                             }
                         })
@@ -177,9 +175,10 @@ public final class ShutdownThread extends Thread {
                                         Log.e(TAG, "failure trying to perform soft reboot", e);
                                     }
                                 } else {
-                                mReboot = true;
-                                beginShutdownSequence(context);
-                            }
+                                    mReboot = true;
+                                    beginShutdownSequence(context);
+                                }
+			    }
                         })
                         .setNegativeButton(com.android.internal.R.string.no,
                                 new DialogInterface.OnClickListener() {
